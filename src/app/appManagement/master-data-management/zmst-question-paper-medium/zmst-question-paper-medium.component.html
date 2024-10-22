@@ -1,0 +1,102 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Question Paper Medium Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Question Paper Medium</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstquestionpapermediumFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="mediumId"
+                                    class="form-label">Question Paper Medium Id</label> <input type="text" id="mediumId"
+                                    formControlName="mediumId" [maxlength]="2" name="mediumId" class="form-control"
+                                    placeholder="Question Paper Medium Id"
+                                    [ngClass]="{ 'is-invalid':(zmstquestionpapermediumFrmControl?.['mediumId'].errors && (zmstquestionpapermediumFrmControl?.['mediumId'].dirty || zmstquestionpapermediumFrmControl?.['mediumId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstquestionpapermediumFrmControl?.['mediumId'].touched || submitted) && zmstquestionpapermediumFrmControl?.['mediumId'].errors?.['required']">
+                                    Question Paper Medium Id</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="mediumName"
+                                    class="form-label">Question Paper Medium Name</label> <input type="text" id="mediumName"
+                                    formControlName="mediumName" [maxlength]="100" name="mediumName"
+                                    class="form-control" placeholder="Question Paper Medium Name"
+                                    [ngClass]="{ 'is-invalid':(zmstquestionpapermediumFrmControl?.['mediumName'].errors && (zmstquestionpapermediumFrmControl?.['mediumName'].dirty || zmstquestionpapermediumFrmControl?.['mediumName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstquestionpapermediumFrmControl?.['mediumName'].touched || submitted) && zmstquestionpapermediumFrmControl?.['mediumName'].errors?.['required']">
+                                    Question Paper Medium Name is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstquestionpapermediumGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Question Paper Medium Id</th>
+                                        <th>Question Paper Medium  Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstquestionpapermediumList.length>0">
+                                        <tr *ngFor="let data of zmstquestionpapermediumList;">
+                                            <td>{{data.mediumId}}</td>
+                                            <td>{{data.mediumName}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.mediumId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Question Paper Medium Id</th>
+                                        <th>Question Paper Medium Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

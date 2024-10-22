@@ -1,0 +1,93 @@
+<form [formGroup]="financial" autocomplete="off">
+    <div class="row g-3">
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="finacialComponent" class="form-label">Expenditure Component</label>
+            <select id="finacialComponent"
+                [ngClass]="{ 'is-invalid':(FinancialControls?.['finacialComponent'].errors 
+        && (FinancialControls?.['finacialComponent'].dirty || FinancialControls?.['finacialComponent'].touched || submittedFinancial  ))}"
+                formControlName="finacialComponent" class="form-select">
+                <option value="0" selected>--Select--</option>
+                <option *ngFor="let data of projectFinancialComponent" value={{data.financialComponentId}}>
+                    {{data.financialComponent}}
+                </option>
+
+            </select>
+            <span class="invalid-feedback"
+                *ngIf="(FinancialControls?.['finacialComponent'].touched || submittedFinancial) && FinancialControls?.['finacialComponent'].errors?.['required']">
+                Expenditure Component is Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> 
+            <label for="ddlCycle" class="form-label">Amount</label>
+            <input formControlName="amount" [maxlength]="8" (keypress)="numberOnly($event)" [ngClass]="{ 'is-invalid':(FinancialControls?.['amount'].errors 
+        && (FinancialControls?.['amount'].dirty || FinancialControls?.['amount'].touched || submittedFinancial  ))}"
+                id="amount" type="text" class="form-control">
+            <span class="invalid-feedback"
+                *ngIf="(FinancialControls?.['amount'].touched || submittedFinancial) && FinancialControls?.['amount'].errors?.['required']">
+                Amount is Required.
+            </span>
+        </div>
+    </div>
+    <div class="row mt-2" [hidden]="addhdn">
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-end">
+            <button type="button" (click)="onAdd()" class="btn btn-outline-primary btn-sm">
+                <i class="bx bxs-plus-circle"></i> Add
+            </button>
+        </div>
+    </div>
+    <div class="row mt-2" [hidden]="updatehdn">
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-end">
+            <button type="button" (click)="onUpdate()" class="btn btn-primary me-3">
+                <i class="bx bxs-plus-circle"></i> Update
+            </button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm w-100">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th class="w-50">Expenditure Components</th>
+                            <th class="w-25 text-end">Amount (in INR)</th>
+                            <th class="w-25">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let list of costListData">
+                            <td>{{list.financialComponent}}</td>
+                            <td class="text-end">
+                                {{list.amount}}
+                            </td>
+
+                            <td>
+                                <div class="d-flex order-actions">
+                                    <a (click)="edit(list)" class="text-primary bg-light-primary border-0">
+                                        <i class="bx bxs-edit"></i>
+                                    </a>
+                                    <a (click)="deleterow(list.financialComponentId,list.projectId)"
+                                        class="ms-4  text-danger bg-light-danger border-0">
+                                        <i class="bx bxs-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-secondary bg-opacity-10">
+                            <th>
+                                Total Amount
+                            </th>
+                            <th class="text-end">
+                                {{total}}
+                            </th>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

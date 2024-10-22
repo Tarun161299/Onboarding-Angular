@@ -1,0 +1,251 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Work Order Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Work Order Details</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="workorderdetailsFrmGroup">
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12" hidden>
+                                <label for="ddlWorkOrder" class="form-label">Select Project Code</label>
+                                <select class="form-select" formControlName="ddlWorkOrder" id="ddlWorkOrder"
+                                    (change)="onSelectWorkorder($event)" name="ddlWorkOrder"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['ddlWorkOrder'].errors 
+                                && (workorderdetailsFrmControl?.['ddlWorkOrder'].dirty || workorderdetailsFrmControl?.['ddlWorkOrder'].touched || submitted  ))}">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let workOrder of rowData" value={{workOrder.projectCode}}>
+                                        {{workOrder.projectName }} [{{[workOrder.projectCode]}}]
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback"
+                                    *ngIf="(workorderdetailsFrmControl?.['ddlWorkOrder'].touched || submitted) && workorderdetailsFrmControl?.['ddlWorkOrder'].errors?.['required']">
+                                    Select Work Order is required.
+                                </span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="workorderNo"
+                                    class="form-label">Work Order No</label> <input type="text" id="workorderNo"
+                                    formControlName="workorderNo" [maxlength]="50" name="workorderNo"
+                                    class="form-control" placeholder="Workorder No"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['workorderNo'].errors && (workorderdetailsFrmControl?.['workorderNo'].dirty || workorderdetailsFrmControl?.['workorderNo'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['workorderNo'].touched || submitted) && workorderdetailsFrmControl?.['workorderNo'].errors?.['required']">
+                                    Work Order No is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12" hidden> <label for="docName"
+                                    class="form-label">Project Code</label> <input type="text" id="docName" value="-1"
+                                    formControlName="docName" [maxlength]="100" name="docName" class="form-control"
+                                    placeholder="Project Code"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['docName'].errors && (workorderdetailsFrmControl?.['docName'].dirty || workorderdetailsFrmControl?.['docName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['docName'].touched || submitted) && workorderdetailsFrmControl?.['docName'].errors?.['required']">
+                                    Project Code is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="agencyName"
+                                    class="form-label">Agency Name</label>
+                                <ng-select formControlName="agencyName" name="agencyName" [clearable]="false"
+                                    [searchable]="true"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['agencyName'].errors 
+                                    && (workorderdetailsFrmControl?.['agencyName'].dirty || workorderdetailsFrmControl?.['agencyName'].touched || submitted  ))}">
+                                    <ng-option value="">--Select--</ng-option>
+                                    <ng-option *ngFor="let data of agencyData" value={{data.agencyName}}>
+                                        {{data.agencyName }}</ng-option>
+                                </ng-select>
+                                <span class="invalid-feedback"
+                                    *ngIf="(workorderdetailsFrmControl?.['agencyName'].touched || submitted) && workorderdetailsFrmControl?.['agencyName'].errors?.['required']">
+                                    Agency is required.
+                                </span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="resourceCategory"
+                                    class="form-label">Resource Category</label> <input type="text"
+                                    id="resourceCategory" formControlName="resourceCategory" [maxlength]="100"
+                                    name="resourceCategory" class="form-control" placeholder="Resource Category"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['resourceCategory'].errors && (workorderdetailsFrmControl?.['resourceCategory'].dirty || workorderdetailsFrmControl?.['resourceCategory'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['resourceCategory'].touched || submitted) && workorderdetailsFrmControl?.['resourceCategory'].errors?.['required']">
+                                    Resource Category is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['resourceCategory'].touched && workorderdetailsFrmControl?.['resourceCategory'].errors?.['pattern'])">Only
+                                    Alphabet are allowed</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="resourceNo"
+                                    class="form-label">No of Resource</label> <input type="text" id="resourceNo"
+                                    formControlName="resourceNo" [maxlength]="3" name="resourceNo" class="form-control"
+                                    placeholder="No of resource"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['resourceNo'].errors && (workorderdetailsFrmControl?.['resourceNo'].dirty || workorderdetailsFrmControl?.['resourceNo'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['resourceNo'].touched || submitted) && workorderdetailsFrmControl?.['resourceNo'].errors?.['required']">
+                                    No of Resource is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['resourceNo'].touched && workorderdetailsFrmControl?.['resourceNo'].errors?.['pattern'])">Max
+                                    3 digits are allowed</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="noofMonths"
+                                    class="form-label">No of Months</label> <input type="text" id="noofMonths"
+                                    formControlName="noofMonths" [maxlength]="2" name="noofMonths" class="form-control"
+                                    placeholder="No. of Months"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['noofMonths'].errors && (workorderdetailsFrmControl?.['noofMonths'].dirty || workorderdetailsFrmControl?.['noofMonths'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['noofMonths'].touched || submitted) && workorderdetailsFrmControl?.['noofMonths'].errors?.['required']">
+                                    No. of Months is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['noofMonths'].touched && workorderdetailsFrmControl?.['noofMonths'].errors?.['pattern'])">Max
+                                    12 Month are allowed</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="issueDate"
+                                    class="form-label">Issue Date</label> <input type="date" formControlName="issueDate"
+                                    class="form-control" placeholder="Issue Date"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['issueDate'].errors && (workorderdetailsFrmControl?.['issueDate'].dirty || workorderdetailsFrmControl?.['issueDate'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['issueDate'].touched || submitted) && workorderdetailsFrmControl?.['issueDate'].errors?.['required']">
+                                    Issue Date is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="workorderFrom"
+                                    class="form-label">Work Order From</label> <input type="date"
+                                    formControlName="workorderFrom" class="form-control" placeholder="Workorder From"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['workorderFrom'].errors && (workorderdetailsFrmControl?.['workorderFrom'].dirty || workorderdetailsFrmControl?.['workorderFrom'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['workorderFrom'].touched || submitted) && workorderdetailsFrmControl?.['workorderFrom'].errors?.['required']">
+                                    Work Order From is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="workorderTo"
+                                    class="form-label">Work Order To</label> <input type="date"
+                                    formControlName="workorderTo" class="form-control" placeholder="WorkorderTo"
+                                    [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['workorderTo'].errors && (workorderdetailsFrmControl?.['workorderTo'].dirty || workorderdetailsFrmControl?.['workorderTo'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['workorderTo'].touched || submitted) && workorderdetailsFrmControl?.['workorderTo'].errors?.['required']">
+                                    Work Order To is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                                <label for="document" class="form-label">Document</label>
+                                <div class="input-group">
+                                    <input type="file" id="document" (change)="handleFileInput($event)"
+                                        formControlName="document" class="form-control" placeholder="Document"
+                                        [ngClass]="{ 'is-invalid':(workorderdetailsFrmControl?.['document'].errors && (workorderdetailsFrmControl?.['document'].dirty || workorderdetailsFrmControl?.['document'].touched || submitted  ))}" />
+                                    <button class="btn text-primary bg-light-primary btn-sm d-block" *ngIf="document"
+                                        (click)="getWorkOrderDocument()" title="Document"><i class='bx bxs-show'></i>
+                                    </button>
+                                </div>
+                                <span class="text-danger"
+                                    *ngIf="(workorderdetailsFrmControl?.['document'].touched || submitted) && workorderdetailsFrmControl?.['document'].errors?.['required']">
+                                    Document is required</span>
+                                    <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <br>
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-danger" (click)="reset()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="workorderdetailsGrid" class="table align-middle mb-0"
+                                *ngIf="workorderdetailsList.length>0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Workorder No</th>
+                                        <th>Agency Name</th>
+                                        <th>Issue Date</th>
+                                        <th>Workorder From</th>
+                                        <th>Workorder To</th>
+                                        <th>Document</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="workorderdetailsList.length>0">
+                                        <tr *ngFor="let data of workorderdetailsList;">
+
+                                            <td>{{data.workorderNo}}</td>
+                                            <td>{{data.agencyName}}</td>
+                                            <td>{{data.issueDate | ddMmYYYYDate}}</td>
+                                            <td>{{data.workorderFrom | ddMmYYYYDate}}</td>
+                                            <td>{{data.workorderTo | ddMmYYYYDate}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+
+                                                    <a class="ms-4 text-primary bg-light-primary border-0"
+                                                        title="View Document" id="btndownload" (click)="viewPdf(data)">
+                                                        <i class="bx bxs-show"></i></a>
+                                                </div>
+
+                                            </td>
+                                            <td>
+
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)" title="Edit Document"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="deleteData(data.workorderId)" title="Delete Document"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Workorder No</th>
+                                        <th>Agency Name</th>
+                                        <th>Issue Date</th>
+                                        <th>Workorder From</th>
+                                        <th>Workorder To</th>
+                                        <th>Document</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

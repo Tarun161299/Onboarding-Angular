@@ -1,0 +1,117 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Branch Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Branch</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstbranchFrmGroup">
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="brCd"
+                                    class="form-label">Branch Code</label> <input type="text" id="brCd"
+                                    formControlName="brCd" [maxlength]="6" name="brCd" class="form-control"
+                                    placeholder="Branch Code"
+                                    [ngClass]="{ 'is-invalid':(zmstbranchFrmControl?.['brCd'].errors && (zmstbranchFrmControl?.['brCd'].dirty || zmstbranchFrmControl?.['brCd'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstbranchFrmControl?.['brCd'].touched || submitted) && zmstbranchFrmControl?.['brCd'].errors?.['required']">
+                                    Branch Code is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="brNm"
+                                    class="form-label">Branch Name</label> <input type="text" id="brNm"
+                                    formControlName="brNm" [maxlength]="300" name="brNm" class="form-control"
+                                    placeholder="Branch Name"
+                                    [ngClass]="{ 'is-invalid':(zmstbranchFrmControl?.['brNm'].errors && (zmstbranchFrmControl?.['brNm'].dirty || zmstbranchFrmControl?.['brNm'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstbranchFrmControl?.['brNm'].touched || submitted) && zmstbranchFrmControl?.['brNm'].errors?.['required']">
+                                    Branch Name is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="stream"
+                                    class="form-label">Stream</label> <input type="text" id="stream"
+                                    formControlName="stream" [maxlength]="4" name="stream" class="form-control"
+                                    placeholder="Stream"
+                                    [ngClass]="{ 'is-invalid':(zmstbranchFrmControl?.['stream'].errors && (zmstbranchFrmControl?.['stream'].dirty || zmstbranchFrmControl?.['stream'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstbranchFrmControl?.['stream'].touched || submitted) && zmstbranchFrmControl?.['stream'].errors?.['required']">
+                                    Stream is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="reset()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstbranchGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Branch Code</th>
+                                        <th>Branch Name</th>
+                                        <th>Stream</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstbranchList.length>0">
+                                        <tr *ngFor="let data of zmstbranchList;">
+                                            <td>{{data.brCd}}</td>
+                                            <td>{{data.brNm}}</td>
+                                            <td>{{data.stream}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.brCd)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Branch Code</th>
+                                        <th>Branch Name</th>
+                                        <th>Stream</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

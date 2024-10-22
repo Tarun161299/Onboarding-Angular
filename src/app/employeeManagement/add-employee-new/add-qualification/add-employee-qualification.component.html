@@ -1,0 +1,150 @@
+<ng-template #content let-c="close" let-d="dismiss" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<div class="row">
+    <div class="col">
+        <div class="card radius-10 mb-3">
+            <div class="card-body">
+                <form class="row g-3" [formGroup]="qualificationdetailsFrmGroup">
+                    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                        <h5 class="mb-1"><b>Qualification</b></h5>
+                    </div>
+                    <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                        <label for="examPassed" class="form-label">Exam Passed</label>
+                        <select class="form-select" formControlName="examPassed" id="examPassed" name="examPassed"
+                            [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['examPassed'].errors && (qualificationdetailsFrmControl?.['examPassed'].dirty || qualificationdetailsFrmControl?.['examPassed'].touched || qualSubmit  ))}">
+                            <option value="0">--Select--</option>
+                            <option *ngFor="let data of examData" value={{data.id}}>
+                                {{data.exam}}
+                            </option>
+                        </select>
+                        <span class="text-danger"
+                            *ngIf="(qualificationdetailsFrmControl?.['examPassed'].touched || qualSubmit) && qualificationdetailsFrmControl?.['examPassed'].errors?.['required']">
+                            Exam Passed is required</span>
+                    </div>
+                    <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="boardUniv"
+                            class="form-label">Board/University</label> <input type="text" id="boardUniv"
+                            formControlName="boardUniv" [maxlength]="150" name="boardUniv" class="form-control"
+                            placeholder="Board/University"
+                            [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['boardUniv'].errors && (qualificationdetailsFrmControl?.['boardUniv'].dirty || qualificationdetailsFrmControl?.['boardUniv'].touched || qualSubmit  ))}" />
+
+                        <span class="text-danger"
+                            *ngIf="(qualificationdetailsFrmControl?.['boardUniv'].touched || qualSubmit) && qualificationdetailsFrmControl?.['boardUniv'].errors?.['required']">
+                            Board/University is required</span>
+                    </div>
+                    <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="passYear" class="form-label">Pass
+                            Year</label> <input type="text" id="passYear" formControlName="passYear" [maxlength]="4"
+                            name="passYear" class="form-control" placeholder="Pass Year"
+                            [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['passYear'].errors && (qualificationdetailsFrmControl?.['passYear'].dirty || qualificationdetailsFrmControl?.['passYear'].touched || qualSubmit  ))}" />
+
+                        <span class="text-danger"
+                            *ngIf="(qualificationdetailsFrmControl?.['passYear'].touched || qualSubmit) && qualificationdetailsFrmControl?.['passYear'].errors?.['required']">
+                            Pass Year is required</span>
+                    </div>
+                    <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="boardUniv" class="form-label">Upload
+                            Certificate</label>
+                        <input type="file" id="uploadCertificate" formControlName="uploadCertificate"
+                            class="form-control" (change)="handleFileInputQualification($event)"
+                            placeholder="uploadCertificate"
+                            [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['uploadCertificate'].errors && (qualificationdetailsFrmControl?.['uploadCertificate'].dirty || qualificationdetailsFrmControl?.['uploadCertificate'].touched || qualSubmit  ))}" />
+                        <button class="btn text-primary bg-light-primary btn-sm d-block" *ngIf="certificate==true"
+                            title="View Certificate" (click)="viewQualDoc()"><i class='bx bxs-show'></i>
+                        </button>
+                        <span class="text-danger"
+                            *ngIf="(qualificationdetailsFrmControl?.['uploadCertificate'].touched || qualSubmit) && qualificationdetailsFrmControl?.['uploadCertificate'].errors?.['required']">
+                            Upload Certificate is required</span>
+                            <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+                    </div>
+                    <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="division"
+                            class="form-label">Division</label>
+                        <select class="form-select" formControlName="division" id="division" name="division"
+                            [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['division'].errors && (qualificationdetailsFrmControl?.['division'].dirty || qualificationdetailsFrmControl?.['division'].touched || qualSubmit  ))}">
+                            <option value="0">--Select--</option>
+                            <option value="1st">
+                                1st
+                            </option>
+                            <option value="2nd">
+                                2nd
+                            </option>
+                            <option value="3rd">
+                                3rd
+                            </option>
+                        </select>
+                        <span class="text-danger"
+                            *ngIf="(qualificationdetailsFrmControl?.['division'].touched || qualSubmit) && qualificationdetailsFrmControl?.['division'].errors?.['required']">
+                            Division is required</span>
+                    </div>
+                    <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                        <button type="submit" (click)="saveQulification()" *ngIf="submithdn"
+                            class="btn btn-primary me-3"> Submit
+                        </button>
+                        <button type="submit" *ngIf="updatehdn" (click)="updateQulification()"
+                            class="btn btn-primary me-3"> Update
+                        </button>
+                    </div>
+                </form>
+                <div class="table-responsive mt-3"  *ngIf="qualificationdetailsList.length>0">
+                    <table id="qualificationdetailsGrid" class="table align-middle mb-0"
+                        *ngIf="qualificationdetailsList.length>0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Qualification Details Id</th>
+                                <th>Employee Code</th>
+                                <th>Exam Passed</th>
+                                <th>Board/University</th>
+                                <th>Pass Year</th>
+                                <th>Division</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="qualificationdetailsList.length>0">
+                                <tr *ngFor="let data of qualificationdetailsList;">
+                                    <td>{{data.qualificationDetailsId}}</td>
+                                    <td>{{data.empCode}}</td>
+                                    <td>{{data.examPassed|examTypePipe:examData}}</td>
+                                    <td>{{data.boardUniv}}</td>
+                                    <td>{{data.passYear}}</td>
+                                    <td>{{data.division}}</td>
+
+                                    <td>
+                                        <div class="d-flex order-actions">
+                                            <a title="View Document" class="ms-4 text-primary bg-light-primary border-0"
+                                                (click)="viewDocument(data)"><i class='bx bxs-show'></i></a>
+                                            <a title="Edit Qualification" (click)="editQualification(data)"
+                                                class="ms-4 text-primary bg-light-primary border-0">
+                                                <i class="bx bxs-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Qualification Details Id</th>
+                                <th>Employee Code</th>
+                                <th>Exam Passed</th>
+                                <th>Board/University</th>
+                                <th>Pass Year</th>
+                                <th>Division</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

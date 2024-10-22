@@ -1,0 +1,78 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Cycle Creation Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item active" aria-current="page">Cycle Creation Details</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <button type="button" class="btn btn-primary me-3" (click)="btnAddNew()">
+                                Add New
+                            </button>
+                            &nbsp;&nbsp;
+                            <table id="zmstprojectsGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Agency Name</th>
+                                        <th>Academic Year</th>
+                                        <th>Project Id</th>
+                                        <th>Project Name</th>
+                                        <th>Is Live</th>
+                                        <th>Project Initiated</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstprojectsList.length>0">
+                                        <tr *ngFor="let data of zmstprojectsList;">
+                                            <td>{{data.agencyName}}</td>
+                                            <td>{{((data.academicYear==20)?"2019-2020":(data.academicYear==21)?"2020-2021":(data.academicYear==22)?"2021-2022":(data.academicYear==23)?"2022-2023":(data.academicYear==24)?"2023-2024":(data.academicYear==25)?"2024-2025":(data.academicYear==26)?"2025-2026":data.academicYear)}}
+                                            </td>
+                                            <td>{{data.projectId}}</td>
+                                            <td>{{data.projectName}}</td>
+                                            <td>{{(data.isLive=='Y')?"Yes":"No"}}</td>
+
+                                            <td>{{(data.pinitiated=='Y')?"Yes":"No"}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.projectId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Agency Name</th>
+                                        <th>Academic Year</th>
+                                        <th>Project Id</th>
+                                        <th>Project Name</th>
+                                        <th>Is Live</th>
+                                        <th>Project Initiated</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

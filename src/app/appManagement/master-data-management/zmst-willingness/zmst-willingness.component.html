@@ -1,0 +1,152 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Willingness Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Willingness</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-2">
+                    <div class="card-body mt-3">
+                        <form class="row g-3" [formGroup]="zmstWillingnessFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="willingnessId"
+                                    class="form-label">Willingness Id</label> <input type="text" id="willingnessId"
+                                    formControlName="willingnessId" [maxlength]="2" name="willingnessId"
+                                    class="form-control" placeholder="Willingness Id"
+                                    [ngClass]="{ 'is-invalid':(mdwillingnessFrmControl?.['willingnessId'].errors && (mdwillingnessFrmControl?.['willingnessId'].dirty || mdwillingnessFrmControl?.['willingnessId'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(mdwillingnessFrmControl?.['willingnessId'].touched || submitted) && mdwillingnessFrmControl?.['willingnessId'].errors?.['required']">
+                                    Willingness Id is required</span>
+                                <span class="text-danger"
+                                    *ngIf="mdwillingnessFrmControl?.['willingnessId'].touched && mdwillingnessFrmControl?.['willingnessId'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                                <div *ngIf="mdwillingnessFrmControl?.['willingnessId'].errors?.['pattern']"
+                                    class="invalid-feedback1">
+                                    Invalid Willingness Id
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="description"
+                                    class="form-label">Description</label> <input type="text" id="description"
+                                    formControlName="description" [maxlength]="200" name="description"
+                                    class="form-control" placeholder="Description"
+                                    [ngClass]="{ 'is-invalid':(mdwillingnessFrmControl?.['description'].errors && (mdwillingnessFrmControl?.['description'].dirty || mdwillingnessFrmControl?.['description'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(mdwillingnessFrmControl?.['description'].touched || submitted) && mdwillingnessFrmControl?.['description'].errors?.['required']">
+                                    description is required</span>
+                                <span class="text-danger"
+                                    *ngIf="mdwillingnessFrmControl?.['description'].touched && mdwillingnessFrmControl?.['description'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                                <div *ngIf="mdwillingnessFrmControl?.['description'].errors?.['pattern']"
+                                    class="invalid-feedback1">
+                                    Invalid description
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="alternateNames"
+                                    class="form-label">Alternate Name</label> <input type="text" id="alternateNames"
+                                    formControlName="alternateNames" [maxlength]="500" name="id" class="form-control"
+                                    placeholder="Alternate Name"
+                                    [ngClass]="{ 'is-invalid':(mdwillingnessFrmControl?.['alternateNames'].errors && (mdwillingnessFrmControl?.['alternateNames'].dirty || mdwillingnessFrmControl?.['alternateNames'].touched || submitted  ))}" />
+                                    <span class="text-danger"
+                                    *ngIf="(mdwillingnessFrmControl?.['alternateNames'].touched || submitted) && mdwillingnessFrmControl?.['alternateNames'].errors?.['required']">
+                                    alternateNames is required</span>
+                                <span class="text-danger"
+                                    *ngIf="mdwillingnessFrmControl?.['alternateNames'].touched && mdwillingnessFrmControl?.['alternateNames'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                                <div *ngIf="mdwillingnessFrmControl?.['alternateNames'].errors?.['pattern']"
+                                    class="invalid-feedback1">
+                                    Invalid alternateNames
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" [hidden]="submithdn" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" [hidden]="updatehdn" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3" *ngIf="zmstwillingnessModelList.length>0">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="tblwillingness" class="table align-middle mb-0"
+                                *ngIf="zmstwillingnessModelList.length>0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Willingness Id</th>
+                                        <th>Description</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstwillingnessModelList.length>0">
+                                        <tr *ngFor="let data of zmstwillingnessModelList;">
+                                            <td>{{data.willingnessId}}</td>
+                                            <td>{{data.description}}</td>
+                                            <td>{{data.alternateNames}}</td>
+
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.willingnessId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Willingness Id</th>
+                                        <th>Description</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3" *ngIf="zmstwillingnessModelList.length == 0">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        No Records Found
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

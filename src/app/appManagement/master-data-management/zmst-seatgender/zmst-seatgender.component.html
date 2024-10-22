@@ -1,0 +1,108 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Seat Gender Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Seat Gender</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstseatgenderFrmGroup">
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="seatGenderId"
+                                    class="form-label">Seat Gender Id</label> <input type="text" id="seatGenderId"
+                                    formControlName="seatGenderId" [maxlength]="1" name="seatGenderId"
+                                    class="form-control" placeholder="Seat Gender Id"
+                                    [ngClass]="{ 'is-invalid':(zmstseatgenderFrmControl?.['seatGenderId'].errors && (zmstseatgenderFrmControl?.['seatGenderId'].dirty || zmstseatgenderFrmControl?.['seatGenderId'].touched || submitted  ))}" />
+							
+							<span class="text-danger" *ngIf="(zmstseatgenderFrmControl?.['seatGenderId'].touched || submitted) && zmstseatgenderFrmControl?.['seatGenderId'].errors?.['required']">Seat Gender Id is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="description"
+                                    class="form-label">Description</label> <input type="text" id="description"
+                                    formControlName="description" [maxlength]="100" name="description"
+                                    class="form-control" placeholder="Description"
+                                    [ngClass]="{ 'is-invalid':(zmstseatgenderFrmControl?.['description'].errors && (zmstseatgenderFrmControl?.['description'].dirty || zmstseatgenderFrmControl?.['description'].touched || submitted  ))}" />
+							
+							<span class="text-danger" *ngIf="(zmstseatgenderFrmControl?.['description'].touched || submitted) && zmstseatgenderFrmControl?.['description'].errors?.['required']">Description is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="alternateNames"
+                                    class="form-label">Alternate Name</label> <input type="text" id="alternateNames"
+                                    formControlName="alternateNames" [maxlength]="500" name="alternateNames"
+                                    class="form-control" placeholder="Alternate Name"
+                                    [ngClass]="{ 'is-invalid':(zmstseatgenderFrmControl?.['alternateNames'].errors && (zmstseatgenderFrmControl?.['alternateNames'].dirty || zmstseatgenderFrmControl?.['alternateNames'].touched || submitted  ))}" />
+							
+							<span class="text-danger" *ngIf="(zmstseatgenderFrmControl?.['alternateNames'].touched || submitted) && zmstseatgenderFrmControl?.['alternateNames'].errors?.['required']">Alternate Name is required</span></div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="reset()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstseatgenderGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Seat Gender Id</th>
+                                        <th>Description</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstseatgenderList.length>0">
+                                        <tr *ngFor="let data of zmstseatgenderList;">
+                                            <td>{{data.seatGenderId}}</td>
+                                            <td>{{data.description}}</td>
+                                            <td>{{data.alternateNames}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.seatGenderId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Seat Gender Id</th>
+                                        <th>Description</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

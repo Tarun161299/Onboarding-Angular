@@ -1,0 +1,249 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Agency Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item active" aria-current="page">Agency</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-1">ZMST Agency</h5>
+                            </div>
+                        </div>
+                        <hr />
+                        <form class="row g-3" [formGroup]="zmstagencyFrmGroup">
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyId"
+                                    class="form-label">AgencyId</label> <input type="text" id="agencyId"
+                                    formControlName="agencyId" [maxlength]="15" name="agencyId" class="form-control"
+                                    placeholder="AgencyId"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['agencyId'].errors && (zmstagencyFrmControl?.['agencyId'].dirty || zmstagencyFrmControl?.['agencyId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyId'].touched || submitted) && zmstagencyFrmControl?.['agencyId'].errors?.['required']">
+                                    AgencyId is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyName"
+                                    class="form-label">AgencyName</label> <input type="text" id="agencyName"
+                                    formControlName="agencyName" [maxlength]="200" name="agencyName"
+                                    class="form-control" placeholder="AgencyName"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['agencyName'].errors && (zmstagencyFrmControl?.['agencyName'].dirty || zmstagencyFrmControl?.['agencyName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyName'].touched || submitted) && zmstagencyFrmControl?.['agencyName'].errors?.['required']">
+                                    AgencyName is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyName'].touched && zmstagencyFrmControl?.['agencyName'].errors?.['pattern'])">Only
+                                    alphabets are allowed </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyAbbr"
+                                    class="form-label">Description</label> <textarea type="text" id="agencyAbbr"
+                                    formControlName="agencyAbbr" [maxlength]="500" name="agencyAbbr"
+                                    class="form-control" placeholder="Description"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['agencyAbbr'].errors && (zmstagencyFrmControl?.['agencyAbbr'].dirty || zmstagencyFrmControl?.['agencyAbbr'].touched || submitted  ))}"> </textarea>
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyAbbr'].touched || submitted) && zmstagencyFrmControl?.['agencyAbbr'].errors?.['required']">
+                                    AgencyAbbr is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyType"
+                                    class="form-label">AgencyType</label>
+                                <select class="form-select"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['agencyType'].errors && (zmstagencyFrmControl?.['agencyType'].dirty || zmstagencyFrmControl?.['agencyType'].touched || submitted  ))}"
+                                    formControlName="agencyType">
+                                    <option value="">--Select--</option>
+                                    <option value="1">
+                                        Central
+                                    </option>
+                                    <option value="2">
+                                        State
+                                    </option>
+                                </select>
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyType'].touched || submitted) && zmstagencyFrmControl?.['agencyType'].errors?.['required']">
+                                    AgencyType is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="stateId"
+                                    class="form-label">State Type</label>
+                                <select class="form-select"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['stateId'].errors && (zmstagencyFrmControl?.['stateId'].dirty || zmstagencyFrmControl?.['stateId'].touched || submitted  ))}"
+                                    formControlName="stateId">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let state of states" value={{state.id}}>
+                                        {{state.description}}
+                                    </option>
+
+                                </select>
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['stateId'].touched || submitted) && zmstagencyFrmControl?.['stateId'].errors?.['required']">
+                                    StateId is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="serviceTypeId"
+                                    class="form-label">ServiceTypeId</label>
+                                <div class="form-check form-check-inline" *ngFor="let item of CHECK_LIST;">
+                                    <input class="form-check-input" type="checkbox" formControlName="serviceTypeId"
+                                        id="{{item.serviceTypeName}}" [checked]="getSelection(item)" checked="false"
+                                        (change)="changeHandler(item)" />
+                                    <label for="{{item.serviceTypeName}}"
+                                        class="form-check-label">{{item.serviceTypeName}}</label>
+
+                                </div>
+                                <div class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['serviceTypeId'].touched || submitted) && zmstagencyFrmControl?.['serviceTypeId'].errors?.['required']">
+                                    At least 1 service should be selected.
+                                </div>
+
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="address"
+                                    class="form-label">Address</label> <input type="text" id="address"
+                                    formControlName="address" [maxlength]="200" name="address" class="form-control"
+                                    placeholder="Address"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['address'].errors && (zmstagencyFrmControl?.['address'].dirty || zmstagencyFrmControl?.['address'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['address'].touched || submitted) && zmstagencyFrmControl?.['address'].errors?.['required']">
+                                    address is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="isActive"
+                                    class="form-label">IsActive</label>
+                                <select class="form-select"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['isActive'].errors && (zmstagencyFrmControl?.['isActive'].dirty || zmstagencyFrmControl?.['isActive'].touched || submitted  ))}"
+                                    formControlName="isActive">
+                                    <option value="">--Select--</option>
+                                    <option value="Y">
+                                        Active
+                                    </option>
+                                    <option value="N">
+                                        Inactive
+                                    </option>
+                                </select>
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['isActive'].touched || submitted) && zmstagencyFrmControl?.['isActive'].errors?.['required']">
+                                    isActive is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="priority"
+                                    class="form-label">Priority</label> <input type="text" id="priority"
+                                    formControlName="priority" [maxlength]="4" name="priority" class="form-control"
+                                    placeholder="Priority"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['priority'].errors && (zmstagencyFrmControl?.['priority'].dirty || zmstagencyFrmControl?.['priority'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['priority'].touched || submitted) && zmstagencyFrmControl?.['priority'].errors?.['required']">
+                                    priority is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="boardRequestLetter"
+                                    class="form-label">BoardRequestLetter</label> <input type="file"
+                                    (change)="handleFileInput($event)" id="boardRequestLetter"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['boardRequestLetter'].errors 
+                                    && (zmstagencyFrmControl?.['boardRequestLetter'].dirty || (submitted || fileUploadValidation)))}" formControlName="boardRequestLetter"
+                                    [maxlength]="-1" name="boardRequestLetter" class="form-control"
+                                    placeholder="BoardRequestLetter" />
+                                <span class="invalid-feedback"
+                                    *ngIf="(submitted) && zmstagencyFrmControl?.['boardRequestLetter'].errors?.['required']">
+                                    File is Required.
+                                </span>
+                                <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                                    upload PDf File only.</span>
+                                    <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstagencyGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>AgencyId</th>
+                                        <th>AgencyName</th>
+                                        <th>AgencyAbbr</th>
+                                        <th>AgencyType</th>
+                                        <th>StateId</th>
+                                        <th>ServiceTypeId</th>
+                                        <th>Address</th>
+                                        <th>IsActive</th>
+                                        <th>Priority</th>
+                                        <th>BoardRequestLetter</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstagencyList.length>0">
+                                        <tr *ngFor="let data of zmstagencyList;">
+                                            <td>{{data.agencyId}}</td>
+                                            <td>{{data.agencyName}}</td>
+                                            <td>{{data.agencyAbbr}}</td>
+                                            <td>{{data.agencyType}}</td>
+                                            <td>{{data.stateId}}</td>
+                                            <td>{{data.serviceTypeId}}</td>
+                                            <td>{{data.address}}</td>
+                                            <td>{{data.isActive}}</td>
+                                            <td>{{data.priority}}</td>
+                                            <td>{{data.boardRequestLetter}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.agencyId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>AgencyId</th>
+                                        <th>AgencyName</th>
+                                        <th>AgencyAbbr</th>
+                                        <th>AgencyType</th>
+                                        <th>StateId</th>
+                                        <th>ServiceTypeId</th>
+                                        <th>Address</th>
+                                        <th>IsActive</th>
+                                        <th>Priority</th>
+                                        <th>BoardRequestLetter</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

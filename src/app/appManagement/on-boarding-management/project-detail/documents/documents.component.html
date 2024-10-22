@@ -1,0 +1,139 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #image let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Image</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <img height="1000px" [src]="imgSource" alt="Image Source">
+    </div>
+</ng-template>
+<form [formGroup]="documentCycles" autocomplete="off">
+    <div class="row g-3">
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="ddlDocumentType" class="form-label">Document Type</label>
+            <select id="ddlDocumentType" formControlName="docType"
+                [ngClass]="{ 'is-invalid':(projectDocumentFormControl?.['docType'].errors 
+        && (projectDocumentFormControl?.['docType'].dirty || projectDocumentFormControl?.['docType'].touched || submittedDocument  ))}" class="form-select"
+                (change)="onSelectDocumentType($event)">
+                <option value="">--Select--</option>
+                <option *ngFor="let docType Of documentType" value={{docType.id}}>
+                    {{docType.title}}</option>
+            </select>
+            <span class="invalid-feedback"
+                *ngIf="(projectDocumentFormControl?.['docType'].touched || submittedDocument) && projectDocumentFormControl?.['docType'].errors?.['required']">
+                Document Type is Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputFile" class="form-label">Subject</label>
+
+            <input id="inputFile" type="input" class="form-control" formControlName="subject" placeholder="Subject"
+                [ngClass]="{ 'is-invalid':(projectDocumentFormControl?.['subject'].errors 
+                                                        && (projectDocumentFormControl?.['subject'].dirty || projectDocumentFormControl?.['subject'].touched || submittedDocument  ))}">
+
+            <span class="invalid-feedback"
+                *ngIf="(projectDocumentFormControl?.['subject'].touched || submittedDocument) && projectDocumentFormControl?.['subject'].errors?.['required']">
+                subject is Required.
+            </span>
+            <span *ngIf="projectDocumentFormControl?.['subject'].errors?.['pattern']" class="invalid-feedback1">
+                Special characters are not allowed.
+            </span>
+            <span class="text-danger"
+                *ngIf="(projectDocumentFormControl?.['subject'].touched && projectDocumentFormControl?.['subject'].errors?.['pattern'] )">Only
+                Alphabets are allowed </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputFile" class="form-label">Choose File</label>
+            <input id="inputFile" type="file" class="form-control" (change)="handleFileInput($event)"
+                formControlName="chooseFile"
+                [ngClass]="{ 'is-invalid':(projectDocumentFormControl?.['chooseFile'].errors 
+                                                        && (projectDocumentFormControl?.['chooseFile'].dirty || projectDocumentFormControl?.['chooseFile'].touched || submittedDocument  ))}">
+            <!-- <div class="help-block">Only .pdf file allow to Upload.</div> -->
+            <span class="invalid-feedback"
+                *ngIf="(projectDocumentFormControl?.['chooseFile'].touched || submittedDocument) && projectDocumentFormControl?.['chooseFile'].errors?.['required']">
+                Choose File is Required.
+            </span>
+            <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                upload PDf File only.</span>
+                <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <div>&nbsp;</div>
+            <button type="button" class="btn btn-primary me-3" (click)="documentSubmit()">
+                Submit
+            </button>
+            <button type="submit" class="btn btn-danger" (click)="resetdocumentCycles()">
+                Cancel
+            </button>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+            <div class="table-responsive">
+                <table id="projectDetailsDocuments" class="table w-100" *ngIf="rowdata.length>0">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Document Type</th>
+                            <th>Document Subject Line</th>
+                            <th>Uploaded By</th>
+                            <th>Uploaded On</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="rowdata.length>0">
+                            <tr *ngFor="let user of rowdata; let id=index">
+                                <td>{{id+1}}</td>
+                                <td>
+                                    {{user.docType}}
+                                </td>
+                                <td>
+                                    {{user.projectName}}
+                                </td>
+                                <td>
+                                    {{user.createdby}}
+                                </td>
+                                <td>
+                                    {{user.submit | ddMmYYYYDate}}
+                                </td>
+                                <td>
+                                      <!-- (click)="btndownload(user.documentId,user.docContentType)"> -->
+                                    <div class="d-flex order-actions">
+                                        <a href="javascript:;" title="Download"
+                                            class="ms-4 text-primary bg-light-primary border-0"
+                                            (click)="btndownload(user.documentId,user.format)"> 
+                                           
+                                            <i class="bx bxs-download"></i>
+                                        </a>
+                                        <a href="javascript:;" title="View Document" 
+                                            class="ms-4 text-primary bg-light-primary border-0" *ngIf="getPermissionToView(user.format)"
+                                            (click)="viewDocument(user.documentId)"><i class='bx bxs-show'></i></a>
+                                        <a href="javascript:;" title="Delete Document"
+                                            class="ms-4 text-danger bg-light-danger border-0"
+                                            (click)="delete(user.documentId)"><i class='bx bxs-trash'></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

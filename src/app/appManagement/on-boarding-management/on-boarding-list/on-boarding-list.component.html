@@ -1,0 +1,335 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Onboarding Request</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Onboarding Request List</li>
+                    </ol>
+                </nav>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-2">Onboarding Request</h5>
+                            </div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+                            <div class="col" (click)="totalRequest()" style="cursor: pointer;">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-cosmic">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{TotalRequesttitle}}:
+                                                        {{TotalRequest}}</strong></p>
+                                            </div>
+
+                                        </div>
+                                        <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                (click)="totalRequest()" [ngStyle]="{width: TotalRequestprogress}"
+                                                [title]=[TotalRequest]></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" (click)="ApproveRequest()" style="cursor: pointer;">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-Ohhappiness">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{ApprovedRequesttitle}}:
+                                                        {{ApprovedRequest}}</strong></p>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                [ngStyle]="{width: ApprovedRequestprogress}" [title]=[ApprovedRequest]>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="cursor: pointer;" (click)="btnPendingRequest()">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-burning">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{PendingRequesttitle}}:
+                                                        {{PendingRequest}}</strong></p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                (click)="btnPendingRequest()"
+                                                [ngStyle]="{width: PendingRequestprogress}" [title]=[PendingRequest]>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="cursor: pointer;" (click)="btnOnHoldRequest()">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-moonlit">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{HoldRequesttitle}} :
+                                                        {{HoldRequest}}</strong></p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="progress  bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                [ngStyle]="{width: HoldRequestprogress}" [title]=[HoldRequest]></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="cursor: pointer;" (click)="btnRejectRequest()">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-burning">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{RejectRequesttitle}}:
+                                                        {{RejectRequest}}</strong></p>
+                                                <h5 class="mb-0 text-white"></h5>
+                                            </div>
+
+                                        </div>
+                                        <div class="progress  bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                [ngStyle]="{width: RejectRequestprogress}" [title]=[RejectRequest]>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-2">Onboarding Details</h5>
+                            </div>
+
+                        </div>
+                        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+                            <div class="col" style="cursor: pointer;" (click)="btnTotalDetails()">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-cosmic">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{EligibleDetailstitle}}:
+                                                        {{EligibleDetails}}</strong></p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                [ngStyle]="{width: TotalRequestprogress}" [title]=[TotalRequest]></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="cursor: pointer;" (click)="btnDetailApproved()">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-Ohhappiness">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{ApprovedDetailstitle}}:
+                                                        {{ApprovedDetails}}</strong></p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                [ngStyle]="{width: ApprovedRequestprogress}" [title]=[ApprovedRequest]>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="cursor: pointer;" (click)="btnDetailPending()">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-burning">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{PendingDetailstitle}}:
+                                                        {{PendingDetails}}</strong></p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                [ngStyle]="{width: PendingRequestprogress}" [title]=[PendingRequest]>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="cursor: pointer;" (click)="btnDetailReturn()">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-moonlit">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{ReturnDetailstitle}}:
+                                                        {{ReturnDetails}}</strong></p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="progress  bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                [ngStyle]="{width: HoldRequestprogress}" [title]=[HoldRequest]></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" style="cursor: pointer;" (click)="btnDetailReject()">
+                                <div class="card radius-10 mb-0 overflow-hidden bg-gradient-burning">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="mb-0 text-white"><strong>{{RejectDetailstitle}}:
+                                                        {{RejectDetails}}</strong></p>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="progress  bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                                            <div class="progress-bar bg-white" role="progressbar"
+                                                [ngStyle]="{width: RejectRequestprogress}" [title]=[RejectRequest]>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+
+
+                        <div class="table-responsive">
+                            <table id="exampleDD" class="table align-middle mb-0" *ngIf="rowdata.length>0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Serial No.</th>
+                                        <th>Request No</th>
+                                        <th>Agency Type</th>
+                                        <th>Organization Name</th>
+                                        <th>Request Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="rowdata.length>0">
+                                        <tr *ngFor="let user of rowdata; let i = index">
+                                            <td>{{i+1}}</td>
+                                            <th>
+
+                                                <a class="btn btn-link" (click)="viewDetails(user)">{{user.requestNo
+                                                    }}</a>
+                                            </th>
+                                            <td> {{user.agencyType}} </td>
+                                            <td>{{user.oranizationName}}</td>
+                                            <td>{{user.modifyOn|ddMmYYYYDate}} </td>
+                                            <td>
+                                                <span [ngClass]="{                                                    
+                                                    'bg-gradient-burning text-dark':user.currentStage === 'Details form submitted',
+                                                    'bg-light-success text-success':user.currentStage === 'Request Approved & Details Form Send',
+                                                    'bg-light-warning text-warning':user.currentStage === 'Request Pending',
+                                                    'bg-light-danger text-danger':user.currentStage === 'Request Reject',                                                    
+                                                    'bg-gradient-cosmic text-decoration-none':user.currentStage === 'Details form returned',
+                                                    'bg-secondary text-dark':user.currentStage === 'Details form Rejected',
+                                                    'bg-light-dark text-dark':user.currentStage === 'Request Hold',
+                                                    'bg-light-danger text-primary':user.currentStage === 'Details form Approved and Registration form sent',
+                                                    'bg-gradient-lush text-dark':user.currentStage === 'Detail form Approved & User Created',
+                                                    'bg-gradient-kyoto text-cyan':user.currentStage === 'Detail form Approved & Project Created',                                                    
+                                                    'bg-gradient-Ohhappiness text-light':user.currentStage === 'Project Created & User Created'
+                                                     
+                                                  }" class="badge w-100 p-2">{{user.currentStage}}</span>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary  split-bg-primary dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">Action</button>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                                        <a href="javascript:;" title="View Onboarding Request" class="dropdown-item" (click)="viewDetails(user)">
+                                                            <i class='bx bxs-user-account'></i> View Onboarding Request
+                                                        </a>
+                                                        <a href="javascript:;" title="View Onboarding Details" *ngIf="user.status=='DP' || user.status=='DA' || user.status=='DT' || user.status=='DR'" class="dropdown-item" (click)="viewResponseDetails(user)">
+                                                            <i class='bx bxs-show'></i> View Onboarding Details
+                                                        </a>
+                                                        <a href="javascript:;" title="Project Creation" *ngIf="user.status=='DA'" class="dropdown-item"
+                                                         (click)="viewProjectCreation(user)">
+                                                            <i class='bx bx-laptop'></i> Project Creation
+                                                        </a>
+                                                        <a href="javascript:;" *ngIf="user.currentStage=='Details form Approved and Registration form sent'" 
+                                                        title="Re-Send Registration Link"  class="dropdown-item" 
+                                                        (click)="onDetailsReSend(user)" >
+                                                            <i class='bx bx-laptop'></i> Resend Registration Form Link
+                                                        </a>
+                                                        <a href="javascript:;" *ngIf="user.currentStage=='Request Approved & Details Form Send'" title="Request Form Link Resend" 
+                                                         class="dropdown-item" 
+                                                         (click)="onReSend(user)">
+                                                            <i class='bx bx-laptop'></i>  Resend Details Form Link
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Serial No.</th>
+                                        <th>Request ID</th>
+                                        <th>Agency Type</th>
+                                        <th>Organization Name</th>
+                                        <th>Request Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div *ngIf="rowdata.length==0">
+                                <strong class="w-50 text-center"> No Records Found</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

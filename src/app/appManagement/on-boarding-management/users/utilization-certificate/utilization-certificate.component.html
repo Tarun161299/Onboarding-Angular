@@ -1,0 +1,61 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Project Activities</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item active" aria-current="page">Utilization Certificate</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <h5 class="card-title mb-1">
+                                Utilization Certificate -
+                                 <strong *ngIf="rowData.length>0">
+                                    <i> ({{rowData[0].projectName}})</i>
+                                 </strong>
+                             </h5>
+                        </div>
+                        <hr />
+                        <form [formGroup]="utilizationCertificate" autocomplete="off">
+                            <div class="row g-3">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+                                    <label class="form-label">Utilization Certificate</label>
+                                    :
+                                    <label *ngIf="isavailUC==0" class="text-warning">Pending</label>
+                                    <button *ngIf="isavailUC!=0" href="javascript:;" title="Download"
+                                        class="ms-2 text-primary bg-light-primary border-0" (click)="btndownload(UC)">
+                                        <i class="bx bxs-download fs-4"></i>
+                                    </button>
+                                    <button *ngIf="isavailUC!=0" href="javascript:;" title="View Document"
+                                        class="ms-2 text-primary bg-light-primary border-0"
+                                        (click)="viewDocument(UC)"><i class='bx bxs-show fs-4'></i></button>
+                                        <span class="m-4" *ngIf="isavailUC!=0"><strong>Updated on ({{isAvailUcSubmitTime | ddMmYYYYDate}})</strong></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

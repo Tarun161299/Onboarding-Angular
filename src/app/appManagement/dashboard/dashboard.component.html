@@ -1,0 +1,397 @@
+<div class="page-wrapper">
+    <div class="page-content"> 
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Dashboard</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="ms-auto">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Settings</button>
+                    <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+                            href="javascript:;">Action</a>
+                        <a class="dropdown-item" href="javascript:;">Another action</a>
+                        <a class="dropdown-item" href="javascript:;">Something else here</a>
+                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+                            link</a>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">            
+            <div class="col">
+                <div class="card radius-10 overflow-hidden">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <p class="mb-0">Total Orders</p>
+                                <h5 class="mb-0">867</h5>
+                            </div>
+                            <div class="ms-auto"> <i class='bx bx-cart font-30'></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center">
+                        <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                            [stroke]="chartOptions1.stroke" [markers]="chartOptions1.markers"
+                            [plotOptions]="chartOptions1.plotOptions" [dataLabels]="chartOptions1.dataLabels"
+                            [colors]="chartOptions1.colors" [xaxis]="chartOptions1.xaxis" [fill]="chartOptions1.fill"
+                            [tooltip]="chartOptions1.tooltip"></apx-chart>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card radius-10 overflow-hidden">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <p class="mb-0">Total Income</p>
+                                <h5 class="mb-0">$52,945</h5>
+                            </div>
+                            <div class="ms-auto"> <i class='bx bx-wallet font-30'></i>
+                            </div>
+                        </div>
+                    </div>
+                    <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                        [stroke]="chartOptions2.stroke" [markers]="chartOptions2.markers"
+                        [plotOptions]="chartOptions2.plotOptions" [dataLabels]="chartOptions2.dataLabels"
+                        [colors]="chartOptions2.colors" [xaxis]="chartOptions2.xaxis" [fill]="chartOptions2.fill"
+                        [tooltip]="chartOptions2.tooltip"></apx-chart>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card radius-10 overflow-hidden">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <p class="mb-0">Total Users</p>
+                                <h5 class="mb-0">24.5K</h5>
+                            </div>
+                            <div class="ms-auto"> <i class='bx bx-group font-30'></i>
+                            </div>
+                        </div>
+                    </div>
+                    <apx-chart [series]="chartOptions3.series" [chart]="chartOptions3.chart"
+                        [stroke]="chartOptions3.stroke" [markers]="chartOptions3.markers"
+                        [plotOptions]="chartOptions3.plotOptions" [dataLabels]="chartOptions3.dataLabels"
+                        [colors]="chartOptions3.colors" [xaxis]="chartOptions3.xaxis" [fill]="chartOptions3.fill"
+                        [tooltip]="chartOptions3.tooltip"></apx-chart>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card radius-10 overflow-hidden">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <p class="mb-0">Comments</p>
+                                <h5 class="mb-0">869</h5>
+                            </div>
+                            <div class="ms-auto"> <i class='bx bx-chat font-30'></i>
+                            </div>
+                        </div>
+                    </div>
+                    <apx-chart [series]="chartOptions4.series" [chart]="chartOptions4.chart"
+                        [stroke]="chartOptions4.stroke" [markers]="chartOptions4.markers"
+                        [plotOptions]="chartOptions4.plotOptions" [dataLabels]="chartOptions4.dataLabels"
+                        [colors]="chartOptions4.colors" [xaxis]="chartOptions4.xaxis" [fill]="chartOptions4.fill"
+                        [tooltip]="chartOptions4.tooltip"></apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-xl-8 d-flex">
+                <div class="card radius-10 w-100">
+                    <div class="card-body">
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="ChartOptions6"
+                            style="width: 100%; display: block;"></highcharts-chart>
+                    </div> 
+                </div>
+            </div>
+            <div class="col-12 col-xl-4 d-flex">
+                <div class="card radius-10 w-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-1">Sales Target</h5>
+                            </div>
+                            <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
+                            </div>
+                        </div>
+                        <apx-chart class="mt-4" [series]="chartOptions7.series" [chart]="chartOptions7.chart"
+                            [stroke]="chartOptions7.stroke" [plotOptions]="chartOptions7.plotOptions"
+                            [colors]="chartOptions7.colors" [fill]="chartOptions7.fill"
+                            [labels]="chartOptions7.labels"></apx-chart>
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h2 class="mb-0">2248</h2>
+                                <p class="mb-0">/2,800 target</p>
+                            </div>
+                            <div class="ms-auto d-flex align-items-center border radius-10 px-2">
+                                <i class='bx bxs-checkbox font-22 me-1 text-primary'></i><span>Marketing
+                                    Sales</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-xl-2">
+            <div class="col d-flex">
+                <div class="card radius-10 w-100">
+                    <div class="card-body">
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="ChartOptions8"
+                            style="width: 100%; display: block;"></highcharts-chart>
+                    </div>
+                </div>
+            </div>
+            <div class="col d-flex">
+                <div class="card radius-10 w-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-1">Sales Report</h5>
+                            </div>
+                            <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
+                            </div>
+                        </div>
+                        <apx-chart class="mt-4" [series]="chartOptions5.series" [chart]="chartOptions5.chart"
+                            [stroke]="chartOptions5.stroke" [plotOptions]="chartOptions5.plotOptions"
+                            [colors]="chartOptions5.colors" [fill]="chartOptions5.fill"
+                            [tooltip]="chartOptions5.tooltip" [xaxis]="chartOptions5.xaxis"
+                            [labels]="chartOptions5.labels"></apx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-1">Recent Orders</h5>
+                            </div>
+                            <div class="ms-auto">
+                                <a href="javscript:;" class="btn btn-primary btn-sm radius-30">View All Products</a>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mt-3">
+                            <table id="example" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Tracking ID</th>
+                                        <th>Products Name</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#55879</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="recent-product-img">
+                                                    <img src="assets/images/products/15.png" alt="">
+                                                </div>
+                                                <div class="ms-2">
+                                                    <h6 class="mb-1 font-14">Light Red T-Shirt</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>22 Jun, 2020</td>
+                                        <td class=""><span
+                                                class="badge bg-light-success text-success w-100">Completed</span>
+                                        </td>
+                                        <td>#149.25</td>
+                                        <td>
+                                            <div class="d-flex order-actions"> <a href="javascript:;"
+                                                    class="text-danger bg-light-danger border-0"><i
+                                                        class='bx bxs-trash'></i></a>
+                                                <a href="javascript:;"
+                                                    class="ms-4 text-primary bg-light-primary border-0"><i
+                                                        class='bx bxs-edit'></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#88379</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="recent-product-img">
+                                                    <img src="assets/images/products/16.html" alt="">
+                                                </div>
+                                                <div class="ms-2">
+                                                    <h6 class="mb-1 font-14">Grey Headphone</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>22 Jun, 2020</td>
+                                        <td class=""><span
+                                                class="badge bg-light-danger text-danger w-100">Cancelled</span>
+                                        </td>
+                                        <td>#149.25</td>
+                                        <td>
+                                            <div class="d-flex order-actions"> <a href="javascript:;"
+                                                    class="text-danger bg-light-danger border-0"><i
+                                                        class='bx bxs-trash'></i></a>
+                                                <a href="javascript:;"
+                                                    class="ms-4 text-primary bg-light-primary border-0"><i
+                                                        class='bx bxs-edit'></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#68823</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="recent-product-img">
+                                                    <img src="assets/images/products/19.png" alt="">
+                                                </div>
+                                                <div class="ms-2">
+                                                    <h6 class="mb-1 font-14">Grey Hand Watch</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>22 Jun, 2020</td>
+                                        <td class=""><span
+                                                class="badge bg-light-warning text-warning w-100">Pending</span>
+                                        </td>
+                                        <td>#149.25</td>
+                                        <td>
+                                            <div class="d-flex order-actions"> <a href="javascript:;"
+                                                    class="text-danger bg-light-danger border-0"><i
+                                                        class='bx bxs-trash'></i></a>
+                                                <a href="javascript:;"
+                                                    class="ms-4 text-primary bg-light-primary border-0"><i
+                                                        class='bx bxs-edit'></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#54869</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="recent-product-img">
+                                                    <img src="assets/images/products/07.png" alt="">
+                                                </div>
+                                                <div class="ms-2">
+                                                    <h6 class="mb-1 font-14">Brown Sofa</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>22 Jun, 2020</td>
+                                        <td class=""><span
+                                                class="badge bg-light-success text-success w-100">Completed</span>
+                                        </td>
+                                        <td>#149.25</td>
+                                        <td>
+                                            <div class="d-flex order-actions"> <a href="javascript:;"
+                                                    class="text-danger bg-light-danger border-0"><i
+                                                        class='bx bxs-trash'></i></a>
+                                                <a href="javascript:;"
+                                                    class="ms-4 text-primary bg-light-primary border-0"><i
+                                                        class='bx bxs-edit'></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#22536</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="recent-product-img">
+                                                    <img src="assets/images/products/17.png" alt="">
+                                                </div>
+                                                <div class="ms-2">
+                                                    <h6 class="mb-1 font-14">Black iPhone 11</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>22 Jun, 2020</td>
+                                        <td class=""><span
+                                                class="badge bg-light-success text-success w-100">Completed</span>
+                                        </td>
+                                        <td>#149.25</td>
+                                        <td>
+                                            <div class="d-flex order-actions"> <a href="javascript:;"
+                                                    class="text-danger bg-light-danger border-0"><i
+                                                        class='bx bxs-trash'></i></a>
+                                                <a href="javascript:;"
+                                                    class="ms-4 text-primary bg-light-primary border-0"><i
+                                                        class='bx bxs-edit'></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#25796</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="recent-product-img">
+                                                    <img src="assets/images/products/14.png" alt="">
+                                                </div>
+                                                <div class="ms-2">
+                                                    <h6 class="mb-1 font-14">Men Yellow T-Shirt</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>22 Jun, 2020</td>
+                                        <td class=""><span
+                                                class="badge bg-light-warning text-warning w-100">Pending</span>
+                                        </td>
+                                        <td>#149.25</td>
+                                        <td>
+                                            <div class="d-flex order-actions"> <a href="javascript:;"
+                                                    class="text-danger bg-light-danger border-0"><i
+                                                        class='bx bxs-trash'></i></a>
+                                                <a href="javascript:;"
+                                                    class="ms-4 text-primary bg-light-primary border-0"><i
+                                                        class='bx bxs-edit'></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#98754</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="recent-product-img">
+                                                    <img src="assets/images/products/08.png" alt="">
+                                                </div>
+                                                <div class="ms-2">
+                                                    <h6 class="mb-1 font-14">Grey Stand Table</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>22 Jun, 2020</td>
+                                        <td class=""><span
+                                                class="badge bg-light-danger text-danger w-100">Cancelled</span>
+                                        </td>
+                                        <td>#149.25</td>
+                                        <td>
+                                            <div class="d-flex order-actions"> <a href="javascript:;"
+                                                    class="text-danger bg-light-danger border-0"><i
+                                                        class='bx bxs-trash'></i></a>
+                                                <a href="javascript:;"
+                                                    class="ms-4 text-primary bg-light-primary border-0"><i
+                                                        class='bx bxs-edit'></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

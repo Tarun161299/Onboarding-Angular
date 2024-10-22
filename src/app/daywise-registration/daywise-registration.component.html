@@ -1,0 +1,100 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Daywise Registration</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Daywise Registration</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="DaywiseRegistration">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputAgency" class="form-label">Start Date</label>
+                                <input id="inputAgency"
+                                    [ngClass]="{ 'is-invalid':(DaywiseRegistrationFormControl?.['StartDate'].errors 
+                                && (DaywiseRegistrationFormControl?.['StartDate'].dirty || DaywiseRegistrationFormControl?.['StartDate'].touched || submitted  ))}"
+                                    formControlName="StartDate" class="form-control" type="date"
+                                    placeholder="Start Date">
+                                <span class="text-danger"
+                                    *ngIf="(DaywiseRegistrationFormControl?.['StartDate'].touched || submitted) && DaywiseRegistrationFormControl?.['StartDate'].errors?.['required']">
+                                    Start Date is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputServices" class="form-label">End Date</label>
+                                <input id="inputServices"
+                                    [ngClass]="{ 'is-invalid':(DaywiseRegistrationFormControl?.['Enddate'].errors 
+                                && (DaywiseRegistrationFormControl?.['Enddate'].dirty || DaywiseRegistrationFormControl?.['Enddate'].touched || submitted  ))}"
+                                    formControlName="Enddate" type="date" class="form-control" placeholder="End Date">
+
+                                <span class="text-danger"
+                                    *ngIf="(DaywiseRegistrationFormControl?.['Enddate'].touched || submitted) && DaywiseRegistrationFormControl?.['Enddate'].errors?.['required']">
+                                    End Data is Required
+                                </span>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                    <button type="submit" (click)="save()" class="btn btn-primary me-3"> Submit
+                                    </button>
+                                    <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mt-3">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="applicationSchedule" class="table align-middle mb-0" *ngIf="rowdata.length>0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Board</th>
+                                        <th>Registration Date</th>
+                                        <th>Total Registered</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let outerLoop of rowdata let i=index">
+                                        <tr *ngFor="let user of outerLoop.jSummary">                                            
+                                            <td>{{outerLoop.projectName}}</td>
+                                            <td>{{user.regdate | ddMmYYYYDate}}</td>
+                                            <td>{{user.totalRegistered}} </td>
+                                        </tr>                                       
+                                    </ng-container>  
+                                </tbody>
+                                <tfoot>
+                                    <tr class="bg-secondary bg-opacity-10">
+                                        <th colspan="2">
+                                            Total Registered
+                                        </th>
+                                        <th>
+                                            {{totalRegistered}}
+                                        </th>                                        
+                                    </tr>                                    
+                                </tfoot>
+                            </table>
+                            <div *ngIf="rowdata.length==0">
+                                <strong class="w-50 text-center"> No Records Found</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,197 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">CGConfigurationControleTest Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">CGConfigurationControleTest</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="cgconfigurationcontroletestFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="name"
+                                    class="form-label">Name</label> <input type="text" id="name" formControlName="name"
+                                    [maxlength]="50" name="name" class="form-control" placeholder="Name"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['name'].errors && (cgconfigurationcontroletestFrmControl?.['name'].dirty || cgconfigurationcontroletestFrmControl?.['name'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['name'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['name'].errors?.['required']">
+                                    Name is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="gender"
+                                    class="form-label d-block">Gender</label> <input class="form-check-input"
+                                    type="checkbox" formControlName="gender" name="gender"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['gender'].errors && (cgconfigurationcontroletestFrmControl?.['gender'].dirty || cgconfigurationcontroletestFrmControl?.['gender'].touched || submitted  ))}">
+                                <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['gender'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['gender'].errors?.['required']">
+                                    Gender is required</span></div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="dOB"
+                                    class="form-label d-block">DOB</label> <input type="date" id="dOB"
+                                    formControlName="dOB" [maxlength]="50" name="dOB" class="form-control"
+                                    placeholder="DOB"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['dOB'].errors && (cgconfigurationcontroletestFrmControl?.['dOB'].dirty || cgconfigurationcontroletestFrmControl?.['dOB'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['dOB'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['dOB'].errors?.['required']">
+                                    DOB is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="email"
+                                    class="form-label">Email</label> <input type="text" id="email"
+                                    formControlName="email" [maxlength]="50" name="email" class="form-control"
+                                    placeholder="Email"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['email'].errors && (cgconfigurationcontroletestFrmControl?.['email'].dirty || cgconfigurationcontroletestFrmControl?.['email'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['email'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['email'].errors?.['required']">
+                                    Email is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="mobile"
+                                    class="form-label">Mobile</label> <input type="text" id="mobile"
+                                    formControlName="mobile" [maxlength]="4" name="mobile" class="form-control"
+                                    placeholder="Mobile"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['mobile'].errors && (cgconfigurationcontroletestFrmControl?.['mobile'].dirty || cgconfigurationcontroletestFrmControl?.['mobile'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['mobile'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['mobile'].errors?.['required']">
+                                    Mobile is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="qualification"
+                                    class="form-label d-block">Qualification</label>
+                                <div class="form-check form-check-inline" *ngFor="let item of RADIO_LIST;"> 
+                                    <input
+                                        class="form-check-input" type="radio" id="{{item.id}}" [value]="item.id"
+                                        (change)="onchange(item)" formControlName="qualification"
+                                        name="qualification"" />                                      <label class="
+                                        form-check-label" for="{{item.id}}">{{item.name}}</label> </div> <span
+                                    class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['qualification'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['qualification'].errors?.['required']">
+                                    Qualification is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="image"
+                                    class="form-label d-block">File</label>
+                                <div class="input-group"> <input [hidden]="hideimage" type="file" class="form-control"
+                                        formControlName="image" name="image" (change)="handleFileInput($event)"
+                                        id="image" placeholder="File"
+                                        [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['image'].errors && (cgconfigurationcontroletestFrmControl?.['image'].dirty || cgconfigurationcontroletestFrmControl?.['image'].touched || submitted  ))}">
+                                    <button class="btn text-primary bg-light-primary btn-sm d-block"
+                                        *ngIf="IsAvalableData_VarName_____=='?false:true"
+                                        (click)="getDocumentbyAddress('Type______address')" title="View"><i
+                                            class='bx bxs-show'></i> </button> </div> <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['image'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['image'].errors?.['required']">
+                                    File is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="addresss"
+                                    class="form-label">Addresss</label> <textarea type="text" id="addresss"
+                                    formControlName="addresss" [maxlength]="-1" name="addresss" class="form-control"
+                                    placeholder="Addresss"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['addresss'].errors && (cgconfigurationcontroletestFrmControl?.['addresss'].dirty || cgconfigurationcontroletestFrmControl?.['addresss'].touched || submitted  ))}"></textarea>
+                                <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['addresss'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['addresss'].errors?.['required']">
+                                    Addresss is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="state"
+                                    class="form-label">Select State</label> <select id="state" formControlName="state"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['state'].errors && (cgconfigurationcontroletestFrmControl?.['state'].dirty || cgconfigurationcontroletestFrmControl?.['state'].touched || submitted  ))}"
+                                    class="form-select">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item Of stateList" value={{item.Values__}}>{{item.description}}
+                                    </option>
+                                </select> <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['state'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['state'].errors?.['required']">
+                                    Select State is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="district"
+                                    class="form-label">Select District</label> <select id="district"
+                                    formControlName="district"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['district'].errors && (cgconfigurationcontroletestFrmControl?.['district'].dirty || cgconfigurationcontroletestFrmControl?.['district'].touched || submitted  ))}"
+                                    class="form-select">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let item Of districtList" value={{item.Values__}}>
+                                        {{item.description}}</option>
+                                </select> <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['district'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['district'].errors?.['required']">
+                                    Select District is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="fee"
+                                    class="form-label">Sechool Fee</label> <input type="text" id="fee"
+                                    formControlName="fee" [maxlength]="9" name="fee" class="form-control"
+                                    placeholder="Sechool Fee"
+                                    [ngClass]="{ 'is-invalid':(cgconfigurationcontroletestFrmControl?.['fee'].errors && (cgconfigurationcontroletestFrmControl?.['fee'].dirty || cgconfigurationcontroletestFrmControl?.['fee'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['fee'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['fee'].errors?.['required']">
+                                    Sechool Fee is required</span></div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="hobbies"
+                                    class="form-label d-block">Select Your Hobbies</label>
+                                <div class="form-check form-check-inline" *ngFor="let item of CHECK_LIST;"> <input
+                                        class="form-check-input" type="checkbox" formControlName="hobbies"
+                                        name="hobbies" [checked]="getSelection(item)" checked="false"
+                                        (change)="changeHandler(item)" /> <label for="{{item.Name}}"
+                                        class="form-check-label">{{item.Name}}</label> </div> <span class="text-danger"
+                                    *ngIf="(cgconfigurationcontroletestFrmControl?.['hobbies'].touched || submitted) && cgconfigurationcontroletestFrmControl?.['hobbies'].errors?.['required']">
+                                    Select Your Hobbies is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center"> <button type="submit"
+                                    *ngIf="updatehdn==false" (click)="save()" class="btn btn-primary me-3"> Submit
+                                </button> <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update </button> <button type="button"
+                                    (click)="clear()" class="btn btn-primary btn-danger"> Cancel </button> </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="cgconfigurationcontroletestGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>DOB</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>File</th>
+                                        <th>StateName</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody> <ng-container *ngIf="cgconfigurationcontroletestList.length>0">
+                                        <tr *ngFor="let data of cgconfigurationcontroletestList;">
+                                            <td>{{data.id}}</td>
+                                            <td>{{data.name}}</td>
+                                            <td>{{data.gender}}</td>
+                                            <td>{{data.dOB}}</td>
+                                            <td>{{data.email}}</td>
+                                            <td>{{data.mobile}}</td>
+                                            <td>{{data.image}}</td>
+                                            <td>{{data.stateName}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions"> <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0"> <i
+                                                            class="bx bxs-edit"></i> </a> <a (click)="delete(data.id)"
+                                                        class="ms-4 text-danger bg-light-danger border-0"> <i
+                                                            class="bx bxs-trash"></i> </a> </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container> </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>DOB</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>File</th>
+                                        <th>StateName</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

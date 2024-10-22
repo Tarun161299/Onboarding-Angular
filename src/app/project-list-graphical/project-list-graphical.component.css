@@ -1,0 +1,25 @@
+
+  #chart-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 50%;
+  }
+
+  .yearddl
+  {
+    border: 1px solid #4c73e1;
+    width: 120px;
+    border-radius: 7px;
+    margin-left: 5px;
+  }
+
+  .chart-height
+  {
+    height: 280px !important;
+    margin: auto;
+  }
+
+  .header-div
+  {
+    padding: 0px !important;
+  }

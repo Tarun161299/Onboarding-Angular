@@ -1,0 +1,200 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Onboarding Request</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        
+                        <li class="breadcrumb-item"><a class="text-decoration-none"
+                                routerLink="/auth/onboardinglist">Onboarding Request List</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Project Creation</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="ms-auto">
+                <div class="btn-group">
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+                            href="javascript:;">Action</a>
+                        <a class="dropdown-item" href="javascript:;">Another action</a>
+                        <a class="dropdown-item" href="javascript:;">Something else here</a>
+                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+                            link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-1">Project Creation</h5>
+                            </div>
+                            <div class="ms-auto">
+                                <a routerLink="/auth/onboardinglist" class="btn btn-primary btn-sm radius-30">
+                                    <i class="bx bx-left-arrow-alt"></i>
+                                    Back to Onboarding Request List</a>
+                            </div>
+                        </div>
+                        <hr />
+                        <form class="row g-3" [formGroup]="registerForm">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputRequestID" class="form-label">Request ID</label>
+                                <input id="inputRequestID" type="text" class="form-control" placeholder="Request ID"
+                                    value={{requestId}} disabled>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputAgency" class="form-label">Agency</label>
+                                <input id="inputAgency" type="text" class="form-control" placeholder="Agency"
+                                    value={{rowData.agencyType}} disabled>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputServices" class="form-label">Services</label>
+                                <input id="inputServices" type="text" class="form-control" placeholder="Services"
+                                    value={{Servicess}} disabled>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputMinistry" class="form-label">Ministry</label>
+                                <input id="inputMinistry" type="text" class="form-control" placeholder="Ministry"
+                                    value={{rowData.ministryName}} disabled>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputOrganizationName" class="form-label">
+                                    Name of Organization</label>
+                                <input id="inputOrganizationName" type="text" class="form-control"
+                                    placeholder="Name of Organization" value={{rowData.oranizationName}} disabled>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="btndownload" class="form-label">Request Letter</label>
+                                <div>
+                                    <a class="btn btn-warning btn-sm" id="btndownload" (click)="onIconClickDownload()">
+                                        <i class="bx bx-download"></i>Download Request Letter
+                                    </a>
+                                </div>
+                                <label for="btndownload" class="form-label">View Request Letter
+                                </label>
+                                <div>
+                                    <a class="btn bg-warning btn-sm" title="View Document" (click)="viewDocument()"><i
+                                            class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="userID" class="form-label">Request Letter No</label>
+                                <input type="userID" class="form-control" id="userID"
+                                    placeholder="Request Letter Number" formControlName="requestletterctrl"
+                                    [ngClass]="{ 'is-invalid':(registerFormControl?.['requestletterctrl'].errors 
+                        && (registerFormControl?.['requestletterctrl'].dirty || registerFormControl?.['requestletterctrl'].touched || submitted  ))}">
+                                <span class="invalid-feedback"
+                                    *ngIf="(registerFormControl?.['requestletterctrl'].touched || submitted) && registerFormControl?.['requestletterctrl'].errors?.['required']">
+                                    Request Letter No is Required
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="password" class="form-label">Date of Request Letter</label>
+                                <input class="form-control" type="date" [max]="todayDate"
+                                    [ngClass]="{ 'is-invalid':(registerFormControl?.['daterqstletterctrl'].errors 
+                            && (registerFormControl?.['daterqstletterctrl'].dirty || registerFormControl?.['daterqstletterctrl'].touched || submitted  ))}" id="password"
+                                    placeholder="Enter Password" formControlName="daterqstletterctrl" name="password" />
+                                <span class="invalid-feedback"
+                                    *ngIf="(registerFormControl?.['daterqstletterctrl'].touched || submitted) && registerFormControl?.['daterqstletterctrl'].errors?.['required']">
+                                    Date of Request Letter is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="confirmPassword" class="form-label">Project Name</label>
+                                <input class="form-control" formControlName="projectnamectrl" placeholder="Project Name"
+                                    [ngClass]="{ 'is-invalid':(registerFormControl?.['projectnamectrl'].errors 
+                        && (registerFormControl?.['projectnamectrl'].dirty || registerFormControl?.['projectnamectrl'].touched || submitted  ))}"
+                                    id="confirmPassword" name="confirmPassword" />
+                                <span class="invalid-feedback"
+                                    *ngIf="(registerFormControl?.['projectnamectrl'].touched || submitted) && registerFormControl?.['projectnamectrl'].errors?.['required']">
+                                    Project Name is Required
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="confirmPassword" class="form-label">Project Year</label>
+                                <select id="projectyearCtrl" class="form-select"
+                                    [ngClass]="{ 'is-invalid':(registerFormControl?.['projectyearCtrl'].errors 
+                            && (registerFormControl?.['projectyearCtrl'].dirty || registerFormControl?.['projectyearCtrl'].touched || submitted  ))}"
+                                    formControlName="projectyearCtrl">
+                                    <option value="0" selected>--Select Session Year--</option>
+                                    <option *ngFor="let sessionyear of year"
+                                        value={{sessionyear.yearId}}>
+                                        {{sessionyear.description}}
+                                    </option>
+                                    <option *ngFor="let year of year" value={{year.yearId}}>
+                                        {{year.description}}
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback"
+                                    *ngIf="(registerFormControl?.['projectyearCtrl'].touched || submitted) && registerFormControl?.['projectyearCtrl'].errors?.['required']">
+                                    Project Year is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="confirmPassword" class="form-label">Agency</label>
+                                <select id="ConductedinCounselling" class="form-select"
+                                    (change)="onSelectAgency($event)"
+                                    [ngClass]="{ 'is-invalid':(registerFormControl?.['AgencyControl'].errors 
+                                     && (registerFormControl?.['AgencyControl'].dirty || registerFormControl?.['AgencyControl'].touched || submitted  ))}"
+                                    formControlName="AgencyControl">
+                                    <option value="" >--Select Agency--
+                                    </option>
+                                    <option *ngFor="let Agency Of Agencydata" value={{Agency.agencyId}}>
+                                        {{Agency.agencyName}}</option>
+                                </select>
+                                <span class="invalid-feedback"
+                                    *ngIf="(registerFormControl?.['AgencyControl'].touched || submitted) && registerFormControl?.['AgencyControl'].errors?.['required']">
+                                    Agency is Required
+                                </span>
+                            </div>
+                            <!-- <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="agency" class="form-label d-block">
+                                    Is Work Order Require?
+                                </label>
+                                <div class="form-check form-check-inline" *ngFor="let item1 of RADIO_LIST;">
+                                    <input class="form-check-input" type="radio" id="{{item1.id}}" [value]="item1.id"
+                                        (change)="onchange(item1)" formControlName="isWorkOrderRequired"
+                                        name="isWorkOrderRequired" />
+                                    <label class="form-check-label" for="{{item1.id}}">{{item1.name}}</label>
+                                </div>
+                                <div class="text-danger"
+                                    *ngIf="( submitted) && registerFormControl?.['isWorkOrderRequired'].errors?.['required']">
+                                    Work Order Require is required.
+                                </div>
+                            </div> -->
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center" [hidden]="submitHide">
+                                <button type="submit" (click)="onSubmit()" ngNativeValidate
+                                    class="btn btn-primary btn-sm"> Submit
+                                </button>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center" [hidden]="updateHide">
+                                <button type="submit" (click)="onUpdate()" class="btn btn-primary btn-sm"> Update
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

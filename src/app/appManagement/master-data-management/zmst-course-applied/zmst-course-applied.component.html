@@ -1,0 +1,115 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Course Applied Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Course Applied</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">                       
+                        <form class="row g-3" [formGroup]="zmstcourseappliedFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="courseId"
+                                    class="form-label">Course Id</label> <input type="text" id="courseId"
+                                    formControlName="courseId" [maxlength]="2" name="courseId" class="form-control"
+                                    placeholder="Course Id"
+                                    [ngClass]="{ 'is-invalid':(zmstcourseappliedFrmControl?.['courseId'].errors && (zmstcourseappliedFrmControl?.['courseId'].dirty || zmstcourseappliedFrmControl?.['courseId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcourseappliedFrmControl?.['courseId'].touched || submitted) && zmstcourseappliedFrmControl?.['courseId'].errors?.['required']">
+                                    Course Id is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="courseName"
+                                    class="form-label">Course Name</label> <input type="text" id="courseName"
+                                    formControlName="courseName" [maxlength]="200" name="courseName"
+                                    class="form-control" placeholder="Course Name"
+                                    [ngClass]="{ 'is-invalid':(zmstcourseappliedFrmControl?.['courseName'].errors && (zmstcourseappliedFrmControl?.['courseName'].dirty || zmstcourseappliedFrmControl?.['courseName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcourseappliedFrmControl?.['courseName'].touched || submitted) && zmstcourseappliedFrmControl?.['courseName'].errors?.['required']">
+                                    Course Name is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="alternameNames"
+                                    class="form-label">Altername Name</label> <input type="text" id="alternameNames"
+                                    formControlName="alternameNames" [maxlength]="200" name="alternameNames"
+                                    class="form-control" placeholder="Altername Name"
+                                    [ngClass]="{ 'is-invalid':(zmstcourseappliedFrmControl?.['alternameNames'].errors && (zmstcourseappliedFrmControl?.['alternameNames'].dirty || zmstcourseappliedFrmControl?.['alternameNames'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcourseappliedFrmControl?.['alternameNames'].touched || submitted) && zmstcourseappliedFrmControl?.['alternameNames'].errors?.['required']">
+                                    Altername Name is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="reset()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstcourseappliedGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Course Id</th>
+                                        <th>Course Name</th>
+                                        <th>Altername Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstcourseappliedList.length>0">
+                                        <tr *ngFor="let data of zmstcourseappliedList;">
+                                            <td>{{data.courseId}}</td>
+                                            <td>{{data.courseName}}</td>
+                                            <td>{{data.alternameNames}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.courseId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Course Id</th>
+                                        <th>Course Name</th>
+                                        <th>Altername Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

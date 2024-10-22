@@ -1,0 +1,77 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="approlemodulepermissionfrm">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputRole" class="form-label">Role</label>
+                                <select class="form-select"
+                                    [ngClass]="{ 'is-invalid':(approlemodulepermissionFrmControl?.['Role'].errors 
+                            && (approlemodulepermissionFrmControl?.['Role'].dirty || approlemodulepermissionFrmControl?.['Role'].touched || submitted  ))}"
+                                    formControlName="Role" (change)="GetByRoll($event)">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let SecurityQ of Roledropdown" value={{SecurityQ.roleName}}>
+                                        {{SecurityQ.roleName}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(approlemodulepermissionFrmControl?.['Role'].touched || submitted) && approlemodulepermissionFrmControl?.['Role'].errors?.['required']">
+                                    Role is Required
+                                </span>
+                            </div>
+                            <div class="card-body" *ngIf="rolegrid.length>0">
+                                <div class="table-responsive mt-3">
+                                    <table id="roledetailsGrid" class="table align-middle mb-0"
+                                        *ngIf="rolegrid.length>0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Module</th>
+                                                <th>Assign</th>
+                                                <th>Is Read Only</th>
+                                                <th>Is Active</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngIf="rolegrid.length>0">
+                                                <tr *ngFor="let data of rolegrid; index as i">
+                                                    <td>{{data.moduleName}}</td>
+                                                    <td>
+                                                       <input  type="checkbox" value="{{data.moduleId}}" [checked]="data.assign !=null"   (change)="getModule($event, data,i)" />
+                                                    </td>
+                                                    <td>
+                                                      <input  type="checkbox" value="{{data.isReadOnly}}" [checked]="data.isReadOnly =='Y'" (change)="getModule1($event, data,i)" />
+                                                    </td>
+                                                     <td>         
+                                                       <input  type="checkbox" value="{{data.isActive}}" [checked]="data.isActive =='Y'" (change)="getModule2($event, data,i)" />     
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Module</th>
+                                                <th>Assign</th>
+                                                <th>Is Read Only</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row mt-2" *ngIf="rolegrid.length>0">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                    <button type="submit" (click)="btnSave()" class="btn btn-primary me-3"> Save
+                                    </button>
+                                    <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

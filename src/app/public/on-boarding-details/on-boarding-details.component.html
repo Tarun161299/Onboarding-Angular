@@ -1,0 +1,1553 @@
+<ng-template class="modal fade" tabindex="-1" aria-labelledby="modal-basic-title" aria-hidden="true" #mobileEmailModal
+    let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">{{otpHeading}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row g3">
+                <label *ngIf="mobileOtp" for="OTPMobile" class="form-label">
+                    Enter Mobile OTP
+                </label>
+                <div [hidden]="mobileOtp!=true" class="input-group mb-3">
+                    <input type="password" class="form-control" id="OTPMobile" placeholder="Enter Mobile OTP">
+                    <span>
+                        <button type="button" (click)="resendotpSms()" [disabled]="isEnableSmsOtpLink" class="btn btn-link ms-1">
+                            Resend OTP
+                        </button>
+                    </span>
+                </div>
+                <label *ngIf="showauthMode" class="form-label text-center">
+                    {{authMode}}
+                </label>
+                <label *ngIf="emailOtp" for="OTPemail" class="form-label">
+                    Enter Email OTP
+                </label>
+
+                <div [hidden]="emailOtp!=true" class="input-group mb-3">
+                    <input type="password" class="form-control" id="OTPemail" placeholder="Enter Email OTP">
+                    <span>
+                        <button type="button" (click)="resendotpEmail()" [disabled]="isEnableEmailOtpLink" class="btn btn-link ms-1">
+                            Resend OTP
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" (click)="modal.close('Save click')">Close</button>
+        <button type="submit" (click)="addData()" class="btn btn-primary btn-sm">Confirm</button>
+    </div>
+</ng-template>
+
+<div class="d-flex align-items-center justify-content-center my-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-1 row-cols-xl-1">
+            <div class="col mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="p-1 rounded">
+                            <div class="text-center">
+                                <h3 class="">Onboarding Details</h3>
+                            </div>
+                            <div class="login-separater text-center mb-4">
+                                <hr />
+                            </div>
+                            <div class="form-body">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ul class="nav nav-tabs nav-primary" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <a id="a_primaryhome" class="nav-link active" data-bs-toggle="tab"
+                                                    href="#primaryhome" role="tab" aria-selected="true">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="tab-icon"><i class='bx bxs-home font-18 me-1'></i>
+                                                        </div>
+                                                        <div class="tab-title">Profile</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a id="a_primaryprofile" class="nav-link" data-bs-toggle="tab"
+                                                    href="#primaryprofile" role="tab" aria-selected="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="tab-icon"><i
+                                                                class='bx bxs-user-pin font-18 me-1'></i>
+                                                        </div>
+                                                        <div class="tab-title">Services</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a id="a_primarycontact" class="nav-link" data-bs-toggle="tab"
+                                                    href="#primarycontact" role="tab" aria-selected="false">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="tab-icon"><i
+                                                                class='bx bxs-microphone font-18 me-1'></i>
+                                                        </div>
+                                                        <div class="tab-title">Contact</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <form [formGroup]="registerForm" autocomplete="off">
+                                            <div class="tab-content py-3">
+                                                <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
+                                                    <div class="row g-3">
+                                                        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                            <label for="inputAgency" class="form-label">Agency</label>
+                                                            :
+                                                            <label id="inputAgency"
+                                                                formControlName="Agency">{{registerForm.controls.Agency.value}}</label>
+                                                        </div>
+                                                        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                            <label for="inputServices"
+                                                                class="form-label">Services</label>
+                                                            :
+                                                            <label id="inputServices"
+                                                                formControlName="Service">{{registerForm.controls.Service.value}}</label>
+                                                        </div>
+                                                        <div *ngIf="ministryshow"
+                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                            <label for="inputMinistry"
+                                                                class="form-label">Ministry</label>
+                                                            :
+                                                            <label id="inputMinistry"
+                                                                formControlName="Ministry">{{registerForm.controls.Ministry.value}}</label>
+                                                        </div>
+                                                        <div *ngIf="Stateshow"
+                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                            <label for="inputState" class="form-label">Agency's
+                                                                State</label>
+                                                            :
+                                                            <label id="inputState"
+                                                                formControlName="AgencyState">{{registerForm.controls.AgencyState.value}}</label>
+                                                        </div>
+                                                        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                            <label for="inputOrganizationName" class="form-label">
+                                                                Organization</label>
+                                                            :
+                                                            <label id="inputOrganizationName"
+                                                                formControlName="OrganizationName">{{registerForm.controls.OrganizationName.value}}</label>
+                                                        </div>
+                                                        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                            <label for="inputWebsite"
+                                                                class="form-label">Website(optional)</label>
+                                                            <input id="inputWebsite" type="text" class="form-control"
+                                                                [ngClass]="{ 'is-invalid':(f?.['websiteV'].errors 
+                                                            && (f?.['websiteV'].dirty || f?.['websiteV'].touched || submitted  ))}"
+                                                                formControlName="websiteV" placeholder="Website">
+                                                            <span class="text-danger"
+                                                                *ngIf="(f?.['websiteV'].touched || submitted) && f?.['websiteV'].errors?.['required']">
+                                                                Website is Required
+                                                            </span>
+                                                            <span class="text-danger"
+                                                                *ngIf="f?.['websiteV'].touched && (f?.['websiteV'].errors?.['pattern'] )">
+                                                                Invalid URL
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                            <label for="inputFirstAffiliated" class="form-label">
+                                                                First Session Assosiated with NIC
+                                                                E-Counselling(optional)</label>
+
+                                                            <select id="inputFirstAffiliated" class="form-select"
+                                                                [ngClass]="{ 'is-invalid':(f?.['firstSessionV'].errors 
+                                                            && ( f?.['firstSessionV'].touched || submitted  ))}"
+                                                                formControlName="firstSessionV">
+                                                                <option value="" selected>--Select Session Year--
+                                                                </option>
+                                                                <option *ngFor="let Firstsession of firstsession"
+                                                                    [ngValue]="Firstsession.yearId">
+                                                                    {{Firstsession.description}}
+                                                                </option>
+                                                            </select>
+                                                            <span class="text-danger"
+                                                                *ngIf="(f?.['firstSessionV'].touched || submitted) && f?.['firstSessionV'].errors?.['required']">
+                                                                Session Year is Required
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" [hidden]="examinationhide">
+                                                        <div class="col">
+                                                            <div class="card mt-4">
+                                                                <div class="card-header fw-bold">
+                                                                    Last Examination Management Process Details
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row g-3">
+                                                                        <div
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="Conductedinexamination"
+                                                                                class="form-label">
+                                                                                Conducted Year (optional) :</label>
+                                                                            <select id="Conductedinexamination"
+                                                                                formControlName="ConductExamV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['ConductExamV'].errors 
+                                                                                    && ( f?.['ConductExamV'].touched || submitted  ))}"
+                                                                                class="form-select">
+                                                                                <option value="" selected>--Select
+                                                                                    Session Year--
+                                                                                </option>
+                                                                                <option
+                                                                                    *ngFor="let sessionexam of firstsession"
+                                                                                    [ngValue]="sessionexam.yearId">
+                                                                                    {{sessionexam.description}}</option>
+                                                                            </select>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['ConductExamV'].touched || submitted) && f?.['ConductExamV'].errors?.['required']">
+                                                                                Session Year is Required
+                                                                            </span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputPreviousAgencyDeployed"
+                                                                                class="form-label">
+                                                                                Technical Support Provided by Agency
+                                                                                (optional)</label>
+                                                                            <input id="inputPreviousAgencyDeployed"
+                                                                                type="text" class="form-control"
+                                                                                formControlName="techsupportEV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['techsupportEV'].errors 
+                                                                                    && (f?.['techsupportEV'].dirty || f?.['techsupportEV'].touched || submitted  ))}"
+                                                                                placeholder="Previous Agency deployed for admissions (if any)">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['techsupportEV'].touched || submitted) && f?.['techsupportEV'].errors?.['required']">
+                                                                                Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['techsupportEV'].touched && (f?.['techsupportEV'].errors?.['pattern'] )">
+                                                                                only alphabets are allowed
+                                                                            </span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+                                                                            <label for="inputDescription"
+                                                                                class="form-label">
+                                                                                Brief Description </label>
+                                                                            <textarea id="inputDescription" type="text"
+                                                                                class="form-control"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['DescriptionEV'].errors 
+                                                                                    && ( f?.['DescriptionEV'].touched || submitted  ))}"
+                                                                                formControlName="DescriptionEV"
+                                                                                placeholder="Brief Description on existing admissions process"></textarea>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['DescriptionEV'].touched || submitted) && f?.['DescriptionEV'].errors?.['required']">
+                                                                                Description is Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['DescriptionEV'].touched && f?.['DescriptionEV'].errors?.['invalid']">
+                                                                                Script or Style are not allowed
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" [hidden]="counsellinghide">
+                                                        <div class="col">
+                                                            <div class="card mt-4">
+                                                                <div class="card-header fw-bold">
+                                                                    Last E-Counselling & Admission Service
+                                                                    detail
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row g-3">
+                                                                        <div
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="ConductedinCounselling"
+                                                                                class="form-label">
+                                                                                Conducted Year (optional):</label>
+
+                                                                            <select id="ConductedinCounselling"
+                                                                                formControlName="conductedCounsV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['conductedCounsV'].errors 
+                                                                                    && ( f?.['conductedCounsV'].touched || submitted  ))}"
+                                                                                class="form-select">
+                                                                                <option value="" selected>--Select
+                                                                                    Session
+                                                                                    Year--
+                                                                                </option>
+                                                                                <option
+                                                                                    *ngFor="let session of firstsession"
+                                                                                    [ngValue]="session.yearId">
+                                                                                    {{session.description}}</option>
+
+                                                                            </select>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['conductedCounsV'].touched || submitted) && f?.['conductedCounsV'].errors?.['required']">
+                                                                                Session Year is Required
+                                                                            </span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="technicalSupportcouns"
+                                                                                class="form-label">
+                                                                                Technical Support Provided by Agency
+                                                                                (optional)</label>
+                                                                            <input id="technicalSupportcouns"
+                                                                                type="text"
+                                                                                formControlName="techSupportCV"
+                                                                                class="form-control"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['techSupportCV'].errors 
+                                                                                    && (f?.['techSupportCV'].dirty || f?.['techSupportCV'].touched || submitted  ))}"
+                                                                                placeholder="Previous Agency deployed for admissions (if any)">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['techSupportCV'].touched || submitted) && f?.['techSupportCV'].errors?.['required']">
+                                                                                Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['techSupportCV'].touched && (f?.['techSupportCV'].errors?.['pattern'] )">
+                                                                                Only alphabets are allowed.
+                                                                            </span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+                                                                            <label for="inputDescription"
+                                                                                class="form-label">
+                                                                                Brief Description</label>
+                                                                            <textarea id="inputDescriptionCouns"
+                                                                                type="text" class="form-control"
+                                                                                formControlName="DescriptionCV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['DescriptionCV'].errors 
+                                                                                    && ( f?.['DescriptionCV'].touched || submitted  ))}"
+                                                                                placeholder="Brief Description on existing Counselling process"></textarea>
+                                                                        </div>
+                                                                        <span class="text-danger"
+                                                                            *ngIf="(f?.['DescriptionCV'].touched || submitted) && f?.['DescriptionCV'].errors?.['required']">
+                                                                            Description is required.
+                                                                        </span>
+                                                                        <span class="text-danger"
+                                                                            *ngIf="f?.['DescriptionCV'].touched && f?.['DescriptionCV'].errors?.['invalid']">
+                                                                            Script or Style are not allowed
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row g-3">
+                                                        <div
+                                                            class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                                            <div class="btn-group" role="group"
+                                                                aria-label="First group">
+                                                                <button type="button" (click)="SaveDraft()"
+                                                                    [hidden]="hidebutton" class="btn btn-warning">
+                                                                    <i class='bx bx-book'></i> Save as Draft
+                                                                </button>
+                                                                <button
+                                                                    (click)="activaTab('primaryhome','primaryprofile')"
+                                                                    type="button" class="btn btn-primary">
+                                                                    <i class='bx bx-arrow-from-left'></i>Next
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
+
+                                                    <div class="row" [hidden]="examinationhide">
+                                                        <div class="col">
+                                                            <div class="card mt-4">
+                                                                <div class="card-header fw-bold">
+                                                                    Examination Management
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row g-3">
+                                                                        <div [hidden]="examinationhide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputExpectedApplicants"
+                                                                                class="form-label">Expected Applicants
+                                                                            </label>
+                                                                            <input id="inputExpectedApplicants"
+                                                                                type="text" class="form-control"
+                                                                                formControlName="expectedAEV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['expectedAEV'].errors 
+                                                                            && (f?.['expectedAEV'].dirty || f?.['expectedAEV'].touched || submitted  ))}"
+                                                                                placeholder="Expected number of applicants in examination">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['expectedAEV'].touched || submitted) && f?.['expectedAEV'].errors?.['required']">
+                                                                                Expected number of applicants are
+                                                                                Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['expectedAEV'].touched && (f?.['expectedAEV'].errors?.['pattern'] )">
+                                                                                Only digits are allowed
+                                                                            </span>
+
+                                                                        </div>
+
+                                                                        <div [hidden]="examinationhide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="totalCourses"
+                                                                                class="form-label">
+                                                                                Total Number of Courses
+                                                                            </label>
+                                                                            <input id="totalCourses" type="text"
+                                                                                [min]="todayDate" class="form-control"
+                                                                                formControlName="totalCourseEV"
+                                                                                [maxLength]="3"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['totalCourseEV'].errors 
+                                                                                && (f?.['totalCourseEV'].dirty || f?.['totalCourseEV'].touched || submitted  ))}"
+                                                                                placeholder="Total Number of Courses">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['totalCourseEV'].touched || submitted) && f?.['totalCourseEV'].errors?.['required']">
+                                                                                Total Number of Courses is Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['totalCourseEV'].touched && (f?.['totalCourseEV'].errors?.['pattern'] )">
+                                                                                Only digits are allowed
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="examinationhide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputExaminationList"
+                                                                                class="form-label">
+                                                                                Courses List
+                                                                            </label>
+                                                                            <input id="inputExaminationList" type="text"
+                                                                                class="form-control"
+                                                                                formControlName="examinatinLtV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['examinatinLtV'].errors 
+                                                                       && (f?.['examinatinLtV'].dirty || f?.['examinatinLtV'].touched || submitted  ))}"
+                                                                                placeholder="For Example (B.Tech,MCA,MBA)">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['examinatinLtV'].touched || submitted) && f?.['examinatinLtV'].errors?.['required']">
+                                                                                Courses List is Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['examinatinLtV'].touched && (f?.['examinatinLtV'].errors?.['pattern'] )">
+                                                                                Only Alphabets are allowed
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="examinationhide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputScheduleStartExam"
+                                                                                class="form-label">
+                                                                                Tentative Start Date
+                                                                            </label>
+                                                                            <input id="inputScheduleStartExam"
+                                                                                type="date" class="form-control"
+                                                                                [min]="todayDate"
+                                                                                (change)="OnselectExaminationStart($event)"
+                                                                                formControlName="TentativeScheduleSEV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['TentativeScheduleSEV'].errors 
+                                                                                && ( f?.['TentativeScheduleSEV'].touched || submitted  ))}"
+                                                                                placeholder="Tentative Schedule Start Date of Examination">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['TentativeScheduleSEV'].touched || submitted) && f?.['TentativeScheduleSEV'].errors?.['required']">
+                                                                                Start Date is Required
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="examinationhide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputScheduleEndExam"
+                                                                                class="form-label">
+                                                                                Tentative End Date
+                                                                            </label>
+                                                                            <input id="inputScheduleEndExam" type="date"
+                                                                                class="form-control"
+                                                                                [min]="examinationScheduleStart"
+                                                                                formControlName="TentativeScheduleEEV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['TentativeScheduleEEV'].errors 
+                                                                                && ( f?.['TentativeScheduleEEV'].touched || submitted  ))}"
+                                                                                placeholder="Tentative Schedule End Date of Examination">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['TentativeScheduleEEV'].touched || submitted) && f?.['TentativeScheduleEEV'].errors?.['required']">
+                                                                                End Date is Required
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="examinationhide" class="col-12">
+                                                                            <label for="disSimEV"
+                                                                                class="form-label d-block">
+                                                                                Same Tentative Schedule For All Courses
+                                                                            </label>
+                                                                            <div class="form-check form-check-inline"
+                                                                                *ngFor="let disSimOfexams of ExamDissimilarityOfSchedule;">
+                                                                                <input class="form-check-input"
+                                                                                    type="radio"
+                                                                                    id="{{disSimOfexams.id}}"
+                                                                                    [value]="disSimOfexams.value"
+                                                                                    (change)="onchangeexams(disSimOfexams)"
+                                                                                    formControlName="disSimEV"
+                                                                                    name="disSimEV" />
+                                                                                <label class="form-check-label"
+                                                                                    for="{{disSimOfexams.id}}">{{disSimOfexams.name}}</label>
+                                                                            </div>
+                                                                            <div class="text-danger"
+                                                                                *ngIf="(f?.['disSimEV'].touched || submitted) && f?.['disSimEV'].errors?.['required']">
+                                                                                Please Select !
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" [hidden]="counsellinghide">
+                                                        <div class="col">
+                                                            <div class="card mt-4">
+                                                                <div class="card-header fw-bold">
+                                                                    E-Counselling & Admission
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="row g-3">
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputExpApplicant"
+                                                                                class="form-label">
+                                                                                Expected Number of Applicants
+                                                                            </label>
+                                                                            <input id="inputExpApplicant" type="text"
+                                                                                class="form-control"
+                                                                                formControlName="expectedAppCounsCV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['expectedAppCounsCV'].errors 
+                                                                                && (f?.['expectedAppCounsCV'].dirty || f?.['expectedAppCounsCV'].touched || submitted  ))}"
+                                                                                placeholder="Expected Number of Applicants in Counselling">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['expectedAppCounsCV'].touched || submitted) && f?.['expectedAppCounsCV'].errors?.['required']">
+                                                                                Expected Number of Applicants is
+                                                                                Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['expectedAppCounsCV'].touched && (f?.['expectedAppCounsCV'].errors?.['pattern'] )">
+                                                                                Only digits are allowed
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputSeats" class="form-label">
+                                                                                Expected Number of Seats
+                                                                            </label>
+                                                                            <input id="inputSeats" type="text"
+                                                                                class="form-control"
+                                                                                formControlName="ExpectedSeatCV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['ExpectedSeatCV'].errors 
+                                                                                && (f?.['ExpectedSeatCV'].dirty || f?.['ExpectedSeatCV'].touched || submitted  ))}"
+                                                                                placeholder="Expected Number of Seats">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['ExpectedSeatCV'].touched || submitted) && f?.['ExpectedSeatCV'].errors?.['required']">
+                                                                                Expected Number of Seats is Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['ExpectedSeatCV'].touched && (f?.['ExpectedSeatCV'].errors?.['pattern'] )">
+                                                                                Only digits are allowed
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputExpParticipInst"
+                                                                                class="form-label">
+                                                                                Total Number Of Courses
+                                                                            </label>
+                                                                            <input id="TotalCoursesCouns" type="text"
+                                                                                [maxLength]="3" class="form-control"
+                                                                                formControlName="totalCourseCV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['totalCourseCV'].errors 
+                                                                                && (f?.['totalCourseCV'].dirty || f?.['totalCourseCV'].touched || submitted  ))}"
+                                                                                placeholder="Total Number Of Courses">
+
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['totalCourseCV'].touched || submitted) && f?.['totalCourseCV'].errors?.['required']">
+                                                                                Total Number Of Courses is Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['totalCourseCV'].touched && (f?.['totalCourseCV'].errors?.['pattern'] )">
+                                                                                Only digits are allowed
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputStramList"
+                                                                                class="form-label">
+                                                                                Courses List
+                                                                            </label>
+                                                                            <input id="inputStramList" type="text"
+                                                                                class="form-control"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['CounsellingltCV'].errors 
+                                                                            && (f?.['CounsellingltCV'].dirty || f?.['CounsellingltCV'].touched || submitted  ))}"
+                                                                                formControlName="CounsellingltCV"
+                                                                                [ngClass]="{ 'is-invalid': f.CounsellingltCV.touched && f.CounsellingltCV.errors }"
+                                                                                placeholder="For Example (B.Tech,MCA,MBA)">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['CounsellingltCV'].touched || submitted) && f?.['CounsellingltCV'].errors?.['required']">
+                                                                                Courses List is Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['CounsellingltCV'].touched && (f?.['CounsellingltCV'].errors?.['pattern'] )">
+                                                                                Digits and Special characters are not
+                                                                                allowed
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputExpRound"
+                                                                                class="form-label">
+                                                                                Expected Number of Rounds
+                                                                            </label>
+                                                                            <input id="inputExpRound" type="text"
+                                                                                class="form-control" [maxLength]="2"
+                                                                                formControlName="ExpectedRoundCV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['ExpectedRoundCV'].errors 
+                                                                                && (f?.['ExpectedRoundCV'].dirty || f?.['ExpectedRoundCV'].touched || submitted  ))}"
+                                                                                placeholder="Expected Number of Rounds in Counselling">
+
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['ExpectedRoundCV'].touched || submitted) && f?.['ExpectedRoundCV'].errors?.['required']">
+                                                                                Expected Number of Rounds is Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['ExpectedRoundCV'].touched && (f?.['ExpectedRoundCV'].errors?.['pattern'] )">
+                                                                                only digits are allowed
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputExpParticipInst"
+                                                                                class="form-label">
+                                                                                Expected Number of Participating
+                                                                                Institutes
+                                                                            </label>
+                                                                            <input id="inputExpParticipInst" type="text"
+                                                                                class="form-control" [maxLength]="4"
+                                                                                formControlName="ExpecpartInstCV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['ExpecpartInstCV'].errors 
+                                                                                && (f?.['ExpecpartInstCV'].dirty || f?.['ExpecpartInstCV'].touched || submitted  ))}"
+                                                                                placeholder="Expected Number of Participating Institutes in Counselling">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['ExpecpartInstCV'].touched || submitted) && f?.['ExpecpartInstCV'].errors?.['required']">
+                                                                                Required
+                                                                            </span>
+                                                                            <span class="text-danger"
+                                                                                *ngIf="f?.['ExpecpartInstCV'].touched && (f?.['ExpecpartInstCV'].errors?.['pattern'] )">
+                                                                                Only digits are allowed.
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputExpSpotRound"
+                                                                                class="form-label">
+                                                                                Expected Number of SPOT Rounds (if Any)
+                                                                            </label>
+                                                                            <input id="inputExpSpotRound" type="text"
+                                                                                class="form-control"
+                                                                                placeholder="Expected Number of SPOT Rounds in Counselling"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['ExpecSpotRCV'].errors 
+                                                                                && (f?.['ExpecSpotRCV'].dirty ))}"
+                                                                                formControlName="ExpecSpotRCV">
+
+                                                                                <span class="text-danger"
+                                                                                *ngIf="f?.['ExpecSpotRCV'].touched && (f?.['ExpecSpotRCV'].errors?.['pattern'] )">
+                                                                                Only digits are allowed.
+                                                                            </span>
+
+                                                                        </div>
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputTentSchStartCouns"
+                                                                                class="form-label">
+                                                                                Tentative Start Date
+                                                                            </label>
+                                                                            <input id="inputTentSchStartCouns"
+                                                                                type="date" [min]="todayDate"
+                                                                                class="form-control"
+                                                                                (change)="onselectCounsellingStart($event)"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['tentativeSSCV'].errors 
+                                                                                && ( f?.['tentativeSSCV'].touched || submitted  ))}"
+                                                                                formControlName="tentativeSSCV"
+                                                                                placeholder="Tentative Schedule Start Date of Counselling">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['tentativeSSCV'].touched || submitted) && f?.['tentativeSSCV'].errors?.['required']">
+                                                                                Start Date Required
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="counsellinghide"
+                                                                            class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                            <label for="inputTentSchEndCouns"
+                                                                                class="form-label">
+                                                                                Tentative End Date
+                                                                            </label>
+                                                                            <input id="inputTentSchEndCouns" type="date"
+                                                                                class="form-control"
+                                                                                [min]="CounsellingScheduleStart"
+                                                                                formControlName="TentativeScheduleECV"
+                                                                                [ngClass]="{ 'is-invalid':(f?.['TentativeScheduleECV'].errors 
+                                                                                && ( f?.['TentativeScheduleECV'].touched || submitted  ))}"
+                                                                                placeholder="Tentative Schedule End Date of Counselling">
+                                                                            <span class="text-danger"
+                                                                                *ngIf="(f?.['TentativeScheduleECV'].touched || submitted) && f?.['TentativeScheduleECV'].errors?.['required']">
+                                                                                End date Required
+                                                                            </span>
+                                                                        </div>
+                                                                        <div [hidden]="counsellinghide" class="col-12">
+                                                                            <label for="inputEmailAddress"
+                                                                                class="form-label d-block">
+                                                                                Same Tentative Schedule For All Courses
+                                                                            </label>
+                                                                            <div class="form-check form-check-inline"
+                                                                                *ngFor="let disSimOfCouns of CounsDissimilarityOfSchedule;">
+                                                                                <input class="form-check-input"
+                                                                                    type="radio"
+                                                                                    id="{{disSimOfCouns.id}}"
+                                                                                    [value]="disSimOfCouns.value"
+                                                                                    (change)="onchange(disSimOfCouns)"
+                                                                                    formControlName="DOSCounsV"
+                                                                                    name="DOSCounsV" />
+                                                                                <label class="form-check-label"
+                                                                                    for="{{disSimOfCouns.id}}">{{disSimOfCouns.name}}</label>
+                                                                            </div>
+                                                                            <div class="text-danger"
+                                                                                *ngIf="(f?.['DOSCounsV'].touched || submitted) && f?.['DOSCounsV'].errors?.['required']">
+                                                                                Please select!
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-3">
+                                                        <div
+                                                            class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                                            <div class="btn-group" role="group"
+                                                                aria-label="First group">
+                                                                <button type="button" (click)="SaveDraft()"
+                                                                    [hidden]="hidebutton" class="btn btn-warning">
+                                                                    <i class='bx bx-book'></i> Save as Draft
+                                                                </button>
+                                                                <button
+                                                                    (click)="activaTab('primaryprofile','primarycontact')"
+                                                                    type="button" class="btn btn-primary">
+                                                                    <i class='bx bx-arrow-from-left'></i> Next
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="primarycontact" role="tabpanel">
+                                                    <hr />
+                                                    <div class="accordion" id="accordionExample">
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header"
+                                                                id="UserDepartmentContactDetails">
+                                                                <button class="accordion-button" type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#collapseOne" aria-expanded="true"
+                                                                    aria-controls="collapseOne">
+                                                                    User Department Contact Details
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapseOne"
+                                                                class="accordion-collapse collapse show"
+                                                                aria-labelledby="UserDepartmentContactDetails"
+                                                                data-bs-parent="#accordionExample">
+                                                                <div class="accordion-body">
+                                                                    <div class="card">
+                                                                        <div class="card-header fw-bold">
+                                                                            Coordinator
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row g-3">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <label for="inputCoordName"
+                                                                                        class="form-label">Name</label>
+                                                                                    :
+                                                                                    <label id="inputCoordName"
+                                                                                        formControlName="Coname">{{registerForm.controls.Coname.value}}</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <label for="inputCoordDesignation"
+                                                                                        class="form-label">Designation</label>
+                                                                                    :
+                                                                                    <label id="inputCoordDesignation"
+                                                                                        formControlName="Codesignation">{{registerForm.controls.Codesignation.value}}</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <label for="inputCoordMobile"
+                                                                                        class="form-label">Mobile</label>
+                                                                                    :
+                                                                                    <label id="inputCoordMobile"
+                                                                                        formControlName="CoMobile">{{registerForm.controls.CoMobile.value}}</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <label for="inputCoordEmail"
+                                                                                        class="form-label">Email</label>
+                                                                                    :
+                                                                                    <label id="inputCoordEmail"
+                                                                                        formControlName="CoEmail">{{registerForm.controls.CoEmail.value}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header fw-bold">
+                                                                            Deputy Coordinator
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row g-3">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputDeputyCoordName"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="Depconame"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['Depconame'].errors 
+                                                                                        && (f?.['Depconame'].dirty || f?.['Depconame'].touched || submitted  ))}"
+                                                                                        placeholder="Name">
+
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['Depconame'].touched || submitted) && f?.['Depconame'].errors?.['required']">
+                                                                                        Name is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['Depconame'].touched && (f?.['Depconame'].errors?.['pattern'] )">
+                                                                                        Digits and Special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputDeputyCoordDesignation"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="Depcodesignation"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['Depcodesignation'].errors 
+                                                                                        && (f?.['Depcodesignation'].dirty || f?.['Depcodesignation'].touched || submitted  ))}"
+                                                                                        placeholder="Designation">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['Depcodesignation'].touched || submitted) && f?.['Depcodesignation'].errors?.['required']">
+                                                                                        Designation is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['Depcodesignation'].touched && (f?.['Depcodesignation'].errors?.['pattern'] )">
+                                                                                        Digits and special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputDeputyCoordMobile"
+                                                                                        [maxLength]="10"
+                                                                                        formControlName="Depcomobile"
+                                                                                        type="tel" class="form-control"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['Depcomobile'].errors 
+                                                        && (f?.['Depcomobile'].dirty || f?.['Depcomobile'].touched || submitted  ))}"
+                                                                                        placeholder="Mobile Number">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['Depcomobile'].touched || submitted) && f?.['Depcomobile'].errors?.['required']">
+                                                                                        Mobile number is
+                                                                                        required.
+                                                                                    </span>
+
+                                                                                    <div *ngIf="f?.['Depcomobile'].errors?.['maxlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['Depcomobile'].errors?.['minlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['Depcomobile'].errors?.['pattern']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Invalid Mobile Number
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputDeputyCoordEmail"
+                                                                                        type="email"
+                                                                                        class="form-control"
+                                                                                        formControlName="Depcoemail"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['Depcoemail'].errors 
+                                                        && (f?.['Depcoemail'].dirty || f?.['Depcoemail'].touched || submitted  ))}"
+                                                                                        placeholder="Email ID">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['Depcoemail'].touched || submitted) && f?.['Depcoemail'].errors?.['required']">
+                                                                                        Email is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['Depcoemail'].touched && (f?.['Depcoemail'].errors?.['email'] || f?.['Depcoemail'].errors?.['pattern'])">
+                                                                                        Enter a valid email address
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header fw-bold">
+                                                                            Program Manager Unit(optional)
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row g-3">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputProgManagerUnitName"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="programMname"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['programMname'].errors 
+                                                                                        && (f?.['programMname'].dirty || f?.['programMname'].touched || submitted  ))}"
+                                                                                        placeholder="Name">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['programMname'].touched || submitted) && f?.['programMname'].errors?.['required']">
+                                                                                        Required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['programMname'].touched && (f?.['programMname'].errors?.['pattern'] )">
+                                                                                        Digits and Special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputProgManagerUnitDesignation"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="programMdesignation"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['programMdesignation'].errors 
+                                                                                        && (f?.['programMdesignation'].dirty || f?.['programMdesignation'].touched || submitted  ))}"
+                                                                                        placeholder="Designation">
+
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['programMdesignation'].touched || submitted) && f?.['programMdesignation'].errors?.['required']">
+                                                                                        Designation is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['programMdesignation'].touched && (f?.['programMdesignation'].errors?.['pattern'] )">
+                                                                                        Digits and special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputProgManagerUnitMobile"
+                                                                                        [maxLength]="10" type="tel"
+                                                                                        class="form-control"
+                                                                                        formControlName="programMmobile"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['programMmobile'].errors 
+                                                        && (f?.['programMmobile'].dirty || f?.['programMmobile'].touched || submitted  ))}"
+                                                                                        placeholder="Mobile Number">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['programMmobile'].touched || submitted) && f?.['programMmobile'].errors?.['required']">
+                                                                                        Mobile number is
+                                                                                        required.
+                                                                                    </span>
+
+                                                                                    <div *ngIf="f?.['programMmobile'].errors?.['maxlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['programMmobile'].errors?.['minlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['programMmobile'].errors?.['pattern']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Invalid Mobile Number
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputProgManagerUnitEmail"
+                                                                                        type="email"
+                                                                                        formControlName="programMemail"
+                                                                                        class="form-control"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['programMemail'].errors 
+                                                        && (f?.['programMemail'].dirty || f?.['programMemail'].touched || submitted  ))}"
+                                                                                        placeholder="Email ID">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['programMemail'].touched || submitted) && f?.['programMemail'].errors?.['required']">
+                                                                                        Email is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['programMemail'].touched && (f?.['programMemail'].errors?.['email'] || f?.['programMemail'].errors?.['pattern'])">
+                                                                                        Enter a valid email address.
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header"
+                                                                id="UserDepartmentMoUSignatoryDetails">
+                                                                <button class="accordion-button collapsed" type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#collapseTwo" aria-expanded="false"
+                                                                    aria-controls="collapseTwo">
+                                                                    User Department MoU Signatory Details
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapseTwo" class="accordion-collapse collapse"
+                                                                aria-labelledby="UserDepartmentMoUSignatoryDetails"
+                                                                data-bs-parent="#accordionExample">
+                                                                <div class="accordion-body">
+                                                                    <div class="card">
+                                                                        <div class="card-header fw-bold">
+                                                                            Nodal Officer
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row g-3">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputNodalOfficerName"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="modalDname"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['modalDname'].errors 
+                                                                                        && (f?.['modalDname'].dirty || f?.['modalDname'].touched || submitted  ))}"
+                                                                                        placeholder="Name">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['modalDname'].touched || submitted) && f?.['modalDname'].errors?.['required']">
+                                                                                        Required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['modalDname'].touched && (f?.['modalDname'].errors?.['pattern'] )">
+                                                                                        Digits and Special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputNodalOfficerDesignation"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="modalDdesignation"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['modalDdesignation'].errors 
+                                                                                        && (f?.['modalDdesignation'].dirty || f?.['modalDdesignation'].touched || submitted  ))}"
+                                                                                        placeholder="Designation">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['modalDdesignation'].touched || submitted) && f?.['modalDdesignation'].errors?.['required']">
+                                                                                        Designation is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['modalDdesignation'].touched && (f?.['modalDdesignation'].errors?.['pattern'] )">
+                                                                                        Digits and special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputNodalOfficerMobile"
+                                                                                        [maxLength]="10" type="tel"
+                                                                                        class="form-control"
+                                                                                        formControlName="modaldmobile"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['modaldmobile'].errors 
+                                                        && (f?.['modaldmobile'].dirty || f?.['modaldmobile'].touched || submitted  ))}"
+                                                                                        placeholder="Mobile Number">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['modaldmobile'].touched || submitted) && f?.['modaldmobile'].errors?.['required']">
+                                                                                        Mobile number is
+                                                                                        required.
+                                                                                    </span>
+
+                                                                                    <div *ngIf="f?.['modaldmobile'].errors?.['maxlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['modaldmobile'].errors?.['minlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['modaldmobile'].errors?.['pattern']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Invalid Mobile Number
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputNodalOfficerEmail"
+                                                                                        type="email"
+                                                                                        formControlName="modalemail"
+                                                                                        class="form-control"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['modalemail'].errors 
+                                                        && (f?.['modalemail'].dirty || f?.['modalemail'].touched || submitted  ))}"
+                                                                                        placeholder="Email ID">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['modalemail'].touched || submitted) && f?.['modalemail'].errors?.['required']">
+                                                                                        Email is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['modalemail'].touched && (f?.['modalemail'].errors?.['email'] || f?.['modalemail'].errors?.['pattern'])">
+                                                                                        Enter a valid email address.
+                                                                                    </span>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header fw-bold">
+                                                                            Authorized Signatory
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row g-3">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputAuthorizedSignatoryName"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="authname"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['authname'].errors 
+                                                                                        && (f?.['authname'].dirty || f?.['authname'].touched || submitted  ))}"
+                                                                                        placeholder="Name">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['authname'].touched || submitted) && f?.['authname'].errors?.['required']">
+                                                                                        Required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['authname'].touched && (f?.['authname'].errors?.['pattern'] )">
+                                                                                        Digits and Special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputAuthorizedSignatoryDesignation"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="authdesignation"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['authdesignation'].errors 
+                                                                                        && (f?.['authdesignation'].dirty || f?.['authdesignation'].touched || submitted  ))}"
+                                                                                        placeholder="Designation">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['authdesignation'].touched || submitted) && f?.['authdesignation'].errors?.['required']">
+                                                                                        Designation is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['authdesignation'].touched && (f?.['authdesignation'].errors?.['pattern'] )">
+                                                                                        Digits and special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputAuthorizedSignatoryMobile"
+                                                                                        [maxLength]="10" type="tel"
+                                                                                        class="form-control"
+                                                                                        formControlName="authmobile"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['authmobile'].errors 
+                                                                                        && (f?.['authmobile'].dirty || f?.['authmobile'].touched || submitted  ))}"
+                                                                                        placeholder="Mobile Number">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['authmobile'].touched || submitted) && f?.['authmobile'].errors?.['required']">
+                                                                                        Mobile number is
+                                                                                        required.
+                                                                                    </span>
+
+                                                                                    <div *ngIf="f?.['authmobile'].errors?.['maxlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['authmobile'].errors?.['minlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+
+                                                                                    <div *ngIf="f?.['authmobile'].errors?.['pattern']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Invalid Mobile Number
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputAuthorizedSignatoryEmail"
+                                                                                        type="email"
+                                                                                        formControlName="authemail"
+                                                                                        class="form-control"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['authemail'].errors 
+                                                                                        && (f?.['authemail'].dirty || f?.['authemail'].touched || submitted  ))}"
+                                                                                        placeholder="Email ID">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['authemail'].touched || submitted) && f?.['authemail'].errors?.['required']">
+                                                                                        Email is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['authemail'].touched && (f?.['authemail'].errors?.['email'] || f?.['authemail'].errors?.['pattern'])">
+                                                                                        Enter a valid email address
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header"
+                                                                id="UserDepartmentTechnicalTeamDetails">
+                                                                <button class="accordion-button collapsed" type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#collapseThree"
+                                                                    aria-expanded="false" aria-controls="collapseThree">
+                                                                    User Department Technical Team Details
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapseThree" class="accordion-collapse collapse"
+                                                                aria-labelledby="UserDepartmentTechnicalTeamDetails"
+                                                                data-bs-parent="#accordionExample">
+                                                                <div class="accordion-body">
+                                                                    <div class="card">
+                                                                        <div class="card-header fw-bold">
+                                                                            System Admin
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row g-3">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputSystemAdminName"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="systemName"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['systemName'].errors 
+                                                                                        && (f?.['systemName'].dirty || f?.['systemName'].touched || submitted  ))}"
+                                                                                        placeholder="Name">
+
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['systemName'].touched || submitted) && f?.['systemName'].errors?.['required']">
+                                                                                        Required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['systemName'].touched && (f?.['systemName'].errors?.['pattern'] )">
+                                                                                        Digits and Special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputSystemAdminDesignation"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="systemdesignation"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['systemdesignation'].errors 
+                                                                                        && (f?.['systemdesignation'].dirty || f?.['systemdesignation'].touched || submitted  ))}"
+                                                                                        placeholder="Designation">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['systemdesignation'].touched || submitted) && f?.['systemdesignation'].errors?.['required']">
+                                                                                        Designation is required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['systemdesignation'].touched && (f?.['systemdesignation'].errors?.['pattern'] )">
+                                                                                        Digits and special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputSystemAdminMobile"
+                                                                                        [maxLength]="10" type="tel"
+                                                                                        class="form-control"
+                                                                                        formControlName="systemmobile"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['systemmobile'].errors 
+                                                                                        && (f?.['systemmobile'].dirty || f?.['systemmobile'].touched || submitted  ))}"
+                                                                                        placeholder="Mobile Number">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['systemmobile'].touched || submitted) && f?.['systemmobile'].errors?.['required']">
+                                                                                        Mobile number is
+                                                                                        required.
+                                                                                    </span>
+
+                                                                                    <div *ngIf="f?.['systemmobile'].errors?.['maxlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['systemmobile'].errors?.['minlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['systemmobile'].errors?.['pattern']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Invalid Mobile Number
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputSystemAdminEmail"
+                                                                                        type="email"
+                                                                                        formControlName="systememail"
+                                                                                        class="form-control"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['systememail'].errors 
+                                                                                        && (f?.['systememail'].dirty || f?.['systememail'].touched || submitted  ))}"
+                                                                                        placeholder="Email ID">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['systememail'].touched || submitted) && f?.['systememail'].errors?.['required']">
+                                                                                        Email is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['systememail'].touched && (f?.['systememail'].errors?.['email'] || f?.['systememail'].errors?.['pattern'])">
+                                                                                        Enter a valid email address.
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header fw-bold">
+                                                                            Database Admin
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row g-3">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputDatabaseAdminName"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="databasename"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['databasename'].errors 
+                                                                                        && (f?.['databasename'].dirty || f?.['databasename'].touched || submitted  ))}"
+                                                                                        placeholder="Name">
+
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['databasename'].touched || submitted) && f?.['databasename'].errors?.['required']">
+                                                                                        Required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['databasename'].touched && (f?.['databasename'].errors?.['pattern'] )">
+                                                                                        Digits and Special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputDatabaseAdminDesignation"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="databasedesignation"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['databasedesignation'].errors 
+                                                                                        && (f?.['databasedesignation'].dirty || f?.['databasedesignation'].touched || submitted  ))}"
+                                                                                        placeholder="Designation">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['databasedesignation'].touched || submitted) && f?.['databasedesignation'].errors?.['required']">
+                                                                                        Designation is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['databasedesignation'].touched && (f?.['databasedesignation'].errors?.['pattern'] )">
+                                                                                        Digits and special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputDatabaseAdminMobile"
+                                                                                        [maxLength]="10" type="tel"
+                                                                                        class="form-control"
+                                                                                        formControlName="databasemobile"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['databasemobile'].errors 
+                                                                                        && (f?.['databasemobile'].dirty || f?.['databasemobile'].touched || submitted  ))}"
+                                                                                        placeholder="Mobile Number">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['databasemobile'].touched || submitted) && f?.['databasemobile'].errors?.['required']">
+                                                                                        Mobile number is
+                                                                                        required.
+                                                                                    </span>
+
+                                                                                    <div *ngIf="f?.['databasemobile'].errors?.['maxlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['databasemobile'].errors?.['minlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['databasemobile'].errors?.['pattern']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Invalid Mobile Number
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputDatabaseAdminEmail"
+                                                                                        type="email"
+                                                                                        formControlName="databaseemail"
+                                                                                        class="form-control"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['databaseemail'].errors 
+                                                                                        && (f?.['databaseemail'].dirty || f?.['databaseemail'].touched || submitted  ))}"
+                                                                                        placeholder="Email ID">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['databaseemail'].touched || submitted) && f?.['databaseemail'].errors?.['required']">
+                                                                                        Email is required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['databaseemail'].touched && (f?.['databaseemail'].errors?.['email'] || f?.['databaseemail'].errors?.['pattern'])">
+                                                                                        Enter a valid email address
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card">
+                                                                        <div class="card-header fw-bold">
+                                                                            Web Information Manager
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div class="row g-3">
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputWebInfoManagerName"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="webname"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['webname'].errors 
+                                                                                        && (f?.['webname'].dirty || f?.['webname'].touched || submitted  ))}"
+                                                                                        placeholder="Name">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['webname'].touched || submitted) && f?.['webname'].errors?.['required']">
+                                                                                        Required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['webname'].touched && (f?.['webname'].errors?.['pattern'] )">
+                                                                                        Digits and Special characters
+                                                                                        are not allowed.
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputWebInfoManagerDesignation"
+                                                                                        type="text" class="form-control"
+                                                                                        formControlName="webdesignation"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['webdesignation'].errors 
+                                                                                        && (f?.['webdesignation'].dirty || f?.['webdesignation'].touched || submitted  ))}"
+                                                                                        placeholder="Designation">
+
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['webdesignation'].touched || submitted) && f?.['webdesignation'].errors?.['required']">
+                                                                                        Designation is required
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['webdesignation'].touched && (f?.['webdesignation'].errors?.['pattern'] )">
+                                                                                        Digits and special characters
+                                                                                        are not allowed
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input
+                                                                                        id="inputWebInfoManagerMobile"
+                                                                                        [maxLength]="10" type="tel"
+                                                                                        class="form-control"
+                                                                                        formControlName="webmobile"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['webmobile'].errors 
+                                                                                        && (f?.['webmobile'].dirty || f?.['webmobile'].touched || submitted  ))}"
+                                                                                        placeholder="Mobile Number">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['webmobile'].touched || submitted) && f?.['webmobile'].errors?.['required']">
+                                                                                        Mobile number is
+                                                                                        required.
+                                                                                    </span>
+
+                                                                                    <div *ngIf="f?.['webmobile'].errors?.['maxlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['webmobile'].errors?.['minlength']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Mobile number should be of 10
+                                                                                        digits.
+                                                                                    </div>
+                                                                                    <div *ngIf="f?.['webmobile'].errors?.['pattern']"
+                                                                                        class="invalid-feedback1">
+                                                                                        Invalid Mobile Number
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                                                    <input id="inputWebInfoManagerEmail"
+                                                                                        formControlName="webemail"
+                                                                                        type="email"
+                                                                                        [ngClass]="{ 'is-invalid':(f?.['webemail'].errors 
+                                                                                        && (f?.['webemail'].dirty || f?.['webemail'].touched || submitted  ))}"
+                                                                                        class="form-control"
+                                                                                        placeholder="Email ID">
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="(f?.['webemail'].touched || submitted) && f?.['webemail'].errors?.['required']">
+                                                                                        Email is required.
+                                                                                    </span>
+                                                                                    <span class="text-danger"
+                                                                                        *ngIf="f?.['webemail'].touched && (f?.['webemail'].errors?.['email'] || f?.['webemail'].errors?.['pattern'])">
+                                                                                        Enter a valid email address.
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row g-3">
+                                                        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 mt-4">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    [ngClass]="{ 'is-invalid':((f?.['termAndCondition'].errors?.['requiredTrue']) && submitted)}"
+                                                                    formControlName="termAndCondition"
+                                                                    id="flexSwitchCheckChecked">
+                                                                <label class="form-check-label"
+                                                                    for="flexSwitchCheckChecked">I
+                                                                    Read and Agree to Terms &
+                                                                    Conditions.</label>
+                                                                <div class="text-danger"
+                                                                    *ngIf="(f?.['termAndCondition'].errors?.['required']) && submitted">
+                                                                    Required</div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div
+                                                            class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                                            <div class="btn-group" role="group"
+                                                                aria-label="First group">
+                                                                <button type="button" [hidden]="hidebutton"
+                                                                    (click)="SaveDraft()" class="btn btn-warning">
+                                                                    <i class='bx bx-book'></i>
+                                                                    Save as Draft
+                                                                </button>
+                                                                <button type="button"
+                                                                    (click)="savedetails(mobileEmailModal)"
+                                                                    [hidden]="hidebutton" class="btn btn-primary">
+                                                                    <i class='bx bx-save'></i>
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,135 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<form class="row g-3" [formGroup]="appprojectpaymentdetailsFrmGroup">
+    <div class="card p-3">
+        <div class="row g-3">
+            <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                <label for="pINumber" class="form-label pe-2">NICSI PI Number : </label>
+                <label for="pINumber"> {{nicPInumber}} </label>
+            </div>
+            <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                <label for="dateOfPI" class="form-label pe-2">Date of PI : </label>
+                <label for="dateOfPI"> {{dateOfPi}} </label>
+            </div>
+            <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                <label for="pIAmount" class="form-label pe-2">PI Amount : </label>
+                <label for="pIAmount"> {{piAmount}} </label>
+            </div>
+            <div *ngIf="isavailPI" class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                <div class="d-flex order-actions">
+                    <label for="pI" class="form-label pe-2">PI :</label>
+                    <a title="View Document" class="ms-4 text-primary bg-light-primary border-0"
+                        (click)="viewPIDetailsDocument('05')"><i class='bx bxs-show'></i></a>
+                    <a title="Download Document" class="ms-4 text-primary bg-light-primary border-0"
+                        (click)="downloadPIDetailsDocument('05')">
+                        <i class="bx bxs-download"></i>
+                    </a>
+                </div>
+            </div>
+            <div *ngIf="isavailProposal" class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                <div class="d-flex order-actions">
+                    <label for="proposal" class="form-label">Proposal :</label>
+                    <a title="View Document" class="ms-4 text-primary bg-light-primary border-0"
+                        (click)="viewProposalDocument('06')"><i class='bx bxs-show'></i></a>
+                    <a title="Download Document" class="ms-4 text-primary bg-light-primary border-0"
+                        (click)="downloadProposalDocument('06')">
+                        <i class="bx bxs-download"></i>
+                    </a>
+                </div>
+            </div>
+            <div *ngIf="isavailCoverLetter" class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                <div class="d-flex order-actions">
+                    <label for="coverLetter" class="form-label">Cover Letter:</label>
+                    <a title="View Document" class="ms-4 text-primary bg-light-primary border-0"
+                        (click)="viewCoverLetterDocument('07')"><i class='bx bxs-show'></i></a>
+                    <a title="Download Document" class="ms-4 text-primary bg-light-primary border-0"
+                        (click)="downloadCoverLetterDocument('07')">
+                        <i class="bx bxs-download"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+        <label for="amount" class="form-label">Total Amount</label>
+        <input type="text" id="amount" formControlName="amount" [maxlength]="9" name="amount" class="form-control"
+            placeholder="Total Amount"
+            [ngClass]="{ 'is-invalid':(appprojectpaymentdetailsFrmControl?.['amount'].errors && (appprojectpaymentdetailsFrmControl?.['amount'].dirty || appprojectpaymentdetailsFrmControl?.['amount'].touched || submitted  ))}" />
+
+        <span class="text-danger"
+            *ngIf="(appprojectpaymentdetailsFrmControl?.['amount'].touched || submitted) && appprojectpaymentdetailsFrmControl?.['amount'].errors?.['required']">
+            Total Amount is required</span>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+        <label for="uTRNo" class="form-label">UTR No</label>
+        <input type="text" id="uTRNo" formControlName="uTRNo" [maxlength]="50" name="uTRNo" class="form-control"
+            placeholder="UTR No"
+            [ngClass]="{ 'is-invalid':(appprojectpaymentdetailsFrmControl?.['uTRNo'].errors && (appprojectpaymentdetailsFrmControl?.['uTRNo'].dirty || appprojectpaymentdetailsFrmControl?.['uTRNo'].touched || submitted  ))}" />
+
+        <span class="text-danger"
+            *ngIf="(appprojectpaymentdetailsFrmControl?.['uTRNo'].touched || submitted) && appprojectpaymentdetailsFrmControl?.['uTRNo'].errors?.['required']">
+            UTR No is required</span>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+        <label for="paymentDate" class="form-label">Payment Date</label>
+        <input type="date" id="paymentDate" formControlName="paymentDate" [maxlength]="200" name="paymentDate"
+            class="form-control" placeholder="Payment Date"
+            [ngClass]="{ 'is-invalid':(appprojectpaymentdetailsFrmControl?.['paymentDate'].errors && (appprojectpaymentdetailsFrmControl?.['paymentDate'].dirty || appprojectpaymentdetailsFrmControl?.['paymentDate'].touched || submitted  ))}" />
+
+        <span class="text-danger"
+            *ngIf="(appprojectpaymentdetailsFrmControl?.['paymentDate'].touched || submitted) && appprojectpaymentdetailsFrmControl?.['paymentDate'].errors?.['required']">
+            Payment Date is required</span>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+        <label for="incomeTax" class="form-label">Income Tax</label>
+        <input type="text" id="incomeTax" formControlName="incomeTax" [maxlength]="9" name="incomeTax"
+            class="form-control" placeholder="Income Tax"
+            [ngClass]="{ 'is-invalid':(appprojectpaymentdetailsFrmControl?.['incomeTax'].errors && (appprojectpaymentdetailsFrmControl?.['incomeTax'].dirty || appprojectpaymentdetailsFrmControl?.['incomeTax'].touched || submitted  ))}" />
+
+        <span class="text-danger"
+            *ngIf="(appprojectpaymentdetailsFrmControl?.['incomeTax'].touched || submitted) && appprojectpaymentdetailsFrmControl?.['incomeTax'].errors?.['required']">
+            Income Tax is required</span>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+        <label for="gST" class="form-label">GST</label>
+        <input type="text" id="gST" formControlName="gST" [maxlength]="9" name="gST" class="form-control"
+            placeholder="GST"
+            [ngClass]="{ 'is-invalid':(appprojectpaymentdetailsFrmControl?.['gST'].errors && (appprojectpaymentdetailsFrmControl?.['gST'].dirty || appprojectpaymentdetailsFrmControl?.['gST'].touched || submitted  ))}" />
+
+        <span class="text-danger"
+            *ngIf="(appprojectpaymentdetailsFrmControl?.['gST'].touched || submitted) && appprojectpaymentdetailsFrmControl?.['gST'].errors?.['required']">
+            GST is required</span>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+        <label for="tDS" class="form-label">TDS</label>
+        <input type="text" id="tDS" formControlName="tDS" [maxlength]="9" name="tDS" class="form-control"
+            placeholder="TDS"
+            [ngClass]="{ 'is-invalid':(appprojectpaymentdetailsFrmControl?.['tDS'].errors && (appprojectpaymentdetailsFrmControl?.['tDS'].dirty || appprojectpaymentdetailsFrmControl?.['tDS'].touched || submitted  ))}" />
+
+        <span class="text-danger"
+            *ngIf="(appprojectpaymentdetailsFrmControl?.['tDS'].touched || submitted) && appprojectpaymentdetailsFrmControl?.['tDS'].errors?.['required']">
+            TDS is required</span>
+    </div>
+    <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+        <button *ngIf="isApproved!=true" class="btn btn-primary me-3"><i class='bx bxs-check-circle'></i> </button>
+        <button type="submit" (click)="approved()"  [hidden]="isApproved!=true" class="btn btn-primary me-3">Verify
+            Payment
+        </button>
+        <button type="submit" *ngIf="updte==true" (click)="update()" class="btn bg-light-danger me-3"> Update
+        </button>
+        <button type="button" *ngIf="cancel==false"  [hidden]="isApproved!=true" (click)="clear()" class="btn btn-primary btn-danger">
+            Cancel
+        </button>
+    </div>
+</form>

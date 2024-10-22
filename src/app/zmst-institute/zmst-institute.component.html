@@ -1,0 +1,323 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Institute Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                </nav>
+            </div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item active" aria-current="page">Add Institute</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstinstituteFrmGroup">
+                            <div [hidden]="hdninstituteCodeType" class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="agency" class="form-label d-block">
+                                    Institute Code Type*
+                                </label>
+                                <div class="form-check form-check-inline" *ngFor="let item1 of RADIO_LIST;">
+                                    <input class="form-check-input" type="radio" id="{{item1.id}}" [value]="item1.id"
+                                        (change)="onchange(item1)" formControlName="instituteCodeType"
+                                        name="instituteCodeType" />
+                                    <label class="form-check-label" for="{{item1.id}}">{{item1.name}}</label>
+                                </div>
+                                <div class="text-danger"
+                                    *ngIf="( submitted) && zmstinstituteFrmControl?.['instituteCodeType'].errors?.['required']">
+                                    Institute Code Type is required.
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="instCd"
+                                    class="form-label">Institute Code</label> <input type="text" id="instCd"
+                                    formControlName="instCd" [maxlength]="6" name="instCd" class="form-control"
+                                    placeholder="Institute Code"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['instCd'].errors && (zmstinstituteFrmControl?.['instCd'].dirty || zmstinstituteFrmControl?.['instCd'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['instCd'].touched || submitted) && zmstinstituteFrmControl?.['instCd'].errors?.['required']">
+                                    Institute Code is required</span>
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['instCd'].touched && zmstinstituteFrmControl?.['instCd'].errors?.['pattern'])">Only
+                                    Numeric value are allowed</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="instNm"
+                                    class="form-label">Institute
+                                    Name</label> <input type="text" id="instNm" formControlName="instNm"
+                                    [maxlength]="500" name="instNm" class="form-control" placeholder="Institute Name"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['instNm'].errors && (zmstinstituteFrmControl?.['instNm'].dirty || zmstinstituteFrmControl?.['instNm'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['instNm'].touched || submitted) && zmstinstituteFrmControl?.['instNm'].errors?.['required']">
+                                    Institute Name is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['instNm'].touched && zmstinstituteFrmControl?.['instNm'].errors?.['pattern'] )">Only
+                                    Alphabets are allowed </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="abbrNm"
+                                    class="form-label">Abbrevation Name</label> <input type="text" id="abbrNm"
+                                    formControlName="abbrNm" [maxlength]="500" name="abbrNm" class="form-control"
+                                    placeholder="Abbrevation Name"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['abbrNm'].errors && (zmstinstituteFrmControl?.['abbrNm'].dirty || zmstinstituteFrmControl?.['abbrNm'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['abbrNm'].touched || submitted) && zmstinstituteFrmControl?.['abbrNm'].errors?.['required']">
+                                    Abbrevation Name is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['abbrNm'].touched && zmstinstituteFrmControl?.['abbrNm'].errors?.['pattern'] )">Only
+                                    Alphabets are allowed </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="instTypeId"
+                                    class="form-label">Institute Type</label>
+
+                                <ng-select formControlName="instTypeId" name="instTypeId" [clearable]="false"
+                                    [searchable]="true" (change)="onSelectInstType($event)"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['instTypeId'].errors 
+                                        && (zmstinstituteFrmControl?.['instTypeId'].dirty || zmstinstituteFrmControl?.['instTypeId'].touched || submitted  ))}">
+                                    <ng-option value="">--Select Institute Type--</ng-option>
+                                    <ng-option *ngFor="let zmstInstitute of allZmstInstitute"
+                                        value={{zmstInstitute.instituteTypeId}}>
+                                        {{zmstInstitute.instituteType}}</ng-option>
+                                </ng-select>
+
+                                <span class="invalid-feedback"
+                                    *ngIf="(zmstinstituteFrmControl?.['instTypeId'].touched || submitted) && zmstinstituteFrmControl?.['instTypeId'].errors?.['required']">
+                                    Institute Type is required.
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="instAdd"
+                                    class="form-label">Institute Address</label> <input type="text" id="instAdd"
+                                    formControlName="instAdd" [maxlength]="300" name="instAdd" class="form-control"
+                                    placeholder="Institute Address"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['instAdd'].errors && (zmstinstituteFrmControl?.['instAdd'].dirty || zmstinstituteFrmControl?.['instAdd'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['instAdd'].touched || submitted) && zmstinstituteFrmControl?.['instAdd'].errors?.['required']">
+                                    Institute Address is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="state"
+                                    class="form-label">State</label>
+                                <ng-select formControlName="state" name="state" [clearable]="false" [searchable]="true"
+                                    (change)="onSelectState($event)"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['state'].errors 
+                                        && (zmstinstituteFrmControl?.['state'].dirty || zmstinstituteFrmControl?.['state'].touched || submitted  ))}">
+                                    <ng-option value="">--Select State--</ng-option>
+                                    <ng-option *ngFor="let state of states" value={{state.id}}>
+                                        {{state.description}}</ng-option>
+                                </ng-select>
+
+                                <span class="invalid-feedback"
+                                    *ngIf="(zmstinstituteFrmControl?.['state'].touched || submitted) && zmstinstituteFrmControl?.['state'].errors?.['required']">
+                                    State is required.
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="district"
+                                    class="form-label">District</label>
+                                <ng-select formControlName="district" name="district" [clearable]="false"
+                                    [searchable]="true"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['district'].errors 
+                                        && (zmstinstituteFrmControl?.['district'].dirty || zmstinstituteFrmControl?.['district'].touched || submitted  ))}">
+                                    <ng-option value="">--Select District--</ng-option>
+                                    <ng-option *ngFor="let district of districts" value={{district.id}}>
+                                        {{district.description}}</ng-option>
+                                </ng-select>
+
+                                <span class="invalid-feedback"
+                                    *ngIf="(zmstinstituteFrmControl?.['district'].touched || submitted) && zmstinstituteFrmControl?.['district'].errors?.['required']">
+                                    District is required.
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="pincode"
+                                    class="form-label">Pincode</label> <input type="text" id="pincode"
+                                    formControlName="pincode" [maxlength]="6" name="pincode" class="form-control"
+                                    placeholder="Pincode" [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['pincode'].errors && (zmstinstituteFrmControl?.['pincode'].dirty || zmstinstituteFrmControl?.['pincode'].touched || submitted  ))}"/>
+
+                                 <div *ngIf="zmstinstituteFrmControl?.['pincode'].errors?.['minlength']"
+                                    class="invalid-feedback1">
+                                    Pincode should be of 6 digits
+                                </div>
+                                <div *ngIf="zmstinstituteFrmControl?.['pincode'].errors?.['pattern']"
+                                    class="invalid-feedback">
+                                    Invalid Pincode
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="instPhone"
+                                    class="form-label">Institute Phone</label> <input type="text" id="instPhone"
+                                    formControlName="instPhone" [maxlength]="10" name="instPhone" class="form-control"
+                                    placeholder="Institute Phone"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['instPhone'].errors && (zmstinstituteFrmControl?.['instPhone'].dirty || zmstinstituteFrmControl?.['instPhone'].touched || submitted  ))}" />
+
+                              
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['instPhone'].touched && zmstinstituteFrmControl?.['instPhone'].errors?.['pattern'])">Only
+                                    Numeric value are allowed</span>
+                                <div *ngIf="zmstinstituteFrmControl?.['instPhone'].errors?.['minlength']"
+                                    class="invalid-feedback1">
+                                    Pincode should be of 8 digits
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="instFax"
+                                    class="form-label">Institute Fax</label> <input type="text" id="instFax"
+                                    formControlName="instFax" [maxlength]="10" name="instFax" class="form-control"
+                                    placeholder="Institute Fax"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['instFax'].errors && (zmstinstituteFrmControl?.['instFax'].dirty || zmstinstituteFrmControl?.['instFax'].touched || submitted  ))}" />
+
+                            
+                                <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['instFax'].touched && zmstinstituteFrmControl?.['instFax'].errors?.['pattern'])">Only
+                                    Numeric value are allowed</span>
+                                <div *ngIf="zmstinstituteFrmControl?.['instFax'].errors?.['minlength']"
+                                    class="invalid-feedback1">
+                                    Pincode should be of 8 digits
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="instWebSite"
+                                    class="form-label">Institute Website</label> <input type="text" id="instWebSite"
+                                    formControlName="instWebSite" [maxlength]="100" name="instWebSite"
+                                    class="form-control" placeholder="Institute Website"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['instWebSite'].errors && (zmstinstituteFrmControl?.['instWebSite'].dirty || zmstinstituteFrmControl?.['instWebSite'].touched || submitted  ))}" />
+
+                                   <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['instWebSite'].touched && zmstinstituteFrmControl?.['instWebSite'].errors?.['pattern'] )">
+                                    Invalid URL </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="emailId"
+                                    class="form-label">EmailId</label> <input type="text" id="emailId"
+                                    formControlName="emailId" [maxlength]="50" name="emailId" class="form-control"
+                                    placeholder="EmailId"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['emailId'].errors && (zmstinstituteFrmControl?.['emailId'].dirty || zmstinstituteFrmControl?.['emailId'].touched || submitted  ))}" />
+
+                         
+                                <span class="invalid-feedback"
+                                    *ngIf="(zmstinstituteFrmControl?.['emailId'].touched && zmstinstituteFrmControl?.['emailId'].errors?.['email'] || zmstinstituteFrmControl?.['emailId'].errors?.['pattern'])">Enter
+                                    a valid email address</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="altEmailId"
+                                    class="form-label">Alternate EmailId</label> <input type="text" id="altEmailId"
+                                    formControlName="altEmailId" [maxlength]="50" name="altEmailId" class="form-control"
+                                    placeholder="Alternate EmailId"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['altEmailId'].errors && (zmstinstituteFrmControl?.['altEmailId'].dirty || zmstinstituteFrmControl?.['altEmailId'].touched || submitted  ))}" />
+
+                                    <span class="invalid-feedback"
+                                    *ngIf="(zmstinstituteFrmControl?.['altEmailId'].touched && zmstinstituteFrmControl?.['altEmailId'].errors?.['email'] || zmstinstituteFrmControl?.['altEmailId'].errors?.['pattern'])">Enter
+                                    a valid email address</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="contactPerson"
+                                    class="form-label">Contact Person</label> <input type="text" id="contactPerson"
+                                    formControlName="contactPerson" [maxlength]="100" name="contactPerson"
+                                    class="form-control" placeholder="Contact Person"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['contactPerson'].errors && (zmstinstituteFrmControl?.['contactPerson'].dirty || zmstinstituteFrmControl?.['contactPerson'].touched || submitted  ))}" />
+
+                                    <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['contactPerson'].touched && zmstinstituteFrmControl?.['contactPerson'].errors?.['pattern'] )">Only
+                                    Alphabets are allowed </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="designation"
+                                    class="form-label">Designation</label> <input type="text" id="designation"
+                                    formControlName="designation" [maxlength]="100" name="designation"
+                                    class="form-control" placeholder="Designation"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['designation'].errors && (zmstinstituteFrmControl?.['designation'].dirty || zmstinstituteFrmControl?.['designation'].touched || submitted  ))}" />
+
+                                    <span class="text-danger"
+                                    *ngIf="(zmstinstituteFrmControl?.['designation'].touched && zmstinstituteFrmControl?.['designation'].errors?.['pattern'] )">Only
+                                    Alphabets are allowed </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="mobileNo"
+                                    class="form-label">Mobile
+                                    No</label> <input type="text" id="mobileNo" formControlName="mobileNo"
+                                    [maxlength]="10" name="mobileNo" class="form-control" placeholder="MobileNo"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['mobileNo'].errors && (zmstinstituteFrmControl?.['mobileNo'].dirty || zmstinstituteFrmControl?.['mobileNo'].touched || submitted  ))}" />
+
+                                 <div *ngIf="zmstinstituteFrmControl?.['mobileNo'].errors?.['maxlength']"
+                                    class="invalid-feedback1">
+                                    Mobile number should be of 10 digits
+                                </div>
+                                <div *ngIf="zmstinstituteFrmControl?.['mobileNo'].errors?.['pattern']"
+                                    class="invalid-feedback">
+                                    Invalid Mobile Number
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="aISHE"
+                                    class="form-label">AISHE</label> <input type="text" id="aISHE"
+                                    formControlName="aISHE" [maxlength]="5" name="aISHE" class="form-control"
+                                    placeholder="AISHE"
+                                    [ngClass]="{ 'is-invalid':(zmstinstituteFrmControl?.['aISHE'].errors && (zmstinstituteFrmControl?.['aISHE'].dirty || zmstinstituteFrmControl?.['aISHE'].touched || submitted  ))}" />
+                           </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3">
+                                    Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3">
+                                    Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="btnCancel()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [hidden]="true" class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstinstituteGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Institute Code</th>
+                                        <th>Institute Name</th>
+                                        <th>Institute Address</th>
+                                        <th>Institute WebSite</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstinstituteList.length>0">
+                                        <tr *ngFor="let data of zmstinstituteList;">
+                                            <td>{{data.instCd}}</td>
+                                            <td>{{data.instNm}}</td>
+                                            <td>{{data.instAdd}}</td>
+                                            <td>{{data.instWebSite}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.instCd)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Institute Code</th>
+                                        <th>Institute Name</th>
+                                        <th>Institute Address</th>
+                                        <th>Institute WebSite</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

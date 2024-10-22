@@ -1,0 +1,151 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~ngx-smart-modal/ngx-smart-modal.css"; */
+
+.headerfirst {
+    background: #fff;
+    width: 100%;
+}
+
+.headerfirst h1 {
+    font-weight: bold;
+    font-size: 26px;
+    color: #000;
+    margin: 0;
+    padding: 2px 0 5px 0;
+}
+
+.headerfirst h3 {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000000;
+    margin: 0;
+    padding: 15px 0 1px 0;
+}
+
+.topmenu .nav-link {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.topmenu .nav-link.active {
+    color: #ffffff;
+    background: #2f4885;
+}
+.topmenu .nav-link:hover {
+    color: #ffffff;
+    background: #2f4885;
+}
+
+.section-authentication-signin, .authentication-forgot {
+    height: auto;
+}
+
+.footersec {
+    background: #fff;
+    border-top: 1px solid #8fb3e7;
+}
+
+.disclaimerText {
+    margin-bottom: 5px;
+}
+
+.footersec p {
+    color: #000;
+    padding: 20px 2px 1px 2px;
+    line-height: 1.5em;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.disclaimerText a {
+    color: #ff0000;
+}
+
+.disclaimerLogo {
+    margin-bottom: 20px;
+}
+
+.disclaimerLogo a {
+    display: inline-block;
+    padding: 7px 30px;
+    position: relative;
+}
+
+img.loginlogo {
+    border: 1px solid #2384c6;
+    padding: 8px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, white, #b5e8ff);
+}
+
+.CaptchaDiv {
+    width: 130px;
+    color: #000000;
+    font: normal 28px Impact;
+    vertical-align: middle;
+    user-select: none;
+    display: inline-block;
+    letter-spacing: 2px;
+}
+
+.invalid-feedback1 {
+    color: #fd3550;
+}
+
+.login-instruction {
+    /* background-image: linear-gradient(45deg, #167d7fd4, #98d7c2cf), url(../../../Image/RaspberryBg.jpg); */
+    background-image: linear-gradient(45deg, #2196f3, #caa3ff3b), url(assets/images/BlueBg.jpg);
+    border: 0px solid #ccc;
+    background-size: cover;
+    background-position: top center;
+    padding: 8px 10px 10px 10px;
+    height: 100%;
+    border-radius: 0px 4px 4px 0px;
+}
+
+.login-instruction h3 {
+    color: #fff;
+    font-size: 20px;
+}
+
+ul.inst {
+    list-style-type: square;
+}
+
+.inst li {
+    color: #fff;
+    margin-bottom: 15px;
+    margin-left: 25px;
+    text-align: justify;
+    line-height: 20px;
+}
+
+p.cautiontext {
+    color: #fff;
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.breaklongword {
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+}
+.is-invalid .ng-select-container
+ {
+    border: 1px solid #dc3545 !important;
+    border-radius: 4px;
+}
+
+/* Start Modal Popup*/
+.confirmation-modal {
+    background-color: black !important;
+    border: 1px solid grey;
+}
+
+
+/* End Modal Popup*/

@@ -1,0 +1,182 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Country Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Country</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstcountryFrmGroup">
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="code"
+                                    class="form-label">Code</label> <input type="text" id="code" formControlName="code"
+                                    [maxlength]="2" name="code" class="form-control" placeholder="Code"
+                                    [ngClass]="{ 'is-invalid':(zmstcountryFrmControl?.['code'].errors && (zmstcountryFrmControl?.['code'].dirty || zmstcountryFrmControl?.['code'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['code'].touched || submitted) && zmstcountryFrmControl?.['code'].errors?.['required']">
+                                    Code is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['code'].touched && zmstcountryFrmControl?.['code'].errors?.['pattern'] )">Only
+                                    Alphabets are allowed </span>
+                                <div *ngIf="zmstcountryFrmControl?.['code'].errors?.['maxlength']"
+                                    class="invalid-feedback1"> Code should be of 2 digits </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="name"
+                                    class="form-label">Name</label> <input type="text" id="name" formControlName="name"
+                                    [maxlength]="100" name="name" class="form-control" placeholder="Name"
+                                    [ngClass]="{ 'is-invalid':(zmstcountryFrmControl?.['name'].errors && (zmstcountryFrmControl?.['name'].dirty || zmstcountryFrmControl?.['name'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['name'].touched || submitted) && zmstcountryFrmControl?.['name'].errors?.['required']">
+                                    Name is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['name'].touched && zmstcountryFrmControl?.['name'].errors?.['pattern'] )">Only
+                                    Alphabets are allowed </span>
+                                <div *ngIf="zmstcountryFrmControl?.['name'].errors?.['maxlength']"
+                                    class="invalid-feedback1"> Name should be of 100 digits </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="sAARCCode"
+                                    class="form-label">SAARC Code</label> <input type="text" id="sAARCCode"
+                                    formControlName="sAARCCode" [maxlength]="2" name="sAARCCode" class="form-control"
+                                    placeholder="SAARC Code"
+                                    [ngClass]="{ 'is-invalid':(zmstcountryFrmControl?.['sAARCCode'].errors && (zmstcountryFrmControl?.['sAARCCode'].dirty || zmstcountryFrmControl?.['sAARCCode'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['sAARCCode'].touched || submitted) && zmstcountryFrmControl?.['sAARCCode'].errors?.['required']">
+                                    SAARC Code is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['sAARCCode'].touched && zmstcountryFrmControl?.['sAARCCode'].errors?.['pattern'] )">Only
+                                    Alphabets are allowed </span>
+                                <div *ngIf="zmstcountryFrmControl?.['sAARCCode'].errors?.['maxlength']"
+                                    class="invalid-feedback1"> sAARCCode should be of 2 digits </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="sAARCName"
+                                    class="form-label">SAARC Name</label> <input type="text" id="sAARCName"
+                                    formControlName="sAARCName" [maxlength]="100" name="sAARCName" class="form-control"
+                                    placeholder="SAARC Name"
+                                    [ngClass]="{ 'is-invalid':(zmstcountryFrmControl?.['sAARCName'].errors && (zmstcountryFrmControl?.['sAARCName'].dirty || zmstcountryFrmControl?.['sAARCName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['sAARCName'].touched || submitted) && zmstcountryFrmControl?.['sAARCName'].errors?.['required']">
+                                    SAARC Name is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['sAARCName'].touched && zmstcountryFrmControl?.['sAARCName'].errors?.['pattern'] )">Only
+                                    Alphabets are allowed </span>
+                                <div *ngIf="zmstcountryFrmControl?.['sAARCName'].errors?.['maxlength']"
+                                    class="invalid-feedback1"> SAARC Name should be of 100 digits </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="isdcode"
+                                    class="form-label">Isd Code</label> <input type="text" id="isdcode"
+                                    formControlName="isdcode" [maxlength]="50" name="isdcode" class="form-control"
+                                    placeholder="Isd Code"
+                                    [ngClass]="{ 'is-invalid':(zmstcountryFrmControl?.['isdcode'].errors && (zmstcountryFrmControl?.['isdcode'].dirty || zmstcountryFrmControl?.['isdcode'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['isdcode'].touched || submitted) && zmstcountryFrmControl?.['isdcode'].errors?.['required']">
+                                    Isd Code is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['isdcode'].touched && zmstcountryFrmControl?.['isdcode'].errors?.['pattern'])">Only
+                                    Numeric value are allowed</span>
+                                <div *ngIf="zmstcountryFrmControl?.['isdcode'].errors?.['maxlength']"
+                                    class="invalid-feedback1"> Isd Code should be of 50 digits </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="priority"
+                                    class="form-label">Priority</label> <input type="text" id="priority"
+                                    formControlName="priority" [maxlength]="4" name="priority" class="form-control"
+                                    placeholder="Priority"
+                                    [ngClass]="{ 'is-invalid':(zmstcountryFrmControl?.['priority'].errors && (zmstcountryFrmControl?.['priority'].dirty || zmstcountryFrmControl?.['priority'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['priority'].touched || submitted) && zmstcountryFrmControl?.['priority'].errors?.['required']">
+                                    Priority is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(zmstcountryFrmControl?.['priority'].touched && zmstcountryFrmControl?.['priority'].errors?.['pattern'])">Only
+                                    Numeric value are allowed</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="reset()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstcountryGrid" class="table align-middle mb-0"
+                                *ngIf="zmstcountryList.length>0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>SAARC Code</th>
+                                        <th>SAARC Name</th>
+                                        <th>Isd Code</th>
+                                        <th>Priority</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstcountryList.length>0">
+                                        <tr *ngFor="let data of zmstcountryList;">
+                                            <td>{{data.code}}</td>
+                                            <td>{{data.name}}</td>
+                                            <td>{{data.sAarccode}}</td>
+                                            <td>{{data.sAarcname}}</td>
+                                            <td>{{data.isdcode}}</td>
+                                            <td>{{data.priority}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.code)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>SAARC Code</th>
+                                        <th>SAARC Name</th>
+                                        <th>Isd Code</th>
+                                        <th>Priority</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,563 @@
+<ng-template class="modal fade" tabindex="-1" aria-labelledby="modal-basic-title" aria-hidden="true" #mobileEmailModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">{{otpHeading}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row g3">
+                <label *ngIf="mobileOtp" for="OTPMobile" class="form-label">
+                    Enter Mobile OTP
+                </label>
+                <div [hidden]="mobileOtp!=true" class="input-group mb-3">
+                    <input type="password" class="form-control" id="OTPMobile" placeholder="Enter Mobile OTP">
+                    <span>
+                        <button type="button" (click)="resendotpSms()" [disabled]="isEnableSmsOtpLink" class="btn btn-link ms-1">
+                            Resend OTP
+                        </button>
+                    </span>
+                </div>
+                <label *ngIf="showauthMode" class="form-label text-center">
+                    {{authMode}}
+                </label>
+                <label *ngIf="emailOtp" for="OTPemail" class="form-label">
+                    Enter Email OTP
+                </label>
+
+                <div [hidden]="emailOtp!=true" class="input-group mb-3">
+                    <input type="password" class="form-control" id="OTPemail" placeholder="Enter Email OTP">
+                    <span>
+                        <button type="button" (click)="resendotpEmail()" [disabled]="isEnableEmailOtpLink" class="btn btn-link ms-1">
+                            Resend OTP
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" (click)="modal.close('Save click')">Close</button>
+        <button type="submit" (click)="addData()" class="btn btn-primary btn-sm">Confirm</button>
+    </div>
+</ng-template>
+<div class="d-flex mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="text-center">
+                            <h3 class="">Onboarding Request</h3>
+                        </div>
+                        <div class="login-separater text-center mb-4">
+                            <hr />
+                        </div>
+                        <div class="form-body">
+                            <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <label for="agency" class="form-label d-block">
+                                            Choose Agency
+                                        </label>
+                                        <div class="form-check form-check-inline" *ngFor="let item1 of RADIO_LIST;">
+                                            <input class="form-check-input" type="radio" id="{{item1.id}}"
+                                                [value]="item1.id" (change)="onchange(item1)" formControlName="agency"
+                                                name="agency" />
+                                            <label class="form-check-label" for="{{item1.id}}">{{item1.name}}</label>
+                                        </div>
+                                        <div class="text-danger"
+                                            *ngIf="( submitted) && registerFormControl?.['agency'].errors?.['required']">
+                                            Agency should be selected.
+                                        </div>
+                                    </div>
+                                    <div *ngIf="Oncentral" class="col-sm-6">
+                                        <label for="Ministery" class="form-label">Ministry</label>
+                                        <ng-select formControlName="MinisteryName" name="MinisteryName"
+                                            [clearable]="false" [searchable]="true" (change)="onSelectMinistry()"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['MinisteryName'].errors 
+                                        && (registerFormControl?.['MinisteryName'].dirty || registerFormControl?.['MinisteryName'].touched || submitted  ))}">
+                                            <ng-option value="">--Select Ministry--</ng-option>
+                                            <ng-option *ngFor="let Ministery of MinistryDetail"
+                                                value={{Ministery.ministryId}}>
+                                                {{Ministery.ministryName}}</ng-option>
+                                        </ng-select>
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['MinisteryName'].touched || submitted) && registerFormControl?.['MinisteryName'].errors?.['required']">
+                                            Ministry is required.
+                                        </span>
+                                    </div>
+                                    <div *ngIf="Oncentral" class="col-sm-6" [hidden]="ministryId!=999">
+                                        <label for="inputOtherministry" [hidden]="ministryId!=999"
+                                            class="form-label">Other Ministry</label>
+                                        <input type="text" [hidden]="ministryId!=999" [maxlength]="200"
+                                            formControlName="Otherministry"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Otherministry'].errors && (registerFormControl?.['Otherministry'].dirty || registerFormControl?.['Otherministry'].touched || submitted  ))}"
+                                            class="form-control" id="inputOtherministry" placeholder="Other Ministry"
+                                            name="Otherministry">
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['Otherministry'].touched || submitted) && registerFormControl?.['Otherministry'].errors?.['required']">
+                                            Other Ministry is required.
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="registerFormControl?.['Otherministry'].touched && registerFormControl?.['Otherministry'].errors?.['invalid']">
+                                            Script or Style are not allowed.
+                                        </span>
+                                    </div>
+                                    <div *ngIf="onState" class="col-sm-6">
+                                        <label for="AgencyState" class="form-label">State</label>
+                                        <ng-select formControlName="AgencyState" name="AgencyState" [clearable]="false"
+                                            [searchable]="true" (change)="onSelectAgencyState($event)"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['AgencyState'].errors 
+                                        && (registerFormControl?.['AgencyState'].dirty || registerFormControl?.['AgencyState'].touched || submitted  ))}">
+                                            <ng-option value="">--Select State--</ng-option>
+                                            <ng-option *ngFor="let state of states" value={{state.id}}>
+                                                {{state.description}}</ng-option>
+                                        </ng-select>
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['AgencyState'].touched || submitted) && registerFormControl?.['AgencyState'].errors?.['required']">
+                                            State is required.
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="Nameoforg" class="form-label">Organization</label>
+                                        <ng-select formControlName="Nameoforg" name="Nameoforg" [clearable]="false"
+                                            [searchable]="true" (change)="SelectOrganization($event)"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Nameoforg'].errors 
+                                        && (registerFormControl?.['Nameoforg'].dirty || registerFormControl?.['Nameoforg'].touched || submitted  ))}">
+                                            <ng-option value="">--Select Organization--</ng-option>
+                                            <ng-option *ngFor="let organization of OrganizationDetail"
+                                                value={{organization.organizationId}}>
+                                                {{organization.organizationName}}</ng-option>
+                                        </ng-select>
+
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['Nameoforg'].touched || submitted) && registerFormControl?.['Nameoforg'].errors?.['required']">
+                                            Name of Organization is required.
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6" [hidden]="organization!='999'">
+                                        <label for="otherofSY" [hidden]="organization!='999'" class="form-label">Other
+                                            Organization</label>
+                                        <input type="text" id="otherofSY" [maxlength]="200"
+                                            [hidden]="organization!='999'"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['otherofSY'].errors && (registerFormControl?.['otherofSY'].dirty || registerFormControl?.['otherofSY'].touched || submitted  ))}"
+                                            formControlName="otherofSY" class="form-control"
+                                            placeholder="Other Organization" name="otherofSY">
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['otherofSY'].touched || submitted) && registerFormControl?.['otherofSY'].errors?.['required']">
+                                            Other Organization required.
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="registerFormControl?.['otherofSY'].touched && registerFormControl?.['otherofSY'].errors?.['invalid']">
+                                            Script or Style are not allowed.
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="Sessionyear" class="form-label">Academic Session</label>
+                                        <select id="Sessionyear" formControlName="Sessionyear" name="Sessionyear"
+                                            class="form-select"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Sessionyear'].errors 
+                                            && (registerFormControl?.['Sessionyear'].dirty || registerFormControl?.['Sessionyear'].touched || submitted ))}">
+                                            <option value="" selected>--Select Academic Session--</option>
+                                            <option *ngFor="let sessionyear of year" [ngValue]="sessionyear.yearId">
+                                                {{sessionyear.description}}
+                                            </option>
+                                        </select>
+
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['Sessionyear'].touched || submitted) && registerFormControl?.['Sessionyear'].errors?.['required']">
+                                            Session Year is required.
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="comAddress" class="form-label">
+                                            Complete Mailing Address
+                                        </label>
+                                        <textarea class="form-control" formControlName="comAddress" rows="1"
+                                            [maxlength]="100" id="comAddress" name="comAddress"
+                                            placeholder="Complete Mailing Address"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['comAddress'].errors && (registerFormControl?.['comAddress'].dirty || registerFormControl?.['comAddress'].touched || submitted  ))}">
+                                        </textarea>
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['comAddress'].touched || submitted) && registerFormControl?.['comAddress'].errors?.['required']">
+                                            Complete Address is required.
+                                        </span>
+                                        <span *ngIf="registerFormControl?.['comAddress'].errors?.['pattern']"
+                                            class="invalid-feedback1">
+                                            Special characters are not allowed.
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="registerFormControl?.['comAddress'].touched && registerFormControl?.['comAddress'].errors?.['invalid']">
+                                            Script or Style are not allowed.
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="state" class="form-label">State</label>
+                                        <ng-select (change)="onSelectState($event)" formControlName="state" name="state"
+                                            [clearable]="false" [searchable]="true"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['state'].errors 
+                                        && (registerFormControl?.['state'].dirty || registerFormControl?.['state'].touched || submitted  ))}">
+                                            <ng-option value="">--Select--</ng-option>
+                                            <ng-option *ngFor="let state of states" value={{state.id}}>
+                                                {{state.description}}</ng-option>
+
+                                        </ng-select>
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['state'].touched || submitted) && registerFormControl?.['state'].errors?.['required']">
+                                            State is required.
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="district" class="form-label">District</label>
+                                        <ng-select formControlName="district" name="district" [clearable]="false"
+                                            [searchable]="true"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['district'].errors 
+                                        && (registerFormControl?.['district'].dirty || registerFormControl?.['district'].touched || submitted  ))}">
+                                            <ng-option value="">--Select District--</ng-option>
+                                            <ng-option *ngFor="let state of districts" value={{state.id}}>
+                                                {{state.description}}</ng-option>
+
+                                        </ng-select>
+
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['district'].touched || submitted) && registerFormControl?.['district'].errors?.['required']">
+                                            District is required.
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="Pincode" class="form-label">Pin Code</label>
+                                        <input type="text" class="form-control" id="Pincode" [maxLength]="6"
+                                            formControlName="Pincode" placeholder="Pin Code" name="Pincode"
+                                            (keypress)="numberOnly($event)"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Pincode'].errors 
+                                            && (registerFormControl?.['Pincode'].dirty || registerFormControl?.['Pincode'].touched || submitted  ))}">
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['Pincode'].touched || submitted) && registerFormControl?.['Pincode'].errors?.['required']">
+                                            Pincode is required.
+                                        </span>
+                                        <div *ngIf="registerFormControl?.['Pincode'].errors?.['maxlength']"
+                                            class="invalid-feedback1">
+                                            Pin Code should be of 6 digits
+                                        </div>
+                                        <div *ngIf="registerFormControl?.['Pincode'].errors?.['minlength']"
+                                            class="invalid-feedback1">
+                                            Pin Code should be of 6 digits
+                                        </div>
+                                        <div *ngIf="registerFormControl?.['Pincode'].errors?.['pattern']"
+                                            class="invalid-feedback1">
+                                            Invalid Pincode
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <div class="card mt-3 mb-3">
+                                            <div class="card-header fw-bold">
+                                                Head of Organization Details
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row g-3">
+                                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                        <label for="Headoforg" class="form-label">Name</label>
+                                                        <input type="text" id="Headoforg" formControlName="Headoforg"
+                                                            class="form-control" id="Headoforg" name="Headoforg"
+                                                            placeholder="Name"
+                                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Headoforg'].errors 
+                                                        && (registerFormControl?.['Headoforg'].dirty || registerFormControl?.['Headoforg'].touched || submitted  ))}">
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="(registerFormControl?.['Headoforg'].touched || submitted) && registerFormControl?.['Headoforg'].errors?.['required']">
+                                                            Head of Organization
+                                                            is required
+                                                        </span>
+                                                        <span class="text-danger"
+                                                            *ngIf="registerFormControl?.['Headoforg'].touched && (registerFormControl?.['Headoforg'].errors?.['pattern'] )">
+                                                            Digits and Special characters
+                                                            are not allowed.
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                        <label for="Designation" class="form-label">Designation</label>
+                                                        <input type="text" id="Designation" [maxlength]="50"
+                                                            formControlName="Designation" name="Designation"
+                                                            class="form-control" placeholder="Designation"
+                                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Designation'].errors 
+                                                        && (registerFormControl?.['Designation'].dirty || registerFormControl?.['Designation'].touched || submitted  ))}" />
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="(registerFormControl?.['Designation'].touched || submitted) && registerFormControl?.['Designation'].errors?.['required']">
+                                                            Designation is required
+                                                        </span>
+                                                        <span class="text-danger"
+                                                            *ngIf="registerFormControl?.['Designation'].touched && (registerFormControl?.['Designation'].errors?.['pattern'] )">
+                                                            Special characters
+                                                            are not allowed.
+                                                        </span>
+                                                        <span class="text-danger"
+                                                            *ngIf="(registerFormControl?.['Designation'].touched && registerFormControl?.['Designation'].errors?.['pattern'] )">Only
+                                                            Alphabets are allowed </span>
+                                                    </div>
+                                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                        <label for="Mobileno" class="form-label">Mobile</label>
+                                                        <input type="text" formControlName="Mobileno"
+                                                            class="form-control" name="Mobileno" id="Mobileno"
+                                                            placeholder="Mobile" [maxLength]="10"
+                                                            (keypress)="numberOnly($event)"
+                                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Mobileno'].errors 
+                                                        && (registerFormControl?.['Mobileno'].dirty || registerFormControl?.['Mobileno'].touched || submitted  ))}">
+                                                    <span class="invalid-feedback"
+                                                            *ngIf="(registerFormControl?.['Mobileno'].touched || submitted) && registerFormControl?.['Mobileno'].errors?.['required']">
+                                                            Mobile no. is
+                                                            required
+                                                        </span>
+                                                        <div *ngIf="registerFormControl?.['Mobileno'].errors?.['pattern']"
+                                                            class="invalid-feedback">
+                                                            Invalid Mobile Number
+                                                        </div>
+                                                        <div *ngIf="registerFormControl?.['Mobileno'].errors?.['maxlength']"
+                                                            class="invalid-feedback1">
+                                                            Mobile number should be of 10 digits
+                                                        </div>
+                                                        <div *ngIf="registerFormControl?.['Mobileno'].errors?.['minlength']"
+                                                            class="invalid-feedback1">
+                                                            Mobile number should be of 10 digits
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                        <label for="Email" class="form-label">Email</label>
+                                                        <input type="text" formControlName="Email" class="form-control"
+                                                            id="Email" name="Email" placeholder="Email"
+                                                            placeholder="Email"
+                                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Email'].errors 
+                                                        && (registerFormControl?.['Email'].dirty || registerFormControl?.['Email'].touched || submitted  ))}">
+
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="(registerFormControl?.['Email'].touched || submitted) && registerFormControl?.['Email'].errors?.['required']">
+                                                            Email
+                                                            is required
+                                                        </span>
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="registerFormControl?.['Email'].touched && (registerFormControl?.['Email'].errors?.['email'] || registerFormControl?.['Email'].errors?.['pattern'])">
+                                                            Enter a valid email address
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <div class="card mb-3">
+                                            <div class="card-header fw-bold">
+                                                Coordinator Details
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row g-3">
+                                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                        <label for="CPname" class="form-label">Name</label>
+                                                        <input type="text" id="CPname" placeholder="Name"
+                                                            formControlName="CPname" name="CPname" class="form-control"
+                                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['CPname'].errors 
+                                                        && (registerFormControl?.['CPname'].dirty || registerFormControl?.['CPname'].touched || submitted  ))}" />
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="(registerFormControl?.['CPname'].touched || submitted) && registerFormControl?.['CPname'].errors?.['required']">
+                                                            Name is required
+                                                        </span>
+                                                        <span class="text-danger"
+                                                            *ngIf="registerFormControl?.['CPname'].touched && (registerFormControl?.['CPname'].errors?.['pattern'] )">
+                                                            Digits and Special characters
+                                                            are not allowed.
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                        <label for="CPDesignation"
+                                                            class="form-label">Designation</label>
+                                                        <input type="text" id="CPDesignation" [maxlength]="50"
+                                                            formControlName="CPDesignation" name="CPDesignation"
+                                                            class="form-control" placeholder="Designation"
+                                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['CPDesignation'].errors 
+                                                        && (registerFormControl?.['CPDesignation'].dirty || registerFormControl?.['CPDesignation'].touched || submitted  ))}" />
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="(registerFormControl?.['CPDesignation'].touched || submitted) && registerFormControl?.['CPDesignation'].errors?.['required']">
+                                                            Designation is required
+                                                        </span>
+                                                        <span class="text-danger"
+                                                            *ngIf="registerFormControl?.['CPDesignation'].touched && (registerFormControl?.['CPDesignation'].errors?.['pattern'] )">
+                                                            Special characters
+                                                            are not allowed.
+                                                        </span>
+                                                        <span class="text-danger"
+                                                            *ngIf="(registerFormControl?.['CPDesignation'].touched && registerFormControl?.['CPDesignation'].errors?.['pattern'] )">Only
+                                                            Alphabets are allowed </span>
+
+                                                    </div>
+                                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                        <label for="CPMobile" class="form-label">Mobile</label>
+                                                        <input type="text" id="CPMobile" formControlName="CPMobile"
+                                                            [maxlength]="10" name="CPMobile" class="form-control"
+                                                            placeholder="Mobile" (keypress)="numberOnly($event)"
+                                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['CPMobile'].errors 
+                                                        && (registerFormControl?.['CPMobile'].dirty || registerFormControl?.['CPMobile'].touched || submitted  ))}" />
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="(registerFormControl?.['CPMobile'].touched || submitted) && registerFormControl?.['CPMobile'].errors?.['required']">
+                                                            Mobile no. is required
+                                                        </span>
+                                                        <div *ngIf="registerFormControl?.['CPMobile'].errors?.['maxlength']"
+                                                            class="invalid-feedback1">
+                                                            Mobile number should be of 10 digits
+                                                        </div>
+                                                        <div *ngIf="registerFormControl?.['CPMobile'].errors?.['minlength']"
+                                                            class="invalid-feedback1">
+                                                            Mobile number should be of 10 digits
+                                                        </div>
+                                                        <div *ngIf="registerFormControl?.['CPMobile'].errors?.['pattern']"
+                                                            class="invalid-feedback">
+                                                            Invalid Mobile Number
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                                        <label for="CPEmail" class="form-label">Email</label>
+                                                        <input type="text" id="CPEmail" formControlName="CPEmail"
+                                                            placeholder="Email" name="CPEmail" class="form-control"
+                                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['CPEmail'].errors 
+                                                        && (registerFormControl?.['CPEmail'].dirty || registerFormControl?.['CPEmail'].touched || submitted  ))}" />
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="(registerFormControl?.['CPEmail'].touched || submitted) && registerFormControl?.['CPEmail'].errors?.['required']">
+                                                            Email is required
+                                                        </span>
+                                                        <span class="invalid-feedback"
+                                                            *ngIf="registerFormControl?.['CPEmail'].touched && (registerFormControl?.['CPEmail'].errors?.['email'] || registerFormControl?.['CPEmail'].errors?.['pattern'])">
+                                                            Enter a valid email address
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div [hidden]="UploadShowHide" class="col-sm-6">
+                                        <label for="Uploadfile" class="form-label">Upload Signed
+                                            Request Letter</label>
+                                        <input type="file" class="form-control" formControlName="Uploadfile"
+                                            name="Uploadfile" (change)="handleFileInput($event)" id="Uploadfile"
+                                            placeholder="Upload Signed Request Letter"
+                                            [ngClass]="{ 'is-invalid':(registerFormControl?.['Uploadfile'].errors 
+                                            && (registerFormControl?.['Uploadfile'].dirty || (submitted || fileUploadValidation)))}">
+                                        <div class="help-block">Only PDF files are allowed to be uploaded</div>
+                                        <span class="invalid-feedback"
+                                            *ngIf="(submitted) && registerFormControl?.['Uploadfile'].errors?.['required']">
+                                            file is required.
+                                        </span>
+                                        <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                                            upload PDF file only.</span>
+                                        <span class="text-danger" *ngIf="fileSizeValidation>10">Please
+                                            file should be smaller than 10 MB</span>
+                                            <span class="text-danger" *ngIf="fileExtensionCount">Extension Can't be more than 1,Only one ('.') is allowed in name</span>
+                                    </div>
+                                    <div class="col-sm-12" [hidden]="btnPreview">
+                                        <a class="btn btn-primary" [hidden]="btnPreview" (click)="btnPreviewPdf()">
+                                            Preview Uploaded Request Letter PDF
+                                        </a>
+                                    </div>
+                                    <ng-template #content let-c="close" let-d="dismiss">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title">View PDF</h4>
+                                            <button type="button" class="btn-close" aria-label="Close"
+                                                (click)="d('Cross click')"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="file-priview-container">
+                                                <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false"
+                                                    [base64Src]="selectedFileB64" [height]="'60vh'"
+                                                    [showHandToolButton]="true">
+                                                </ngx-extended-pdf-viewer>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <div class="col-12">
+                                        <label for="inputEmailAddress" class="form-label d-block"> Services </label>
+                                        <div class="form-check form-check-inline" *ngFor="let item of CHECK_LIST;">
+                                            <input class="form-check-input" type="checkbox"
+                                                formControlName="checkboxArrayList" id="{{item.serviceTypeName}}"
+                                                [checked]="getSelection(item)" checked="false"
+                                                (change)="changeHandler(item)" />
+                                            <label for="{{item.serviceTypeName}}"
+                                                class="form-check-label">{{item.serviceTypeName}}</label>
+
+                                        </div>
+                                        <div class="text-danger"
+                                            *ngIf="(registerFormControl?.['checkboxArrayList'].touched || submitted) && registerFormControl?.['checkboxArrayList'].errors?.['required']">
+                                            At least 1 service should be selected.
+                                        </div>
+                                    </div>
+                                    <div [hidden]="Captchainputshowhide" class="col-6">
+                                        <label for="securitypin" class="form-label">Security Pin</label>
+                                        <div class="input-group">
+                                            <input type="text" id="securitypin" formControlName="securitypin"
+                                                class="form-control" id="securitypin" name="securitypin"
+                                                placeholder="Enter Security Code"
+                                                [ngClass]="{ 'is-invalid':(registerFormControl?.['securitypin'].errors 
+                                                && (registerFormControl?.['securitypin'].dirty || registerFormControl?.['securitypin'].touched || submitted  ))}">
+                                        </div>
+                                        <span class="invalid-feedback"
+                                            *ngIf="(registerFormControl?.['securitypin'].touched || submitted) && registerFormControl?.['securitypin'].errors?.['required']">
+                                            Security Pin is required.
+                                        </span>
+                                    </div>
+                                    <div [hidden]="CaptchaHide" class="col-12">
+                                        <div class="d-inline">
+                                            <div class="d-flex">
+                                                <span class=" p-3 py-0 fs-4 rounded fw-bold"
+                                                    style="letter-spacing: 4px;">
+                                                    <img [src]="imageSource">
+                                                </span>
+                                                <button type="button" (click)="refreshCaptcha()"
+                                                    class="btn btn-outline-primary btn-sm ms-2">
+                                                    <i class="bx bx-refresh"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" [hidden]="submitButton">
+                                        <div class="d-grid">
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class='bx bx-book'></i> Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div [hidden]="HideAndShowAgreetermCondition" class="col-sm-12">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input"
+                                                [ngClass]="{ 'is-invalid':((registerFormControl?.['termAndCondition'].errors?.['requiredTrue']) && submittedFinal)}"
+                                                formControlName="termAndCondition" (change)="onselect()" type="checkbox"
+                                                id="flexSwitchCheckChecked">
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">I read and
+                                                agree to Terms & Conditions</label>
+                                            <span class="text-danger"
+                                                *ngIf="registerFormControl?.['termAndCondition'].errors?.['required']">
+                                                Required</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 text-center">
+                                        <button class="btn btn-warning" (click)="Onedit()" [hidden]="editButton"><i
+                                                class='bx bx-book'></i>Edit</button>&nbsp;&nbsp;
+                                        <button class="btn btn-primary" (click)="FinalSubmit(mobileEmailModal)"
+                                            data-toggle="modal" data-target="#exampleModal"
+                                            [hidden]="FinalSubmitButton"><i class='bx bx-book'></i>Final
+                                            Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

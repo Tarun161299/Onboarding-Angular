@@ -1,0 +1,186 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">MD SMS Email Template Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">MD SMS Email Template</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="mdsmsemailtemplateFrmGroup">
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="templateId"
+                                    class="form-label">Template Id</label> <input type="text" id="templateId"
+                                    formControlName="templateId" [maxlength]="6" name="templateId" class="form-control"
+                                    placeholder="Template Id"
+                                    [ngClass]="{ 'is-invalid':(mdsmsemailtemplateFrmControl?.['templateId'].errors && (mdsmsemailtemplateFrmControl?.['templateId'].dirty || mdsmsemailtemplateFrmControl?.['templateId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(mdsmsemailtemplateFrmControl?.['templateId'].touched || submitted) && mdsmsemailtemplateFrmControl?.['templateId'].errors?.['required']">
+                                    Template Id is required</span>
+
+
+                                <span class="text-danger"
+                                    *ngIf="mdsmsemailtemplateFrmControl?.['templateId'].touched && mdsmsemailtemplateFrmControl?.['templateId'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="description"
+                                    class="form-label">Description</label> <input type="text" id="description"
+                                    formControlName="description" [maxlength]="500" name="description"
+                                    class="form-control" placeholder="Description"
+                                    [ngClass]="{ 'is-invalid':(mdsmsemailtemplateFrmControl?.['description'].errors && (mdsmsemailtemplateFrmControl?.['description'].dirty || mdsmsemailtemplateFrmControl?.['description'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(mdsmsemailtemplateFrmControl?.['description'].touched || submitted) && mdsmsemailtemplateFrmControl?.['description'].errors?.['required']">
+                                    Description is required</span>
+                                    <span class="text-danger"
+                                    *ngIf="mdsmsemailtemplateFrmControl?.['description'].touched && mdsmsemailtemplateFrmControl?.['description'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="messageTypeId"
+                                    class="form-label">MessageTypeId</label> <input type="text" id="messageTypeId"
+                                    formControlName="messageTypeId" [maxlength]="6" name="messageTypeId"
+                                    class="form-control" placeholder="Message Type Id"
+                                    [ngClass]="{ 'is-invalid':(mdsmsemailtemplateFrmControl?.['messageTypeId'].errors && (mdsmsemailtemplateFrmControl?.['messageTypeId'].dirty || mdsmsemailtemplateFrmControl?.['messageTypeId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(mdsmsemailtemplateFrmControl?.['messageTypeId'].touched || submitted) && mdsmsemailtemplateFrmControl?.['messageTypeId'].errors?.['required']">
+                                    Message Type Id is required</span>
+                                    <span class="text-danger"
+                                    *ngIf="mdsmsemailtemplateFrmControl?.['messageTypeId'].touched && mdsmsemailtemplateFrmControl?.['messageTypeId'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="messageSubject"
+                                    class="form-label">Message Subject</label> <input type="text" id="messageSubject"
+                                    formControlName="messageSubject" [maxlength]="500" name="messageSubject"
+                                    class="form-control" placeholder="Message Subject"
+                                    [ngClass]="{ 'is-invalid':(mdsmsemailtemplateFrmControl?.['messageSubject'].errors && (mdsmsemailtemplateFrmControl?.['messageSubject'].dirty || mdsmsemailtemplateFrmControl?.['messageSubject'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(mdsmsemailtemplateFrmControl?.['messageSubject'].touched || submitted) && mdsmsemailtemplateFrmControl?.['messageSubject'].errors?.['required']">
+                                    Message Subject is required</span>
+                                    <span class="text-danger"
+                                    *ngIf="mdsmsemailtemplateFrmControl?.['messageSubject'].touched && mdsmsemailtemplateFrmControl?.['messageSubject'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="registeredTemplateId"
+                                    class="form-label">Registered Template Id</label> <input type="text"
+                                    id="registeredTemplateId" formControlName="registeredTemplateId" [maxlength]="50"
+                                    name="registeredTemplateId" class="form-control" placeholder="Registered Template Id"
+                                    [ngClass]="{ 'is-invalid':(mdsmsemailtemplateFrmControl?.['registeredTemplateId'].errors && (mdsmsemailtemplateFrmControl?.['registeredTemplateId'].dirty || mdsmsemailtemplateFrmControl?.['registeredTemplateId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(mdsmsemailtemplateFrmControl?.['registeredTemplateId'].touched || submitted) && mdsmsemailtemplateFrmControl?.['registeredTemplateId'].errors?.['required']">
+                                    Registered Template Id is required</span>
+                                    <span class="text-danger"
+                                    *ngIf="mdsmsemailtemplateFrmControl?.['registeredTemplateId'].touched && mdsmsemailtemplateFrmControl?.['registeredTemplateId'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12"> <label for="messageTemplate"
+                                    class="form-label">Message Template</label>
+                                <editor type="text" id="messageTemplate" formControlName="messageTemplate"
+                                    class="form-control"></editor>
+                            </div>
+
+
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                            <script>
+                                var editor1 = new RichTextEditor("#div_editor1");
+                            </script>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="mdsmsemailtemplateGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Template Id</th>
+                                        <th>Description</th>
+                                        <th>Message Type Id</th>
+                                        <th>Message Subject</th>
+                                        <th>Message Template</th>
+                                        <th>Registered Template Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="mdsmsemailtemplateList.length>0">
+                                        <tr *ngFor="let data of mdsmsemailtemplateList;">
+                                            <td>{{data.templateId}}</td>
+                                            <td>{{data.description}}</td>
+                                            <td>{{data.messageTypeId}}</td>
+                                            <td>{{data.messageSubject}}</td>
+                                            <td>
+                                                <div [innerHTML]="data.messageTemplate"></div>
+                                            </td>
+                                            <td>{{data.registeredTemplateId}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.templateId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Template Id</th>
+                                        <th>Description</th>
+                                        <th>Message Type Id</th>
+                                        <th>Message Subject</th>
+                                        <th>Message Template</th>
+                                        <th>Registered Template Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

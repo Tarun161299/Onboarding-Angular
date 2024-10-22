@@ -1,0 +1,22 @@
+export interface SaveDraftProfile{
+    requestNo:string;
+    website:string;
+    services:string;
+    yearOfFirstTimeAffiliation:number;
+    ministryId:number;
+    previousAgency:string;
+    description:string;
+    examExpectedApplicant:number;
+    examinationList:string;
+    examTentativeScheduleStart:string;
+    examTentativeScheduleEnd:string;
+    counsExpectedApplicant:number;
+    counsExpectedSeat:number;
+    counsStreamList:number;
+    counsExpectedRound:number;
+    counsExpectedSpotRound:number;
+    counsExpectedParticipatingInstitute:number;
+    counsTentativeScheduleStart:string;
+    counsTentativeScheduleEnd:string;
+    counsDissimilarityOfSchedule:boolean;
+}

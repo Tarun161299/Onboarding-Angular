@@ -1,0 +1,305 @@
+<ng-template #content let-c="close" let-d="dismiss" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<ng-template #image let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile Image</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <img height="200px" [src]="imageSourcepop" alt="Image Source">
+    </div>
+</ng-template>
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <div *ngIf="flag==true" class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="usermanagementfrm">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputusername" class="form-label">User Name:</label>
+                                <input id="UserName"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['UserName'].errors 
+        && (userManagementFormControl?.['UserName'].dirty || userManagementFormControl?.['UserName'].touched || submitted  ))}"
+                                    formControlName="UserName" type="text" class="form-control" placeholder="User Name">
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['UserName'].touched || submitted) && userManagementFormControl?.['UserName'].errors?.['required']">
+                                    User Name is Required
+                                </span>
+                            </div>
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputdesignation" class="form-label">Designation:</label>
+                                <input id="Designation"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['Designation'].errors 
+        && (userManagementFormControl?.['Designation'].dirty || userManagementFormControl?.['Designation'].touched || submitted  ))}"
+                                    formControlName="Designation" type="text" class="form-control"
+                                    placeholder="Designation">
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['Designation'].touched || submitted) && userManagementFormControl?.['Designation'].errors?.['required']">
+                                    Designation is Required
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputemailid" class="form-label">Email ID:</label>
+                                <input id="EmailId"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['EmailId'].errors 
+        && (userManagementFormControl?.['EmailId'].dirty || userManagementFormControl?.['EmailId'].touched || submitted  ))}"
+                                    formControlName="EmailId" type="text" class="form-control" placeholder="Email Id">
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['EmailId'].touched || submitted) && userManagementFormControl?.['EmailId'].errors?.['required']">
+                                    Email Id is Required
+                                </span>
+
+
+                                <span class="invalid-feedback"
+                                    *ngIf="userManagementFormControl?.['EmailId'].touched && (userManagementFormControl?.['EmailId'].errors?.['email'] || userManagementFormControl?.['EmailId'].errors?.['pattern'])">
+                                    Enter a valid email address
+                                </span>
+
+                            </div>
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputmobile" class="form-label">Mobile:</label>
+                                <input id="Mobile" [maxLength]="10" (keypress)="numberOnly($event)"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['Mobile'].errors 
+        && (userManagementFormControl?.['Mobile'].dirty || userManagementFormControl?.['Mobile'].touched || submitted  ))}" formControlName="Mobile" type="text" class="form-control"
+                                    placeholder="Mobile">
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['Mobile'].touched || submitted) && userManagementFormControl?.['Mobile'].errors?.['required']">
+                                    Mobile is Required
+                                </span>
+
+                                <div *ngIf="userManagementFormControl?.['Mobile'].errors?.['pattern']"
+                                    class="invalid-feedback">
+                                    Invalid Mobile Number
+                                </div>
+                                <div *ngIf="userManagementFormControl?.['Mobile'].errors?.['maxlength']"
+                                    class="invalid-feedback1">
+                                    Mobile number should be of 10 digits
+                                </div>
+                                <div *ngIf="userManagementFormControl?.['Mobile'].errors?.['minlength']"
+                                    class="invalid-feedback1">
+                                    Mobile number should be of 10 digits
+                                </div>
+                            </div>
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputuserid" class="form-label">Choose your User Id:</label>
+                                <input id="UserId" [maxLength]="15" (keypress)="alphanumericOnly($event)"
+                                    (change)="checkUserIDAvailibility($event)"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['UserId'].errors 
+        && (userManagementFormControl?.['UserId'].dirty || userManagementFormControl?.['UserId'].touched || submitted  ))}" formControlName="UserId" type="text"
+                                    class="form-control" placeholder="UserId">
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['UserId'].touched || submitted) && userManagementFormControl?.['UserId'].errors?.['required']">
+                                    Choose your User Id is Required
+                                </span>
+                                <span class="text-danger" *ngIf="userIdAvailable==true">
+                                    User ID Already Exist, Kindly Choose Another One.
+                                </span>
+                            </div>
+
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputpassword" class="form-label">Create a Password:</label>
+                                <div class="input-group">
+                                    <input [type]="password" id="UserPassword" autocomplete="off" [maxLength]="10"
+                                        [ngClass]="{ 'is-invalid':(userManagementFormControl?.['UserPassword'].errors 
+        && (userManagementFormControl?.['UserPassword'].dirty || userManagementFormControl?.['UserPassword'].touched || submitted  ))}"
+                                        formControlName="UserPassword" class="form-control" placeholder="Password">
+
+                                    <a (click)="onClickShoHidePassword()" class="input-group-text bg-transparent">
+                                        <i class="bx" [ngClass]="{ 'bx-hide': !show, 'bx-show': show }"></i>
+                                    </a>
+
+                                    <!-- <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['UserPassword'].touched || submitted) && userManagementFormControl?.['UserPassword'].errors?.['required']">
+                                    Password is Required
+                                </span> -->
+                                </div>
+                                <div *ngIf="submitted && userManagementFormControl['UserPassword'].errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="userManagementFormControl['UserPassword'].errors['required']">Password
+                                        is Required</div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputcnpassword" class="form-label">Confirm Password:</label>
+                                <div class="input-group">
+                                    <input [type]="confirmpassword" id="ConfirmPassword" autocomplete="off"
+                                        [maxLength]="10"
+                                        [ngClass]="{ 'is-invalid':(userManagementFormControl?.['ConfirmPassword'].errors 
+        && (userManagementFormControl?.['ConfirmPassword'].dirty || userManagementFormControl?.['ConfirmPassword'].touched || submitted  ))}"
+                                        formControlName="ConfirmPassword" class="form-control"
+                                        placeholder="Confirm Password" />
+
+                                    <a (click)="onClickShoHideConfirmPassword()"
+                                        class="input-group-text bg-transparent">
+                                        <i class="bx"
+                                            [ngClass]="{ 'bx-hide': !showconfirm, 'bx-show': showconfirm }"></i>
+                                    </a>
+                                </div>
+                                <!-- <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['ConfirmPassword'].touched || submitted) && userManagementFormControl?.['ConfirmPassword'].errors?.['required']">
+                                    Confirm Password is Required
+                                </span> -->
+                                <div *ngIf="submitted && userManagementFormControl['ConfirmPassword'].errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="userManagementFormControl['ConfirmPassword'].errors['required']">Confirm
+                                        Password is Required</div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputSecurityQuestion" class="form-label">Security Question</label>
+                                <select class="form-select"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['SecurityQuestion'].errors 
+                                && (userManagementFormControl?.['SecurityQuestion'].dirty || userManagementFormControl?.['SecurityQuestion'].touched || submitted  ))}"
+                                    formControlName="SecurityQuestion">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let SecurityQ of SecurityQuestiondropdown"
+                                        value={{SecurityQ.securityQuesId}}>
+                                        {{SecurityQ.securityQues}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['SecurityQuestion'].touched || submitted) && userManagementFormControl?.['SecurityQuestion'].errors?.['required']">
+                                    Security Question is Required
+                                </span>
+                            </div>
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputsecurityanswer" class="form-label">Security Answer:</label>
+                                <input id="securityanswer"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['securityanswer'].errors 
+        && (userManagementFormControl?.['securityanswer'].dirty || userManagementFormControl?.['securityanswer'].touched || submitted  ))}"
+                                    formControlName="securityanswer" type="text" class="form-control"
+                                    placeholder="Security Answer">
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['securityanswer'].touched || submitted) && userManagementFormControl?.['securityanswer'].errors?.['required']">
+                                    Security Answer is Required
+                                </span>
+                            </div>
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputAuthenticationMode" class="form-label">Authentication Mode</label>
+                                <select class="form-select"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['AuthenticationMode'].errors 
+                                && (userManagementFormControl?.['AuthenticationMode'].dirty || userManagementFormControl?.['AuthenticationMode'].touched || submitted  ))}"
+                                    formControlName="AuthenticationMode">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let authentication of AuthenticationModedropdown"
+                                        value={{authentication.authCode}}>
+                                        {{authentication.authmode}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['AuthenticationMode'].touched || submitted) && userManagementFormControl?.['AuthenticationMode'].errors?.['required']">
+                                    Authentication Mode is Required
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputPhotograph" class="form-label">Photograph</label>
+
+                                <div class="input-group">
+                                    <input #Image type="file"
+                                        [ngClass]="{ 'is-invalid':(userManagementFormControl?.['flupload'].errors 
+                                    && (userManagementFormControl?.['flupload'].dirty || userManagementFormControl?.['flupload'].touched || submitted  ))}"
+                                        formControlName="flupload" class="form-control"
+                                        (change)="handleFileInput($event)" accept=".jpg,.svg,.png,.jpeg" />
+
+                                    <button class="btn text-primary bg-light-primary" *ngIf="fileupload==''?false:true"
+                                        title="View Photo" (click)="getDocumentbyAddress('img')"><i
+                                            class='bx bxs-show'></i>
+                                    </button>
+                                </div>
+
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['flupload'].touched || submitted) && userManagementFormControl?.['flupload'].errors?.['required']">
+                                    Photograph is Required, Please upload only .jpg,.svg,.png,.jpeg file
+                                </span>
+                                <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+                            </div>
+
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputsecuritypin" class="form-label">Enter Security Pin:</label>
+                                <input id="securitypin"
+                                    [ngClass]="{ 'is-invalid':(userManagementFormControl?.['securitypin'].errors 
+                                && (userManagementFormControl?.['securitypin'].dirty || userManagementFormControl?.['securitypin'].touched || submitted  ))}"
+                                    formControlName="securitypin" type="text" class="form-control"
+                                    placeholder="Security Pin">
+                                <span class="text-danger"
+                                    *ngIf="(userManagementFormControl?.['securitypin'].touched || submitted) && userManagementFormControl?.['securitypin'].errors?.['required']">
+                                    Security Pin is Required
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <div class="d-inline">
+                                    <div class="CaptchaDiv">
+                                        <div class="d-flex">
+                                            <span class=" p-3 py-0 fs-4 rounded fw-bold" style="letter-spacing: 4px;">
+                                                <img [src]="imageSource">
+                                            </span>
+                                            <button type="button" (click)="refreshCaptcha()"
+                                                class="btn btn-outline-primary btn-sm ms-1">
+                                                <i class="bx bx-refresh"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row mt-2" [hidden]="adduser">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                    <button type="submit" (click)="save()" class="btn btn-primary me-3"> Save
+                                    </button>
+                                    <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-2" [hidden]="updateuser">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                    <button type="submit" (click)="btnUpdate()" class="btn btn-primary me-3"> Update
+                                    </button>
+                                    <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,283 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Examination Management Services</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item active" aria-current="page">Add New Application</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div *ngIf="flag == false" class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstAppSummary">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputServices" class="form-label">Application Year</label>
+                                <select class="form-select" (change)="onSelectAppYear($event)"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['ApplicationYear'].errors 
+                                && (AppSummaryFormControl?.['ApplicationYear'].dirty || AppSummaryFormControl?.['ApplicationYear'].touched || submitted  ))}"
+                                    formControlName="ApplicationYear">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let year of Years" value={{year.value}}>
+                                        {{year.year}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['ApplicationYear'].touched || submitted) && AppSummaryFormControl?.['ApplicationYear'].errors?.['required']">
+                                    Application Year is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputMinistry" class="form-label">Application Type</label>
+                                <select class="form-select"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['ApplicationType'].errors 
+                                && (AppSummaryFormControl?.['ApplicationType'].dirty || AppSummaryFormControl?.['ApplicationType'].touched || submitted  ))}"
+                                    formControlName="ApplicationType">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let AppType of ApplicationTypes" value={{AppType.value}}>
+                                        {{AppType.applicationType}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['ApplicationType'].touched || submitted) && AppSummaryFormControl?.['ApplicationType'].errors?.['required']">
+                                    Application Type is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputRequestID" class="form-label">Application Title</label>
+                                <select class="form-select" (change)="onSelectApplicationTitle($event)"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['ApplicationTitle'].errors 
+                                && (AppSummaryFormControl?.['ApplicationTitle'].dirty || AppSummaryFormControl?.['ApplicationTitle'].touched || submitted  ))}"
+                                    formControlName="ApplicationTitle">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let Zmstproject of Zmstprojectsdropdown"
+                                        value={{Zmstproject.projectName}}>
+                                        {{Zmstproject.projectName}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['ApplicationTitle'].touched || submitted) && AppSummaryFormControl?.['ApplicationTitle'].errors?.['required']">
+                                    Application Title is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputAgency" class="form-label">Application ID</label>
+                                <input id="inputAgency"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['ApplicationID'].errors 
+                                && (AppSummaryFormControl?.['ApplicationID'].dirty || AppSummaryFormControl?.['ApplicationID'].touched || submitted  ))}"
+                                    formControlName="ApplicationID" type="text" class="form-control"
+                                    placeholder="Application ID">
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['ApplicationID'].touched || submitted) && AppSummaryFormControl?.['ApplicationID'].errors?.['required']">
+                                    Application Id is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputServices" class="form-label">Application URL</label>
+                                <input id="inputServices"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['ApplicationURL'].errors 
+                                && (AppSummaryFormControl?.['ApplicationURL'].dirty || AppSummaryFormControl?.['ApplicationURL'].touched || submitted  ))}"
+                                    formControlName="ApplicationURL" type="text" class="form-control"
+                                    placeholder="Application URL">
+                                <span class="text-danger"
+                                    *ngIf="AppSummaryFormControl?.['ApplicationURL'].touched && (AppSummaryFormControl?.['ApplicationURL'].errors?.['pattern'] )">
+                                    Invalid URL
+                                </span>
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['ApplicationURL'].touched || submitted) && AppSummaryFormControl?.['ApplicationURL'].errors?.['required']">
+                                    Application URL is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputMinistry" class="form-label">Status</label>
+                                <select formControlName="Status"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['Status'].errors 
+                                && (AppSummaryFormControl?.['Status'].dirty || AppSummaryFormControl?.['Status'].touched || submitted  ))}"
+                                    class="form-select">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let status of Status" value={{status.value}}>
+                                        {{status.status}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['Status'].touched || submitted) && AppSummaryFormControl?.['Status'].errors?.['required']">
+                                    Status is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputRequestID" class="form-label">Priority</label>
+                                <input formControlName="Priority" (keypress)="numberOnly($event)"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['Priority'].errors 
+                                && (AppSummaryFormControl?.['Priority'].dirty || AppSummaryFormControl?.['Priority'].touched || submitted  ))}" id="inputRequestID" type="text"
+                                    class="form-control" placeholder="Priority">
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['Priority'].touched || submitted) && AppSummaryFormControl?.['Priority'].errors?.['required']">
+                                    Priority is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputAgency" class="form-label">Total Round</label>
+                                <input formControlName="TotalRound" (keypress)="numberOnly($event)"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['TotalRound'].errors 
+                                && (AppSummaryFormControl?.['TotalRound'].dirty || AppSummaryFormControl?.['TotalRound'].touched || submitted  ))}" id="inputAgency" type="text"
+                                    class="form-control" placeholder="Total Round">
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['TotalRound'].touched || submitted) && AppSummaryFormControl?.['TotalRound'].errors?.['required']">
+                                    Total Round is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputServices" class="form-label">Admin URL</label>
+                                <input formControlName="AdminURL"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['AdminURL'].errors 
+                                && (AppSummaryFormControl?.['AdminURL'].dirty || AppSummaryFormControl?.['AdminURL'].touched || submitted  ))}"
+                                    id="inputServices" type="text" class="form-control" placeholder="Admin URL">
+                                <span class="text-danger"
+                                    *ngIf="AppSummaryFormControl?.['AdminURL'].touched && (AppSummaryFormControl?.['AdminURL'].errors?.['pattern'] )">
+                                    Invalid URL
+                                </span>
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['AdminURL'].touched || submitted) && AppSummaryFormControl?.['AdminURL'].errors?.['required']">
+                                    Admin URL is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-6">
+                                <label for="inputMinistry" class="form-label">Enter Security PIN</label>
+                                <input formControlName="SecurityPIN" id="inputMinistry"
+                                    [ngClass]="{ 'is-invalid':(AppSummaryFormControl?.['SecurityPIN'].errors 
+                                && (AppSummaryFormControl?.['SecurityPIN'].dirty || AppSummaryFormControl?.['SecurityPIN'].touched || submitted  ))}" type="text"
+                                    class="form-control" placeholder="Security PIN">
+                                <span class="text-danger"
+                                    *ngIf="(AppSummaryFormControl?.['SecurityPIN'].touched || submitted) && AppSummaryFormControl?.['SecurityPIN'].errors?.['required']">
+                                    Please enter Security Pin
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-6">
+                                <div class="d-inline">
+                                    <div class="CaptchaDiv">
+                                        <div class="d-flex">
+                                            <span class=" p-3 py-0 fs-4 rounded fw-bold" style="letter-spacing: 4px;">
+                                                <img [src]="imageSource">
+                                            </span>
+                                            <button type="button" (click)="refreshCaptcha()"
+                                                class="btn btn-outline-primary btn-sm ms-1">
+                                                <i class="bx bx-refresh"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2" [hidden]="addhdn">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                    <button type="submit" (click)="save()" class="btn btn-primary me-3"> Save
+                                    </button>
+                                    <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-2" [hidden]="updatehdn">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                    <button type="submit" (click)="btnUpdate()" class="btn btn-primary me-3"> Update
+                                    </button>
+                                    <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="flag" class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <button type="button" class="btn btn-primary me-3 mb-3" (click)="btnUpdateAll()">
+                                Update
+                            </button>
+                            <div>
+                                <table id="applicationSummary"
+                                    class="row-border hover table-sm w-100 align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr class="bg-primary bg-opacity-75 text-white">
+                                            <th>SNo.</th>
+                                            <th>Application Year</th>
+                                            <th>Application Type</th>
+                                            <th>Application ID</th>
+                                            <th>Application Title</th>
+                                            <th>Application URL</th>
+                                            <th>Status</th>
+                                            <th>Update Time</th>
+                                            <th>Priority</th>
+                                            <th>Total Round</th>
+                                            <th>Admin URL</th>
+                                            <th>Schedule</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="rowdata.length>0">
+                                            <tr *ngFor="let user of rowdata let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{user.appYear}}</td>
+                                                <td> {{user.appType}} </td>
+                                                <td>{{user.appId}}</td>
+                                                <td>{{user.appTitle}} </td>
+                                                <td>{{user.appUrl}}</td>
+                                                <td>{{user.status}}</td>
+                                                <td>{{user.updatedTime | ddMmYYYYDate}}</td>
+                                                <td>{{user.priority}}</td>
+                                                <td>{{user.totalRound}}</td>
+                                                <td>{{user.adminUrl}}</td>
+                                                <td>{{user.scheduleDoc}}</td>
+                                                <td>
+                                                    <div class="d-flex order-actions">
+                                                        <a (click)="edit(user)"
+                                                            class="text-primary bg-light-primary border-0">
+                                                            <i class="bx bxs-edit"></i>
+                                                        </a>
+                                                        <a (click)="deleterow(user)"
+                                                            class="ms-4  text-danger bg-light-danger border-0">
+                                                            <i class="bx bxs-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>SNo.</th>
+                                            <th>Application Year</th>
+                                            <th>Application Type</th>
+                                            <th>Application ID</th>
+                                            <th>Application Title</th>
+                                            <th>Application URL</th>
+                                            <th>Status</th>
+                                            <th>Update Time</th>
+                                            <th>Priority</th>
+                                            <th>Total Round</th>
+                                            <th>Admin URL</th>
+                                            <th>Schedule</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div *ngIf="rowdata.length==0">
+                                <strong class="w-50 text-center"> No Records Found</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

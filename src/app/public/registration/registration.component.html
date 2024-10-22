@@ -1,0 +1,217 @@
+<ng-template class="modal fade" tabindex="-1" aria-labelledby="modal-basic-title" aria-hidden="true" #mobileEmailModal
+    let-modal>
+    <div class="modal-header">
+        
+       <h5 class="modal-title" id="modal-basic-title">{{otpHeading}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row g3">
+                <label *ngIf="mobileOtp" for="OTPMobile" class="form-label">
+                    Enter Mobile OTP
+                </label>
+                <div [hidden]="mobileOtp!=true" class="input-group mb-3">
+                    <input type="password" class="form-control" id="OTPMobile" placeholder="Enter Mobile OTP">
+                    <span>
+                        <button type="button" (click)="resendotpSms()" [disabled]="isEnableSmsOtpLink"  class="btn btn-link ms-1">
+                            Resend OTP
+                        </button>
+                    </span>
+                </div>
+                <label  *ngIf="showauthMode" class="form-label text-center">
+                    {{authMode}}
+                </label>               
+                <label *ngIf="emailOtp" for="OTPemail" class="form-label">
+                    Enter Email OTP
+                </label>
+
+                <div [hidden]="emailOtp!=true" class="input-group mb-3">
+                    <input type="password" class="form-control" id="OTPemail" placeholder="Enter Email OTP">
+                    <span>
+                        <button type="button" (click)="resendotpEmail()" [disabled]="isEnableEmailOtpLink" class="btn btn-link ms-1">
+                            Resend OTP
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" (click)="modal.close('Save click')">Close</button>
+        <button type="submit" (click)="addData()" class="btn btn-primary btn-sm">Confirm</button>
+    </div>
+</ng-template>
+<div class="d-flex align-items-center justify-content-center my-5">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-1">
+            <div class="col mx-auto">
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <div class="border pt-4 ps-4 pe-4 pb-0 rounded">
+                            <div class="text-center">
+                                <h3 class="">Sign Up</h3>
+                                <p>Already have an account? <a routerLink="/login">Sign in here</a>
+                                </p>
+                            </div>
+                            <div class="login-separater text-center mb-4">
+                                <hr />
+                            </div>
+                            <div class="form-body">
+                                <form class="row g-3" [formGroup]="signUpForm"
+                                    (ngSubmit)="signUpSubmit(mobileEmailModal)">
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="inputRequestID" class="form-label">Request ID</label>
+                                        <input id="inputRequestID" type="text" class="form-control"
+                                            placeholder="Request ID" value={{requestId}} disabled>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="inputAgency" class="form-label">Agency</label>
+                                        <input id="inputAgency" type="text" class="form-control" placeholder="Agency"
+                                            value={{Agency}} disabled>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="inputServices" class="form-label">Services</label>
+                                        <input id="inputServices" type="text" class="form-control"
+                                            placeholder="Services" value={{Services}} disabled>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="inputMinistry" class="form-label">Ministry</label>
+                                        <input id="inputMinistry" type="text" class="form-control"
+                                            placeholder="Ministry" value={{ministry}} disabled>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="inputOrganizationName" class="form-label">Name
+                                            of
+                                            Organization</label>
+                                        <input id="inputOrganizationName" type="text" class="form-control"
+                                            placeholder="Name of Organization" value={{nameOfOrganisation}} disabled>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="userID" class="form-label">Login ID</label>
+                                        <input type="userID" class="form-control" id="userID" placeholder="User ID"
+                                            [maxLength]="15" formControlName="userID"
+                                            (keypress)="alphanumericOnly($event)" name="userID"
+                                            (change)="checkUserIDAvailibility($event)"
+                                            [ngClass]="{ 'is-invalid':(signUpFormControl?.['userID'].errors 
+                                        && (signUpFormControl?.['userID'].dirty || signUpFormControl?.['userID'].touched || submitted  ))}">
+                                        <span class="text-danger"
+                                            *ngIf="(signUpFormControl?.['userID'].touched || submitted) && signUpFormControl?.['userID'].errors?.['required']">
+                                            User ID is required
+                                        </span>
+                                        <span class="text-danger" *ngIf="userIdAvailable==true">
+                                            User ID Already Exist, Kindly Choose Another One.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="userName" class="form-label">Name</label>
+                                        <div class="input-group">
+                                            <input type="userName" class="form-control" id="userName"
+                                                placeholder="Enter User Name" formControlName="userName" name="userName"
+                                                [ngClass]="{ 'is-invalid':(signUpFormControl?.['userName'].errors 
+                                               && (signUpFormControl?.['userName'].dirty || signUpFormControl?.['userName'].touched || submitted  ))}">
+                                        </div>
+                                        <span class="text-danger"
+                                            *ngIf="(signUpFormControl?.['userName'].touched || submitted) && signUpFormControl?.['userName'].errors?.['required']">
+                                            User Name is required.
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="signUpFormControl?.['userName'].touched && signUpFormControl?.['userName'].errors?.['pattern']">
+                                            Only alphabets are allowed
+                                        </span>
+                                    </div>
+
+
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="password" class="form-label">Password</label>
+                                        <div class="input-group">
+                                            <input [type]="password" class="form-control" id="password" [maxLength]="10"
+                                                placeholder="Enter Password" formControlName="password" name="password"
+                                                [ngClass]="{ 'is-invalid':(signUpFormControl?.['password'].errors 
+                                               && (signUpFormControl?.['password'].dirty || signUpFormControl?.['password'].touched || submitted  ))}">
+                                        </div>
+                                        <span class="text-danger"
+                                            *ngIf="(signUpFormControl?.['password'].touched || submitted) && signUpFormControl?.['password'].errors?.['required']">
+                                            Password is required.
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="signUpFormControl?.['password'].touched && signUpFormControl?.['password'].errors?.['invalidPassword']">
+                                            Password should have minimum 8 characters, at least 1 uppercase letter, 1
+                                            lowercase
+                                            letter and 1 number.
+                                        </span>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <label for="confirmPassword" class="form-label">Confirm
+                                            Password</label>
+                                        <div class="input-group">
+                                            <input [type]="show ? 'text' : 'password'" class="form-control"
+                                                formControlName="confirmPassword" id="confirmPassword" [maxLength]="10"
+                                                placeholder="Enter Confirm Password" name="confirmPassword"
+                                                [ngClass]="{ 'is-invalid':(signUpFormControl?.['confirmPassword'].errors 
+                                                                                    && (signUpFormControl?.['confirmPassword'].dirty || signUpFormControl?.['confirmPassword'].touched || submitted  ))}">
+                                            <a (click)="toggleFieldTextType()" class="input-group-text bg-transparent">
+                                                <i class="bx" [ngClass]="{ 'bx-hide': !show, 'bx-show': show }"></i>
+                                            </a>
+                                        </div>
+                                        <span class="text-danger"
+                                            *ngIf="(signUpFormControl?.['confirmPassword'].touched || submitted) && signUpFormControl?.['confirmPassword'].errors?.['required']">
+                                            Confirm Password is required.
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="signUpFormControl?.['confirmPassword'].touched && signUpFormControl?.['confirmPassword'].errors?.['passwordMismatch']">
+                                            Passwords does not matched.
+                                        </span>
+
+
+                                    </div>
+                                    <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+                                        <label for="inputSecurityCode" class="form-label">Security Code</label>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control border-end-0" id="txtSecurityPin"
+                                                formControlName="txtSecurityPin" placeholder="Enter Security Code"
+                                                name="txtSecurityPin"
+                                                [ngClass]="{ 'is-invalid':(signUpFormControl?.['txtSecurityPin'].errors 
+                                                && (signUpFormControl?.['txtSecurityPin'].dirty || signUpFormControl?.['txtSecurityPin'].touched || submitted  ))}">
+                                        </div>
+                                        <span class="text-danger"
+                                            *ngIf="(signUpFormControl?.['txtSecurityPin'].touched || submitted) && signUpFormControl?.['txtSecurityPin'].errors?.['required']">
+                                            Security Pin is required.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="d-inline">
+                                            <div class="CaptchaDiv">
+                                                <div class="d-flex">
+                                                    <span class=" p-3 py-0 fs-4 rounded fw-bold"
+                                                        style="letter-spacing: 4px;">
+                                                        <img [src]="imageSource">
+                                                    </span>
+                                                    <button type="button" (click)="refreshCaptcha()"
+                                                        class="btn btn-outline-primary btn-sm ms-1">
+                                                        <i class="bx bx-refresh"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary"><i class='bx bx-user'></i>Sign
+                                                UP</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

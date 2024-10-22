@@ -1,0 +1,116 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Category Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Category</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstcategoryFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="categoryId"
+                                    class="form-label">Category Id</label> <input type="text" id="categoryId"
+                                    formControlName="categoryId" [maxlength]="5" name="categoryId" class="form-control"
+                                    placeholder="Category Id"
+                                    [ngClass]="{ 'is-invalid':(zmstcategoryFrmControl?.['categoryId'].errors && (zmstcategoryFrmControl?.['categoryId'].dirty || zmstcategoryFrmControl?.['categoryId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcategoryFrmControl?.['categoryId'].touched || submitted) && zmstcategoryFrmControl?.['categoryId'].errors?.['required']">
+                                    Category Id is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="categoryName"
+                                    class="form-label">Category Name</label> <input type="text" id="categoryName"
+                                    formControlName="categoryName" [maxlength]="100" name="categoryName"
+                                    class="form-control" placeholder="Category Name"
+                                    [ngClass]="{ 'is-invalid':(zmstcategoryFrmControl?.['categoryName'].errors && (zmstcategoryFrmControl?.['categoryName'].dirty || zmstcategoryFrmControl?.['categoryName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcategoryFrmControl?.['categoryName'].touched || submitted) && zmstcategoryFrmControl?.['categoryName'].errors?.['required']">
+                                    Category Name is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="alternateNames"
+                                    class="form-label">Alternate Name</label> <input type="text" id="alternateNames"
+                                    formControlName="alternateNames" [maxlength]="500" name="alternateNames"
+                                    class="form-control" placeholder="Alternate Name"
+                                    [ngClass]="{ 'is-invalid':(zmstcategoryFrmControl?.['alternateNames'].errors && (zmstcategoryFrmControl?.['alternateNames'].dirty || zmstcategoryFrmControl?.['alternateNames'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstcategoryFrmControl?.['alternateNames'].touched || submitted) && zmstcategoryFrmControl?.['alternateNames'].errors?.['required']">
+                                    Alternate Name is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="reset()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstcategoryGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Category Id</th>
+                                        <th>Category Name</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstcategoryList.length>0">
+                                        <tr *ngFor="let data of zmstcategoryList;">
+                                            <td>{{data.categoryId}}</td>
+                                            <td>{{data.categoryName}}</td>
+                                            <td>{{data.alternateNames}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.categoryId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Category Id</th>
+                                        <th>Category Name</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

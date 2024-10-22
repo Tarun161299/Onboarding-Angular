@@ -1,0 +1,226 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="file-priview-container">
+      <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="binarydata" [height]="'60vh'"
+        [showHandToolButton]="true">
+      </ngx-extended-pdf-viewer>
+    </div>
+  </div>
+</ng-template>
+<div class="page-wrapper">
+  <div class="page-content">
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+      <div class="breadcrumb-title pe-3">Onboarding Request</div>
+      <div class="ps-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0 p-0">
+            <li class="breadcrumb-item"><a class="text-decoration-none" routerLink="/auth/onboardinglist">Onboarding
+                Request List</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Onboarding Request Detail</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="ms-auto">
+        <div class="btn-group">
+          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+              href="javascript:;">Action</a>
+            <a class="dropdown-item" href="javascript:;">Another action</a>
+            <a class="dropdown-item" href="javascript:;">Something else here</a>
+            <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+              link</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="row g-3" [formGroup]="requestDetailViewForm">
+      <div class="row">
+        <div class="col">
+          <div class="card radius-10 mb-0">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div>
+                  <h5 class="mb-1">Onboarding Request</h5>
+                </div>
+                <div class="ms-auto">
+                  <a routerLink="/auth/onboardinglist" class="btn btn-primary btn-sm radius-30">
+                    <i class="bx bx-left-arrow-alt"></i>
+                    Back to Onboarding Request List</a>
+                </div>
+              </div>
+              <div class="table-responsive mt-3">
+                <table class="table table-bordered table-sm w-100 table-hover">
+                  <tbody>
+                    <tr>
+                      <th class="w-50">Request No.</th>
+                      <td>{{ requestId }}</td>
+                    </tr>
+                    <tr>
+                      <th class="w-50">Agency</th>
+                      <td>{{ (agency== 'null' || agency ==null) ? 'NA' : agency}}</td>
+                    </tr>
+                    <tr [hidden]="stateshow">
+                      <th>State</th>
+                      <td>{{ (state== 'null' || state==null) ? 'NA' : state }}</td>
+                    </tr>
+                    <tr>
+                      <th>Services</th>
+                      <td>{{ (services=='null' ||services==null) ? 'NA':services }}</td>
+                    </tr>
+
+                    <tr [hidden]="Ministryshow">
+                      <th [hidden]="Ministryshow">Ministry</th>
+                      <td>{{ (ministry=='null' ||ministry==null) ? 'NA':ministry }}</td>
+                    </tr>
+                    <tr>
+                      <th>Name of Organization</th>
+                      <td>{{ (NameofOrganization=='null' || NameofOrganization==null) ? 'NA':NameofOrganization }}</td>
+                    </tr>
+                    <tr>
+                      <th>Complete Mailing Address</th>
+                      <td>{{ (mailingAddress=='null' || mailingAddress==null) ? 'NA':mailingAddress }}</td>
+                    </tr>
+                    <tr>
+                      <th>Pin Code</th>
+                      <td>{{ (pinCode=='null' || pinCode==null) ? 'NA':pinCode }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card">
+                <div class="card-header fw-bold">
+                  Head of Organization Details
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-sm w-100 table-hover">
+                      <tbody>
+                        <tr>
+                          <th class="w-50">Name</th>
+                          <td>{{ (headOfOrganization=='null' || headOfOrganization==null) ? 'NA':headOfOrganization }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Designation</th>
+                          <td>{{ (designation=='null' || designation==null) ? 'NA':designation }}</td>
+                        </tr>
+                        <tr>
+                          <th>Email</th>
+                          <td>{{ email==null ? 'NA':email }}</td>
+                        </tr>
+                        <tr>
+                          <th>Mobile Number</th>
+                          <td>{{ mobileNumber==null ? 'NA':mobileNumber }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header fw-bold">
+                  Coordinator Details
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-sm w-100 table-hover">
+                      <tbody>
+                        <tr>
+                          <th class="w-50">Name</th>
+                          <td>{{ coordinatorName==null ? 'NA':coordinatorName }}</td>
+                        </tr>
+                        <tr>
+                          <th>Coordinator Designation</th>
+                          <td>{{ coordinatorDesignation==null ? 'NA':coordinatorDesignation }}</td>
+                        </tr>
+                        <tr>
+                          <th>Coordinator Email</th>
+                          <td>{{ coordinatorEmail==null ? 'NA':coordinatorEmail }}</td>
+                        </tr>
+                        <tr>
+                          <th>Coordinator Mobile Number</th>
+                          <td>{{ coordinatorMobileNumber==null ? 'NA':coordinatorMobileNumber }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="table-responsive mt-3">
+                <table class="table table-bordered table-sm w-100 table-hover">
+                  <tbody>
+                    <tr>
+                      <th class="w-50">Request Letter</th>
+                      <td>                        
+                        <button class="btn btn-warning btn-sm" id="btndownload" (click)="onIconClickDownload()">
+                          <i class="bx bx-download"></i>Download
+                        </button>
+                        <button class="ms-4 btn btn-warning btn-sm" id="btndownload" (click)="viewPdf()">
+                          <i class="bx bxs-show"></i>View
+                        </button>
+                      
+                          <strong class="ms-4">Updated on ({{submitTime | ddMmYYYYDate}})</strong>
+                                               
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Current Status</th>
+                      <td>
+                        {{showStatus==null ? 'NA':showStatus}}
+                      </td>
+                    </tr>
+                    <tr *ngIf="status != 'RA' && status!='RR'">
+                      <th>Status</th>
+                      <td>
+                        <select class="form-select w-50" id="SessionYear">
+                          <option value="">--Select--</option>
+                          <option *ngFor="let dist of statusArray" value='{{dist.statusId}}'>
+                            {{dist.status}}
+                          </option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Remarks </th>
+                      <td>
+                        <textarea [maxlength]="250" id="remarks" formControlName="remarks" type="text"
+                          class="form-control w-50" placeholder="Remarks" [disabled]="disabletxtarea"
+                          [ngClass]="{ 'is-invalid':(requestDetailViewFormControl?.['remarks'].errors 
+                         && (requestDetailViewFormControl?.['remarks'].dirty || requestDetailViewFormControl?.['remarks'].touched || submitted  ))}"></textarea>
+                        <span class="invalid-feedback"
+                          *ngIf="(requestDetailViewFormControl?.['remarks'].touched || submitted) && requestDetailViewFormControl?.['remarks'].errors?.['required']">
+                          Please provide a suitable remarks.
+                        </span>
+                        <span class="text-danger"
+                          *ngIf="requestDetailViewFormControl?.['remarks'].touched && requestDetailViewFormControl?.['remarks'].errors?.['invalid']">
+                          Script or Style are not allowed.
+                        </span>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <button class="btn btn-warning" [hidden]="btnReSend" (click)="onReSend()">
+                          Re-Send</button>&nbsp;
+                        <button *ngIf="status != 'RA' && status != 'RR'" class="btn btn-primary" (click)="onSubmit()">
+                          Submit</button>&nbsp;
+                        <button *ngIf="responseViewBtn" class="btn btn-primary" (click)="responseView()">
+                          View Response Details</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

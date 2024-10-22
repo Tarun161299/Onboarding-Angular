@@ -1,0 +1,66 @@
+<h2>AES-GCM example on the browser</h2>
+
+<div class="box">
+	<div>
+		<h3>Notes:</h3>
+		<ul>
+			<li>Either generate a new key or import a previous generated key.</li>
+		</ul>
+
+		<!-- <div class="form-item">
+			<label for="keyType">Key Type (changing deletes the current key)</label> 
+<span id="keyType" *ngFor="let choice of choices">
+<input type="radio"
+       id="{{ groupName + choice }}"
+       name="{{groupName}}"
+       [value]="choice"
+       [(ngModel)]="defaultChoice"
+       (ngModelChange)="choose($event)"/> 
+      <span>{{ choice }}</span>
+</span>
+</div> -->
+
+<div class="form-item">
+<!-- <label for="importKey">Import</label> 
+<textarea id="importKey" #keyString></textarea>  -->
+<div *ngIf="importError" class="danger">Failed to import.</div>
+</div>
+
+<div class="form-item">
+<!-- <button (click)="generateKey()">Generate Key</button> -->
+
+
+</div>
+</div>
+<div>
+<ng-container *ngIf="_keydata">
+<!-- <label>Key:</label>
+<span><pre><code id="key">{{getKeyJson(_keydata)}}</code></pre></span> -->
+</ng-container>
+</div>
+<div>
+<ng-container >
+<label for="dataToEncrypt">Data to Encrypt</label> 
+<textarea id="dataToEncrypt" [(ngModel)]="dataToEncrypt"></textarea> 
+<button (click)="encrypt(dataToEncrypt)">Encrypt</button>
+<div *ngIf="encrypted">
+<label *ngIf="!encryptionError">Encrypted Data:</label>
+<span id="encryptedData">{{encryptedData}}</span>
+<div *ngIf="encryptionError" class="danger">Failed to encrypt.</div>
+</div>
+</ng-container>
+
+<ng-container >
+<label for="dataToDecrypt">Data to Decrypt</label> 
+<textarea id="dataToDecrypt" [(ngModel)]="dataToDecrypt"></textarea> 
+<button (click)="decrypt(dataToDecrypt)">Decrypt</button>
+<div *ngIf="decrypted">
+<label *ngIf="!decryptionError">
+  Decrypted Data: 
+</label>
+<span id="decryptedData">{{decryptedData}}</span>
+<div *ngIf="decryptionError" class="danger">Failed to decrypt.</div>
+</div>
+</ng-container>
+<div>
+</div>

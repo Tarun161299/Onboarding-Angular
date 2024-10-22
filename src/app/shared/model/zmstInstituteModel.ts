@@ -1,0 +1,22 @@
+export interface ZmstInstituteModel 
+		{
+		instCd:String;
+			instNm:String;
+			abbrNm:String;
+			instTypeId:String;
+			seatType:String;
+			instAdd:String;
+			state:String;
+			district:String;
+			pincode:String;
+			instPhone:String;
+			instFax:String;
+			instWebSite:String;
+			emailId:String;
+			altEmailId:String;
+			contactPerson:String;
+			designation:String;
+			mobileNo:String;
+			aishe:String;
+			oldInstituteCode:String;
+			}

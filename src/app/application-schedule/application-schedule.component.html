@@ -1,0 +1,130 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Application Schedule</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Activity Between Dates</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="ActivityBetweendates">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="Activity"
+                                class="form-label">Activity</label>
+                            <ng-select formControlName="Activity" name="Activity" [clearable]="false"
+                                [searchable]="true"
+                                [ngClass]="{ 'is-invalid':(ActivityBetweendatescontrol?.['Activity'].errors 
+                                    && (ActivityBetweendatescontrol?.['Activity'].dirty || ActivityBetweendatescontrol?.['Activity'].touched || submitted  ))}">
+                                <ng-option value="">--Select--</ng-option>
+                                <ng-option *ngFor="let Activity of Activities" value={{Activity.activityid}}>
+                                    {{Activity.activityNm}}</ng-option>
+                            </ng-select>
+
+                            <span class="invalid-feedback"
+                                *ngIf="(ActivityBetweendatescontrol?.['Activity'].touched || submitted) && ActivityBetweendatescontrol?.['Activity'].errors?.['required']">
+                                Activity Year is required.
+                            </span>
+                        </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputAgency" class="form-label">Start Date</label>
+                                <input id="inputAgency"
+                                    [ngClass]="{ 'is-invalid':(ActivityBetweendatescontrol?.['StartDate'].errors 
+                                && (ActivityBetweendatescontrol?.['StartDate'].dirty || ActivityBetweendatescontrol?.['StartDate'].touched || submitted  ))}"
+                                    formControlName="StartDate" class="form-control" type="date"
+                                    placeholder="Start Date">
+                                <span class="text-danger"
+                                    *ngIf="(ActivityBetweendatescontrol?.['StartDate'].touched || submitted) && ActivityBetweendatescontrol?.['StartDate'].errors?.['required']">
+                                    Start Date is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputServices" class="form-label">End Date</label>
+                                <input id="inputServices"
+                                    [ngClass]="{ 'is-invalid':(ActivityBetweendatescontrol?.['Enddate'].errors 
+                                && (ActivityBetweendatescontrol?.['Enddate'].dirty || ActivityBetweendatescontrol?.['Enddate'].touched || submitted  ))}"
+                                    formControlName="Enddate" type="date" class="form-control" placeholder="End Date">
+
+                                <span class="text-danger"
+                                    *ngIf="(ActivityBetweendatescontrol?.['Enddate'].touched || submitted) && ActivityBetweendatescontrol?.['Enddate'].errors?.['required']">
+                                    End Data is Required
+                                </span>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                    <button type="submit" (click)="save()" class="btn btn-primary me-3"> Submit
+                                    </button>
+                                    <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div>
+                                <table id="applicationSchedule" class="table align-middle mb-0"
+                                    *ngIf="rowdata.length>0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>SNo.</th>
+                                            <th>Board</th>
+                                            <th>Round No</th>
+                                            <th>Activity</th>
+                                            <th>From Date</th>
+                                            <th>To Date</th>
+                                            <th>Schedule Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let outerLoop of rowdata let i=index">
+                                            <tr *ngFor="let user of outerLoop.jSummary">
+                                                <td>{{i+1}}</td>
+                                                <td>{{outerLoop.projectName}}</td>
+                                                <td>{{user.roundno}}</td>
+                                                <td>{{user.activityNm}} </td>
+                                                <td>{{user.sdate}}</td>
+                                                <td>{{user.cDate}}</td>
+                                                <td> {{outerLoop.status}}</td>
+                                            </tr>
+                                        </ng-container>
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>SNo.</th>
+                                            <th>Board</th>
+                                            <th>Round No</th>
+                                            <th>Activity</th>
+                                            <th>From Date</th>
+                                            <th>To Date</th>
+                                            <th>Schedule Status</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div *ngIf="rowdata.length==0">
+                                <strong class="w-50 text-center"> No Records Found</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

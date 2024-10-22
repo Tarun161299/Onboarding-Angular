@@ -1,0 +1,64 @@
+<div class="authentication-forgot d-flex">
+    <div class="container">
+        <form [formGroup]="registerForm" autocomplete="off">
+            <div class="row">
+                <div class="col-sm-6 mx-auto">
+                    <div class="card forgot-box">
+                        <div class="card-body">
+                            <div class="p-3 rounded">
+                                <h4 class="font-weight-bold text-center">Onboarding Status</h4>
+                                <p class="text-muted">Enter your Request Number to check onBoarding Status.</p>
+                                <div class="my-4">
+                                    <label class="form-label">Request ID</label>
+                                    <input type="text" id="requestNo"
+                                        [ngClass]="{ 'is-invalid':(formControl?.['RequestId'].errors && (formControl?.['RequestId'].dirty || formControl?.['RequestId'].touched || submitted  ))}"
+                                        class="form-control form-control-lg" formControlName="RequestId"
+                                        placeholder="Request Id" />
+                                    <span class="invalid-feedback"
+                                        *ngIf="(formControl?.['RequestId'].touched || submitted) && formControl?.['RequestId'].errors?.['required']">
+                                        required.
+                                    </span>
+                                    <span class="text-danger"
+                                        *ngIf="formControl?.['RequestId'].touched && formControl?.['RequestId'].errors?.['invalid']">
+                                        Script or Style are not allowed.
+                                    </span>
+                                    <div class="my-4">
+                                        <label class="form-label">Security Code</label>
+                                        <input type="text" id="securityCode"
+                                            [ngClass]="{ 'is-invalid':(formControl?.['captcha'].errors && (formControl?.['captcha'].dirty || formControl?.['captcha'].touched || submitted  ))}"
+                                            class="form-control form-control-lg" formControlName="captcha"
+                                            placeholder="Security Code" />
+                                        <span class="invalid-feedback"
+                                            *ngIf="(formControl?.['captcha'].touched || submitted) && formControl?.['captcha'].errors?.['required']">
+                                            required.
+                                        </span>
+                                        <div class="col-12 my-4">
+                                            <div class="d-inline">
+                                                <div class="CaptchaDiv">
+                                                    <div class="d-flex">
+                                                        <span class=" p-3 py-0 fs-4 rounded fw-bold"
+                                                            style="letter-spacing: 4px;">
+                                                            <img [src]="imageSource">
+                                                        </span>
+                                                        <button type="button" (click)="refreshCaptcha()"
+                                                            class="btn btn-outline-primary btn-sm ms-1">
+                                                            <i class="bx bx-refresh"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="button" class="btn btn-primary btn-lg"
+                                        (click)="Submit()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

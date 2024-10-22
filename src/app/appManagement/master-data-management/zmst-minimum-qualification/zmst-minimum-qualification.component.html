@@ -1,0 +1,118 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Minimum Qualification Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Minimum Qualification</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                       
+                        <form class="row g-3" [formGroup]="zmstminimumqualificationFrmGroup">
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="minimumQualId"
+                                    class="form-label">Minimum Qualification Id</label> <input type="text" id="minimumQualId"
+                                    formControlName="minimumQualId" [maxlength]="2" name="minimumQualId"
+                                    class="form-control" placeholder="Minimum Qualification Id"
+                                    [ngClass]="{ 'is-invalid':(zmstminimumqualificationFrmControl?.['minimumQualId'].errors && (zmstminimumqualificationFrmControl?.['minimumQualId'].dirty || zmstminimumqualificationFrmControl?.['minimumQualId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstminimumqualificationFrmControl?.['minimumQualId'].touched || submitted) && zmstminimumqualificationFrmControl?.['minimumQualId'].errors?.['required']">
+                                    Minimum Qualification Id is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="description"
+                                    class="form-label">Description</label> <input type="text" id="description"
+                                    formControlName="description" [maxlength]="200" name="description"
+                                    class="form-control" placeholder="Description"
+                                    [ngClass]="{ 'is-invalid':(zmstminimumqualificationFrmControl?.['description'].errors && (zmstminimumqualificationFrmControl?.['description'].dirty || zmstminimumqualificationFrmControl?.['description'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstminimumqualificationFrmControl?.['description'].touched || submitted) && zmstminimumqualificationFrmControl?.['description'].errors?.['required']">
+                                    Description is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="alternateNames"
+                                    class="form-label">Alternate Name</label> <input type="text" id="alternateNames"
+                                    formControlName="alternateNames" [maxlength]="500" name="alternateNames"
+                                    class="form-control" placeholder="Alternate Name"
+                                    [ngClass]="{ 'is-invalid':(zmstminimumqualificationFrmControl?.['alternateNames'].errors && (zmstminimumqualificationFrmControl?.['alternateNames'].dirty || zmstminimumqualificationFrmControl?.['alternateNames'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstminimumqualificationFrmControl?.['alternateNames'].touched || submitted) && zmstminimumqualificationFrmControl?.['alternateNames'].errors?.['required']">
+                                    Alternate Name is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstminimumqualificationGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>MinimumQual Id</th>
+                                        <th>Description</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstminimumqualificationList.length>0">
+                                        <tr *ngFor="let data of zmstminimumqualificationList;">
+                                            <td>{{data.minimumQualId}}</td>
+                                            <td>{{data.description}}</td>
+                                            <td>{{data.alternateNames}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.minimumQualId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>MinimumQual Id</th>
+                                        <th>Description</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,222 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Agency Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Agency</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstagencyFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="agencyId" class="form-label">Agency Id </label>
+                                <input type="text" id="agencyId" formControlName="agencyId" [maxlength]="15"
+                                    name="agencyId" class="form-control" placeholder="Agency Id"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['agencyId'].errors && (zmstagencyFrmControl?.['agencyId'].dirty || zmstagencyFrmControl?.['agencyId'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyId'].touched || submitted) && zmstagencyFrmControl?.['agencyId'].errors?.['required']">
+                                    Agency Id is required
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyName"
+                                    class="form-label">Agency Name</label> <input type="text" id="agencyName"
+                                    formControlName="agencyName" [maxlength]="200" name="agencyName"
+                                    class="form-control" placeholder="Agency Name"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['agencyName'].errors && (zmstagencyFrmControl?.['agencyName'].dirty || zmstagencyFrmControl?.['agencyName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyName'].touched || submitted) && zmstagencyFrmControl?.['agencyName'].errors?.['required']">
+                                    Agency Name is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyAbbr"
+                                    class="form-label">Abbreviation</label> <input type="text" id="agencyAbbr"
+                                    formControlName="agencyAbbr" [maxlength]="500" name="agencyAbbr"
+                                    class="form-control" placeholder="Abbreviation"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['agencyAbbr'].errors && (zmstagencyFrmControl?.['agencyAbbr'].dirty || zmstagencyFrmControl?.['agencyAbbr'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyAbbr'].touched || submitted) && zmstagencyFrmControl?.['agencyAbbr'].errors?.['required']">
+                                    Abbreviation is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyType"
+                                    class="form-label">Agency Type</label>
+                                <select id="agencyType" formControlName="agencyType"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['agencyType'].errors 
+                                    && (zmstagencyFrmControl?.['agencyType'].dirty || zmstagencyFrmControl?.['agencyType'].touched || submitted  ))}"
+                                    class="form-select">
+                                    <option value="0" [selected]="0">--Select--</option>
+                                    <option value="Central">Central</option>
+                                    <option value="State">State</option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['agencyType'].touched || submitted) && zmstagencyFrmControl?.['agencyType'].errors?.['required']">
+                                    Agency Type is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="stateId"
+                                    class="form-label">State</label>
+                                <ng-select formControlName="stateId" name="stateId" [clearable]="false"
+                                    [searchable]="true" (change)="byStateCode($event)"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['stateId'].errors 
+                                && (zmstagencyFrmControl?.['stateId'].dirty || zmstagencyFrmControl?.['stateId'].touched || submitted  ))}">
+                                    <ng-option value="">--Select--</ng-option>
+                                    <ng-option *ngFor="let state Of stateList" value={{state.id}}>
+                                        {{state.description}}</ng-option>
+                                </ng-select>
+
+                                <span class="invalid-feedback"
+                                    *ngIf="(zmstagencyFrmControl?.['stateId'].touched || submitted) && zmstagencyFrmControl?.['stateId'].errors?.['required']">
+                                    State is required.
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="serviceTypeId" class="form-label d-block">Service Type</label>
+                                <div formArrayName="serviceTypes">
+                                    <div class="form-check form-check-inline"
+                                        *ngFor="let control of checkboxArray.controls; let i = index">
+                                        <label>
+                                            <input type="checkbox" [formControlName]="i"
+                                                (change)="changeHandler(CHECK_LIST[i])"> {{
+                                            CHECK_LIST[i].serviceTypeName }}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['serviceTypes'].touched || submitted) && zmstagencyFrmControl?.['serviceTypes'].errors?.['required']">
+                                    At least one checkbox is required.
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="address"
+                                    class="form-label">Address</label> <input type="text" id="address"
+                                    formControlName="address" [maxlength]="200" name="address" class="form-control"
+                                    placeholder="Address"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['address'].errors && (zmstagencyFrmControl?.['address'].dirty || zmstagencyFrmControl?.['address'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['address'].touched || submitted) && zmstagencyFrmControl?.['address'].errors?.['required']">
+                                    Address is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="isActive"
+                                    class="form-label">IsActive</label>
+
+                                <select id="isActive" formControlName="isActive"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['isActive'].errors 
+                                    && (zmstagencyFrmControl?.['isActive'].dirty || zmstagencyFrmControl?.['isActive'].touched || submitted  ))}"
+                                    class="form-select">
+                                    <option value="0" selected="0">--Select--</option>
+                                    <option value="Y">Active</option>
+                                    <option value="N">In Active</option>
+                                </select>
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['isActive'].touched || submitted) && zmstagencyFrmControl?.['isActive'].errors?.['required']">
+                                    IsActive is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="priority"
+                                    class="form-label">Priority</label> <input type="text" id="priority"
+                                    formControlName="priority" [maxlength]="4" name="priority" class="form-control"
+                                    placeholder="Priority"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['priority'].errors && (zmstagencyFrmControl?.['priority'].dirty || zmstagencyFrmControl?.['priority'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyFrmControl?.['priority'].touched || submitted) && zmstagencyFrmControl?.['priority'].errors?.['required']">
+                                    Priority is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="boardRequestLetter"
+                                    class="form-label">Board Request Letter</label>
+
+                                <input type="file" class="form-control" formControlName="boardRequestLetter"
+                                    name="boardRequestLetter" (change)="handleFileInput($event)" id="boardRequestLetter"
+                                    placeholder="Upload Signed Request Letter"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyFrmControl?.['boardRequestLetter'].errors 
+                                            && (zmstagencyFrmControl?.['boardRequestLetter'].dirty || (submitted || fileUploadValidation)))}">
+                                <div class="help-block">Only .pdf file allow to Upload.</div>
+                                <span class="invalid-feedback"
+                                    *ngIf="(submitted) && zmstagencyFrmControl?.['boardRequestLetter'].errors?.['required']">
+                                    File is Required.
+                                </span>
+                                <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                                    upload PDf File only.</span>
+                                    <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstagencyGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Agency Id</th>
+                                        <th>Agency Name</th>
+                                        <th>Agency Type</th>
+                                        <th>State</th>
+                                        <th>IsActive</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstagencyList.length>0">
+                                        <tr *ngFor="let data of zmstagencyList;">
+                                            <td>{{data.agencyId}}</td>
+                                            <td>{{data.agencyName}}</td>
+                                            <td>{{data.agencyType}}</td>
+                                            <td>{{data.stateName}}</td>
+                                            <td>{{data.isActive}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.agencyId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Agency Id</th>
+                                        <th>Agency Name</th>
+                                        <th>Agency Type</th>
+                                        <th>State</th>
+                                        <th>IsActive</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

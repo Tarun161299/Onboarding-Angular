@@ -1,0 +1,156 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<form [formGroup]="pidetails" autocomplete="off">
+    <div class="row g-3">
+
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputServices" class="form-label">NICSI Project Code
+                (optional)</label>
+            <input id="inputServices" type="text" class="form-control" formControlName="nicProjectCode"
+                [ngClass]="{ 'is-invalid':(pidetailsFormControl?.['nicProjectCode'].errors 
+                                            && (pidetailsFormControl?.['nicProjectCode'].dirty || pidetailsFormControl?.['nicProjectCode'].touched || submittedPi  ))}" placeholder="NICSI Project Code">
+            <span class="invalid-feedback"
+                *ngIf="(pidetailsFormControl?.['nicProjectCode'].touched || submittedPi) && pidetailsFormControl?.['nicProjectCode'].errors?.['required']">
+                Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputServices" class="form-label">NICSI PI Number</label>
+            <input id="inputServices" type="text" class="form-control" formControlName="nicPInumber"
+                [ngClass]="{ 'is-invalid':(pidetailsFormControl?.['nicPInumber'].errors 
+                                            && (pidetailsFormControl?.['nicPInumber'].dirty || pidetailsFormControl?.['nicPInumber'].touched || submittedPi  ))}" placeholder="NICSI PI Number">
+            <span class="invalid-feedback"
+                *ngIf="(pidetailsFormControl?.['nicPInumber'].touched || submittedPi) && pidetailsFormControl?.['nicPInumber'].errors?.['required']">
+                NICSI PI Number is Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputServices" class="form-label">Date of PI</label>
+            <input id="inputServices" type="date" class="form-control" formControlName="dataOfPi"
+                [ngClass]="{ 'is-invalid':(pidetailsFormControl?.['dataOfPi'].errors 
+                                            && (pidetailsFormControl?.['dataOfPi'].dirty || pidetailsFormControl?.['dataOfPi'].touched || submittedPi  ))}" placeholder="Date of PI">
+            <span class="invalid-feedback"
+                *ngIf="(pidetailsFormControl?.['dataOfPi'].touched || submittedPi) && pidetailsFormControl?.['dataOfPi'].errors?.['required']">
+                Date of PI is Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputServices" class="form-label">PI Amount</label>
+            <input id="inputServices" type="text" class="form-control" formControlName="piAmount"
+                (keypress)="numberOnly($event)"
+                [ngClass]="{ 'is-invalid':(pidetailsFormControl?.['piAmount'].errors 
+                                            && (pidetailsFormControl?.['piAmount'].dirty || pidetailsFormControl?.['piAmount'].touched || submittedPi  ))}"
+                placeholder="PI Amount">
+            <span class="invalid-feedback"
+                *ngIf="(pidetailsFormControl?.['piAmount'].touched || submittedPi) && pidetailsFormControl?.['piAmount'].errors?.['required']">
+                PI Amount is Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputServices" class="form-label">Upload PI</label>
+            <input id="inputServices" type="file" class="form-control" formControlName="uploadPi"
+                (change)="handleFileInput($event,'UploadPI')"
+                [ngClass]="{ 'is-invalid':(pidetailsFormControl?.['uploadPi'].errors 
+                                            && (pidetailsFormControl?.['uploadPi'].dirty || pidetailsFormControl?.['uploadPi'].touched || submittedPi  ))}">
+            <div class="help-block">Only .Pdf File Allowed To Upload.</div>
+            <span class="invalid-feedback"
+                *ngIf="(pidetailsFormControl?.['uploadPi'].touched || submittedPi) && pidetailsFormControl?.['uploadPi'].errors?.['required']">
+                Upload PI is Required.
+            </span>
+            <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                upload PDf File only.</span>
+                <span class="text-danger" *ngIf="checkFileExtensionPI">Extenion should not be more than 1.use single '.'' in file name</span>
+
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12" *ngIf="selectedFileB64.length>0 || checkData==true">
+            <label for="inputServices" class="form-label"> </label>
+            <div class="d-flex order-actions" *ngIf="isavailPI">
+                <a title="View Document" class="ms-4 text-primary bg-light-primary border-0"
+                    (click)="viewPIDetailsDocument('05')"><i class='bx bxs-show'></i></a>
+                <a title="Download Document" class="ms-4 text-primary bg-light-primary border-0"
+                    (click)="downloadPIDetailsDocument('05')">
+                    <i class="bx bxs-download"></i>
+                </a>
+                <strong class="ms-4">Updated on ({{piDocumentSubmitTime |ddMmYYYYDate}})</strong>
+            </div>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputServices" class="form-label">Proposal</label>
+            <input id="inputServices" type="file" class="form-control" formControlName="uploadProposal"
+                (change)="handleFileInput($event,'Proposal')"
+                [ngClass]="{ 'is-invalid':(pidetailsFormControl?.['uploadProposal'].errors 
+                                            && (pidetailsFormControl?.['uploadProposal'].dirty || pidetailsFormControl?.['uploadProposal'].touched || submittedPi  ))}">
+            <div class="help-block">Only .Pdf File Allowed To Upload.</div>
+            <span class="invalid-feedback"
+                *ngIf="(pidetailsFormControl?.['uploadProposal'].touched || submittedPi) && pidetailsFormControl?.['uploadProposal'].errors?.['required']">
+                Proposal is Required.
+            </span>
+            
+            <span class="text-danger" *ngIf="checkFileExtensionProposal">Extenion should not be more than 1.use single '.'' in file name</span>
+            <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                upload PDf File only.</span>
+                <span class="text-danger" *ngIf="fileSizeValidation>10">Please
+                    file should be smaller than 10 MB</span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12" *ngIf="selectedFileB64.length>0 || checkData==true">
+            <label for="inputServices" class="form-label"></label>
+            <div class="d-flex order-actions" *ngIf="isavailProposal">
+                <a title="View Document" class="ms-4 text-primary bg-light-primary border-0"
+                    (click)="viewProposalDocument('06')"><i class='bx bxs-show'></i></a>
+                <a title="Download Document" class="ms-4 text-primary bg-light-primary border-0"
+                    (click)="downloadProposalDocument('06')">
+                    <i class="bx bxs-download"></i>
+                </a>
+                <strong class="ms-4">Updated on ({{proposalDocumentSubmitTime |ddMmYYYYDate}})</strong>
+            </div>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputServices" class="form-label">Cover Letter</label>
+            <input id="inputServices" type="file" class="form-control" formControlName="uploadCoverLetter"
+                (change)="handleFileInput($event,'CoverLetter')"
+                [ngClass]="{ 'is-invalid':(pidetailsFormControl?.['uploadCoverLetter'].errors 
+                                            && (pidetailsFormControl?.['uploadCoverLetter'].dirty || pidetailsFormControl?.['uploadCoverLetter'].touched || submittedPi  ))}">
+            <div class="help-block">Only .Pdf File Allowed To Upload.</div>
+            <span class="invalid-feedback"
+                *ngIf="(pidetailsFormControl?.['uploadCoverLetter'].touched || submittedPi) && pidetailsFormControl?.['uploadCoverLetter'].errors?.['required']">
+                Cover Latter is Required.
+            </span>
+            <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                upload PDf File only.</span>
+                <span class="text-danger" *ngIf="checkFileExtensionCoverLetter">Extenion should not be more than 1.use single '.'' in file name</span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12" *ngIf="selectedFileB64.length>0 || checkData==true">
+            <label for="inputServices" class="form-label"></label>
+            <div class="d-flex order-actions" *ngIf="isavailCoverLetter">
+                <a title="View Document" class="ms-4 text-primary bg-light-primary border-0"
+                    (click)="viewCoverLetterDocument('07')"><i class='bx bxs-show'></i></a>
+                <a title="Download Document" class="ms-4 text-primary bg-light-primary border-0"
+                    (click)="downloadCoverLetterDocument('07')">
+                    <i class="bx bxs-download"></i>
+                </a>
+                <strong class="ms-4">Updated on ({{coverLetterSubmitTime |ddMmYYYYDate}})</strong>
+            </div>
+        </div>
+    </div>
+    <div class="row g-3 mt-3">
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+            <button type="button" (click)="piDetailsSubmit()" class="btn btn-primary me-3">
+                Submit
+            </button>
+            <button type="button" class="btn btn-danger">
+                Cancel
+            </button>
+        </div>
+    </div>
+</form>

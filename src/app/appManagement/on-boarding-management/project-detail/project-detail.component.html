@@ -1,0 +1,173 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Project</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Project Detail</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="ms-auto">
+                <div class="btn-group">
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+                            href="javascript:;">Action</a>
+                        <a class="dropdown-item" href="javascript:;">Another action</a>
+                        <a class="dropdown-item" href="javascript:;">Something else here</a>
+                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+                            link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-xxl-9 col-xl-9 col-md-9 col-sm-9">
+                                    <h5>{{rowData.projectName}}({{rowData.projectCode}})</h5>
+                                </div>
+                                <div class="col-xxl-2 col-xl-2 col-md-2 col-sm-2">
+                                    <label for="inputProjectYear" class="form-label">Project Year</label> :
+                                    <label id="inputProjectYear">{{rowData.projectYear}}</label>
+                                </div>
+                                <div class="col-xxl-1 col-xl-1 col-md-1 col-sm-1 ms-auto">
+                                    <a routerLink="/auth/projectlist" class="btn btn-primary btn-sm radius-30">
+                                      <i class="bx bx-left-arrow-alt"></i>
+                                      Back</a>
+                                  </div>
+                            </div>
+                        <hr />
+                        <ul class="nav nav-tabs nav-primary" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a id="a_projectDetails" class="nav-link active" data-bs-toggle="tab"
+                                    href="#projectDetails" role="tab" aria-selected="true">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">Project Details</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="a_moudetail" class="nav-link" data-bs-toggle="tab"
+                                    href="#moudetails" role="tab" aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">MOU</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="a_financialComponents" class="nav-link" data-bs-toggle="tab"
+                                    href="#financialComponents" role="tab" aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">Financial Components</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="a_PIDetails" class="nav-link" data-bs-toggle="tab" href="#PIDetails" role="tab"
+                                    aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">Proposal & PI</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="a_Payment" class="nav-link" data-bs-toggle="tab" href="#Payment" role="tab"
+                                    aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">Payment</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="a_Documents" class="nav-link" data-bs-toggle="tab" href="#utilizationCertificate" role="tab"
+                                    aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">Utilization Certificate</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="a_Documents" class="nav-link" data-bs-toggle="tab" href="#SignOffForm" role="tab"
+                                    aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">Sign Off & Data Handover</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="a_Documents" class="nav-link" data-bs-toggle="tab" href="#Documents" role="tab"
+                                    aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">Technical Documents</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a id="a_Expenditure" class="nav-link" data-bs-toggle="tab" href="#Expenditure" role="tab"
+                                    aria-selected="false">
+                                    <div class="d-flex align-items-center">
+                                        <div class="tab-icon">
+                                        </div>
+                                        <div class="tab-title">Project Expenditure</div>
+                                    </div>
+                                </a>
+                            </li> 
+                        </ul>
+                        <div class="tab-content py-3">
+                            <div class="tab-pane fade show active" id="projectDetails" role="tabpanel">
+                                <app-project-details [data]="commonRecords"></app-project-details>
+                            </div>
+                            <div class="tab-pane fade" id="moudetails" role="tabpanel">
+                                <app-mou-details [MOUdata]="commonRecords"></app-mou-details>
+                            </div>
+                            <div class="tab-pane fade" id="financialComponents" role="tabpanel">
+                                <app-financial-details [finanicialdata]="commonRecords"></app-financial-details>
+                            </div>
+                            <div class="tab-pane fade" id="PIDetails" role="tabpanel">
+                                <app-pi-details [piDetailsdata]="commonRecords"></app-pi-details>
+                            </div>
+                            <div class="tab-pane fade" id="Payment" role="tabpanel">
+                                <app-payment [Payment]="commonRecords"></app-payment>
+                            </div>
+                            <div class="tab-pane fade" id="utilizationCertificate" role="tabpanel">
+                                <app-uc [UCData]="commonRecords"></app-uc>
+                            </div>
+                            <!-- <div class="tab-pane fade" id="SignOffForm" role="tabpanel">
+                                <app-sign-off-admin [signOff]="commonRecords"></app-sign-off-admin>
+                            </div> -->
+                            <div class="tab-pane fade" id="SignOffForm" role="tabpanel">
+                                <app-sign-off [signOff]="commonRecords"></app-sign-off>
+                            </div>
+                            <div class="tab-pane fade" id="Documents" role="tabpanel">
+                                <app-documents [Documentsdata]="commonRecords"></app-documents>
+                            </div>
+                            <div class="tab-pane fade" id="Expenditure" role="tabpanel">
+                                <app-project-expenditure [expenditure]="commonRecords"></app-project-expenditure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

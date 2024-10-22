@@ -1,0 +1,39 @@
+
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { ApiEndPoints } from "../constants/apiEndpoints";
+@Injectable({
+  providedIn: "root"
+})
+
+export class ZmstQualifyingExamFromService {
+  constructor(private http: HttpClient) {
+  }
+
+  insert(data: any): Observable<any> {
+    const headers = { "Accept": "text/plain" }
+    localStorage.setItem('isauth', '1');
+    return this.http.post<any>(ApiEndPoints.ZmstQualifyingExamFrom_Insert, data, { headers: headers });
+  }
+  update(data: any): Observable<any> {
+    const headers = { "Accept": "text/plain" }
+    localStorage.setItem('isauth', '1');
+    return this.http.post<any>(ApiEndPoints.ZmstQualifyingExamFrom_Update, data, { headers: headers });
+  }
+  delete(qualexamfromid: any) {
+    const headers = { "Accept": "text/plain" }
+    localStorage.setItem('isauth', '1');
+    return this.http.post<any>(ApiEndPoints.ZmstQualifyingExamFrom_Delete + qualexamfromid, { headers: headers });
+  }
+  getAll(): Observable<any> {
+    const headers = { "Accept": "text/plain" }
+    localStorage.setItem('isauth', '1');
+    return this.http.get<any>(ApiEndPoints.ZmstQualifyingExamFrom_GetAll, { headers: headers });
+  }
+  getById(qualexamfromid: any): Observable<any> {
+    const headers = { "Accept": "text/plain" }
+    localStorage.setItem('isauth', '1');
+    return this.http.get<any>(ApiEndPoints.ZmstQualifyingExamFrom_GetById + qualexamfromid, { headers: headers });
+  }
+}

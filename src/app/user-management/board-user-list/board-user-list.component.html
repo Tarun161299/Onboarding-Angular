@@ -1,0 +1,154 @@
+<ng-template #content let-c="close" let-d="dismiss" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<ng-template #image let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile Image</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <img height="200px" [src]="imageSourcepop" alt="Image Source">
+    </div>
+</ng-template>
+
+<div class="page-wrapper">
+    <div class="page-content">
+
+    <!-- Start View User Details -->
+    <div *ngIf="brduserdetails">
+    <form  class="row g-3" [formGroup]="boardusermanagementfrm">
+        <div class="row">
+          <div class="col">
+            <div class="card radius-10 mb-0">
+              <div class="card-body">
+              <div class="d-flex align-items-center">
+                  <div>
+                    <h5 class="mb-1">Board User Details</h5>
+                  </div>
+                  <div class="ms-auto">
+                    <a (click)="Back()" class="btn btn-primary btn-sm radius-30">
+                      <i class="bx bx-left-arrow-alt"></i>
+                      Back to Board User List</a>
+                  </div>
+              </div>
+                <div class="table-responsive mt-3">
+                  <table class="table table-bordered table-sm w-100 table-hover">
+                    <tbody>
+                        <tr *ngIf="hasData.length>0">
+                            <td align="right" colspan="2">
+                                <img width="100px" height="100px" *ngIf="imageUrl" [src]="imageUrl" class="image" />
+                            </td>
+                       </tr>
+                       <tr>
+                        <th class="w-50">User Name</th>
+                        <td>{{ username }}</td>
+                      </tr>
+                      <tr>
+                        <th class="w-50">Designation</th>
+                        <td>{{ (usernamedesignation == 'null' || usernamedesignation == null) ? 'NA' : usernamedesignation}}</td>
+                      </tr>
+                     
+                      <tr>
+                        <th class="w-50">Email ID</th>
+                        <td>{{ (useremail=='null' || useremail== null) ? 'NA': useremail }}</td>
+                      </tr>
+    
+                      <tr>
+                        <th class="w-50">Mobile</th>
+                        <td>{{ (usermobile =='null' || usermobile == null) ? 'NA': usermobile }}</td>
+                     </tr>
+                     <tr>
+                      <th class="w-50">Security Question</th>
+                      <td>{{ (securityquestion =='null' || securityquestion == null) ? 'NA': securityquestion }}</td>
+                     </tr>
+                     <tr>
+                      <th class="w-50">Security Answer</th>
+                      <td>{{ (securityanswer =='null' || securityanswer == null) ? 'NA': securityanswer }}</td>
+                     </tr>
+                     
+                     <tr>
+                      <th class="w-50">Authentication Type</th>
+                      <td>{{ (authModedesc =='null' || authModedesc == null) ? 'NA': authModedesc }}</td>
+                     </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+    
+        </div>
+        </div>
+        </div>
+        </div>
+     </form> 
+    </div>
+    <!-- End View User Details -->
+        <div *ngIf="brduserdetailsList">
+        <div class="row">
+            <div class="col-3 mb-2">
+                <button type="button" class="btn btn-primary me-3"  (click)="addDetails()">
+                    Add New
+                </button>
+            </div>
+           </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="BoarduserdetailsGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>User Name</th>
+                                        <th>Email Id</th>
+                                        <th>Mobile</th>
+                                        <!-- <th>User Id</th>
+                                        <th>Security Question</th>
+                                        <th>Security Answer</th>
+                                        <th>Authentication Mode</th> -->
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody> <ng-container *ngIf="UsermanagementModelList.length>0">
+                                        <tr *ngFor="let data of UsermanagementModelList;">
+                                            <td>{{data.userName}}</td>                         
+                                            <td>{{data.emailId | decryptStr:decSecretKey:decsalt}}</td>
+                                            <td>{{data.mobileNo | decryptStr:decSecretKey:decsalt}}</td>
+                                            <td>
+                                              <div class="d-flex order-actions"> 
+                                              <button class="btn text-primary bg-light-primary btn-sm d-block" (click)="showPhoto(data.userID)" title="View Photo"><i class='bx bxs-show'></i></button>
+                                              <button class="ms-4 btn btn-warning btn-sm" id="btndownload" (click)="Showdetails(data.userID)">View</button>
+                                              </div>
+                                           </td>
+                                        </tr>
+                                    </ng-container> </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>User Name</th>
+                                        <th>Email Id</th>
+                                        <th>Mobile</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      </div>
+
+    </div>
+</div>

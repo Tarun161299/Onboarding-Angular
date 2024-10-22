@@ -1,0 +1,162 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Cycle Creation Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Cycle Creation</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="cycleCreationFrmGroup">
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                                <label for="agencyId" class="form-label">Agency Name</label>
+                                <select id="agencyId" class="form-select" (change)="onSelectAgency($event)"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['agencyId'].errors 
+                                     && (cycleCreationFrmControl?.['agencyId'].dirty || cycleCreationFrmControl?.['agencyId'].touched || submitted  ))}" formControlName="agencyId">
+                                    <option value="" selected>--Select--
+                                    </option>
+                                    <option *ngFor="let Agency Of Agencydata" value={{Agency.agencyId}}>
+                                        {{Agency.agencyName}}</option>
+                                </select>
+                                <span class="invalid-feedback"
+                                    *ngIf="(cycleCreationFrmControl?.['agencyId'].touched || submitted) && cycleCreationFrmControl?.['agencyId'].errors?.['required']">
+                                    Agency is Required
+                                </span>
+                            </div>
+                            <div class="col-xxl-4 col-xxl-4 col-md-6 col-sm-12">
+                                <label for="examCounsid" class="form-label">Exam Code/Code Cycle Id</label>
+                                <select id="examCounsid" class="form-select" formControlName="examCounsid"
+                                    (change)="onselectExamcode($event)"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['examCounsid'].errors 
+                                     && (cycleCreationFrmControl?.['examCounsid'].dirty || cycleCreationFrmControl?.['examCounsid'].touched || submitted  ))}">
+                                    <option value="0">--Select--</option>
+                                    <option *ngFor="let Examcode of examcode" value={{Examcode.examCounsId}}>
+                                        {{Examcode.description}}
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback"
+                                    *ngIf="(cycleCreationFrmControl?.['examCounsid'].touched || submitted) && cycleCreationFrmControl?.['examCounsid'].errors?.['required']">
+                                    Exam Code/Code Cycle Id is Required.
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="academicYear"
+                                    class="form-label">Academic Year</label>
+                                <select id="academicYear" formControlName="academicYear" name="academicYear"
+                                    class="form-select" (change)="OnselectAcademics()"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['academicYear'].errors && (cycleCreationFrmControl?.['academicYear'].dirty || cycleCreationFrmControl?.['academicYear'].touched || submitted  ))}">
+                                    <option value="0" >--Select--</option>
+                                    <option *ngFor="let year of Years" value={{year.yearId}}>
+                                        {{year.description}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(cycleCreationFrmControl?.['academicYear'].touched || submitted) && cycleCreationFrmControl?.['academicYear'].errors?.['required']">
+                                    Academic Year is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                                <label for="serviceType" class="form-label">Services</label>
+                                <select id="serviceType" class="form-select" formControlName="serviceType"
+                                    (change)="onselectservices($event)"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['serviceType'].errors 
+                            && (cycleCreationFrmControl?.['serviceType'].dirty || cycleCreationFrmControl?.['serviceType'].touched || submitted  ))}">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let services of servicesdata" value={{services.serviceTypeId}}>
+                                        {{services.serviceTypeName}}
+                                    </option>
+                                </select>
+                                <span class="invalid-feedback"
+                                    *ngIf="(cycleCreationFrmControl?.['serviceType'].touched || submitted) && cycleCreationFrmControl?.['serviceType'].errors?.['required']">
+                                    Services Required.
+                                </span>
+                            </div>
+
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="attempt"
+                                    class="form-label">Attempt</label> <input type="number" id="attempt" [max]="9"
+                                    [min]="1" formControlName="attempt" name="attempt" class="form-control"
+                                    placeholder="Attempt" (change)="onattemptchange($event)" (keyup)="onattemptchange($event)"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['attempt'].errors && (cycleCreationFrmControl?.['attempt'].dirty || cycleCreationFrmControl?.['attempt'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(cycleCreationFrmControl?.['attempt'].touched || submitted) && cycleCreationFrmControl?.['attempt'].errors?.['required']">
+                                    Attempt is required
+                                </span>
+                                <div *ngIf="cycleCreationFrmControl?.['attempt'].errors?.['max']"
+                                    class="invalid-feedback1">
+                                    Attempt should be of 1 digit.
+                                </div>
+                                <div *ngIf="cycleCreationFrmControl?.['attempt'].errors?.['min']"
+                                    class="invalid-feedback1">
+                                    Attempt should be greater than 0.
+                                </div>
+
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="projectId"
+                                    class="form-label">Project Id</label> <input type="text" id="projectId" readonly
+                                    formControlName="projectId" [maxlength]="10" name="projectId" class="form-control"
+                                    placeholder="ProjectId"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['projectId'].errors && (cycleCreationFrmControl?.['projectId'].dirty || cycleCreationFrmControl?.['projectId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(cycleCreationFrmControl?.['projectId'].touched || submitted) && cycleCreationFrmControl?.['projectId'].errors?.['required']">
+                                    Project Id is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="projectName"
+                                    class="form-label">Project Name</label> <input type="text" id="projectName"
+                                    formControlName="projectName" [maxlength]="200" name="projectName"
+                                    class="form-control" placeholder="ProjectName"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['projectName'].errors && (cycleCreationFrmControl?.['projectName'].dirty || cycleCreationFrmControl?.['projectName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(cycleCreationFrmControl?.['projectName'].touched || submitted) && cycleCreationFrmControl?.['projectName'].errors?.['required']">
+                                    Project Name is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="isLive"
+                                    class="form-label">Is Live</label> <select id="isLive" formControlName="isLive"
+                                    [maxlength]="1" name="isLive" class="form-select"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['isLive'].errors && (cycleCreationFrmControl?.['isLive'].dirty || cycleCreationFrmControl?.['isLive'].touched || submitted  ))}">
+                                    <option value="0" selected>--Select--</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(cycleCreationFrmControl?.['isLive'].touched || submitted) && cycleCreationFrmControl?.['isLive'].errors?.['required']">
+                                    Is Live is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="pInitiated"
+                                    class="form-label">Project Initiated</label> <select id="pInitiated"
+                                    formControlName="pInitiated" [maxlength]="1" name="pInitiated" class="form-select"
+                                    [ngClass]="{ 'is-invalid':(cycleCreationFrmControl?.['pInitiated'].errors && (cycleCreationFrmControl?.['pInitiated'].dirty || cycleCreationFrmControl?.['pInitiated'].touched || submitted  ))}">
+                                    <option value="0" selected>--Select--</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(cycleCreationFrmControl?.['pInitiated'].touched || submitted) && cycleCreationFrmControl?.['pInitiated'].errors?.['required']">
+                                    Project Initiated is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>

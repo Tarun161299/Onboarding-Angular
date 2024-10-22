@@ -1,0 +1,104 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Counselling Management Services</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Counselling and Admission System Summary
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div>
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive">                            
+                            <button type="button" class="btn btn-primary me-3 mb-3" (click)="btnUpdateAll()">
+                                Update All
+                            </button> 
+                            <div>
+                                <table id="applicationSummary" class="row-border hover table-sm w-100 align-middle mb-0"
+                                    *ngIf="appSummary.length>0">
+                                    <thead class="table-light">
+                                        <tr class="bg-primary bg-opacity-75 text-white">
+                                            <th>SNo.</th>
+                                            <th>Counselling</th>
+                                            <th>Total Eligible Candidates</th>
+                                            <th>Total Registered Candidates</th>
+                                            <th>Total Filled Choices</th>
+                                            <th>Total Participating Institute</th>
+                                            <th>Total Seats</th>
+                                            <th>Status</th>
+                                            <th>Total Rounds</th>
+                                            <th>Current Round</th>
+                                            <th>Application URL</th>
+                                            <th>Admin URL</th>
+                                            <th>Nic Contact Info</th>
+                                            <th>Client Contact Info</th>
+                                            <th>Schedule</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="appSummary.length>0">
+                                            <tr *ngFor="let appSum of appSummary let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{appSum.appTitle}}</td>
+                                                <td>{{(appSum.couns==null)?"NA":appSum.couns.elg}}</td>
+                                                <td>{{(appSum.couns==null)?"NA":appSum.couns.reg}}</td>
+                                                <td>{{(appSum.couns==null)?"NA":appSum.couns.tch}}</td>
+                                                <td>{{(appSum.couns==null)?"NA":appSum.couns.pis}}</td>
+                                                <td>{{(appSum.couns==null)?"NA":appSum.couns.tst}}</td>
+                                                <td>{{appSum.status}}</td>
+                                                <td>{{appSum.totalRound}}</td>
+                                                <td>{{appSum.currentRound}}</td>
+                                                <td>{{appSum.appUrl}}</td>
+                                                <td>{{appSum.adminUrl}}</td>
+                                                <td>{{appSum.contactDetail}}</td>
+                                                <td>{{appSum.contactDetail}}</td>
+                                                <td>{{appSum.scheduleDoc}}</td>
+                                                <td>
+                                                    <div class="d-flex order-actions">                                                     
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>SNo.</th>
+                                            <th>Counselling</th>
+                                            <th>Total Eligible Candidates</th>
+                                            <th>Total Registered Candidates</th>
+                                            <th>Total Filled Choices</th>
+                                            <th>Total Participating Institute</th>
+                                            <th>Total Seats</th>
+                                            <th>Status</th>
+                                            <th>Total Rounds</th>
+                                            <th>Current Round</th>
+                                            <th>Application URL</th>
+                                            <th>Admin URL</th>
+                                            <th>Nic Contact Info</th>
+                                            <th>Client Contact Info</th>
+                                            <th>Schedule</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div *ngIf="appSummary.length==0">
+                                <strong class="w-50 text-center"> No Records Found</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<div class="row">
+    <div class="col">
+        <div class="card radius-10">
+            <div class="card-body">
+                <form class="row g-3" [formGroup]="employeeworkorderFrmGroup">
+                    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                        <h5 class="mb-1"><b>Work Order Mapping</b></h5>
+                    </div>
+                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="workorderNo"
+                            class="form-label">Work order No</label>
+                        <select class="form-select" formControlName="workorderNo" id="agencyName" name="agencyName"
+                            [ngClass]="{ 'is-invalid':(employeeworkorderFrmControl?.['workorderNo'].errors && (employeeworkorderFrmControl?.['workorderNo'].dirty || employeeworkorderFrmControl?.['workorderNo'].touched || submitted  ))}">
+                            <option value="">--Select--</option>
+                            <option *ngFor="let data of workOrderData" value={{data.workorderNo}}>
+                                <strong>{{data.workorderNo}}</strong> [{{data.agencyName}}]
+                            </option>
+                        </select>
+                        <span class="text-danger"
+                            *ngIf="(employeeworkorderFrmControl?.['workorderNo'].touched || submitted) && employeeworkorderFrmControl?.['workorderNo'].errors?.['required']">
+                            Work order No is required</span>
+                    </div>
+                    <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                        <button type="submit" *ngIf="updatehdn==false" (click)="save()" class="btn btn-primary me-3">
+                            Submit
+                        </button>
+                        <button type="submit" *ngIf="updatehdn==true" (click)="update()" class="btn btn-primary me-3">
+                            Update
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-danger" (click)="reset()">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+                <div class="table-responsive mt-3" *ngIf="employeeworkorderList.length>0">
+                    <table id="employeeworkorderGrid" class="table align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Emp Code</th>
+                                <th>Emp Name</th>
+                                <th>Work order No</th>
+                                <th>Agency Name</th>
+                                <th>Work Order From</th>
+                                <th>Work Order To</th>
+                                <th>View Work Order</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="employeeworkorderList.length>0">
+                                <tr *ngFor="let data of employeeworkorderList;">
+                                    <td>{{data.empCode}}</td>
+                                    <td>{{data.empName}}</td>
+                                    <td>{{data.workorderNo}}</td>
+                                    <td>{{data.agencyName}}</td>
+                                    <td>{{data.workorderFrom | ddMmYYYYDate}}</td>
+                                    <td>{{data.workorderTo | ddMmYYYYDate}}</td>
+                                    <td>
+                                        <button class="ms-4 btn text-primary btn bg-light-primary btn-sm d-block"
+                                            (click)="showIdDocument(data)" title="View Work Order"><i
+                                                class='bx bxs-show'></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex order-actions">
+                                            <a (click)="edit(data)" class="ms-4 text-primary bg-light-primary border-0">
+                                                <i class="bx bxs-edit"></i>
+                                            </a>
+                                            <a (click)="delete(data)"
+                                                class="ms-4 text-danger bg-light-danger border-0">
+                                                <i class="bx bxs-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Emp Code</th>
+                                <th>Emp Name</th>
+                                <th>Work order No</th>
+                                <th>Agency Name</th>
+                                <th>Work Order From</th>
+                                <th>Work Order To</th>
+                                <th>View Work Order</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

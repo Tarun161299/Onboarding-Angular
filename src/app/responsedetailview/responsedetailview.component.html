@@ -1,0 +1,369 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="Base64FileString"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Onboarding Request</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item"><a class="text-decoration-none"
+                                routerLink="/auth/onboardinglist">Onboarding Request List</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">On-Boarding Response Detail</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="ms-auto">
+                <div class="btn-group">
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+                            href="javascript:;">Action</a>
+                        <a class="dropdown-item" href="javascript:;">Another action</a>
+                        <a class="dropdown-item" href="javascript:;">Something else here</a>
+                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+                            link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="card-title mb-1">Onboarding Detail</h5>
+                            </div>
+                            <div class="ms-auto">
+                                <a routerLink="/auth/onboardinglist" class="btn btn-primary btn-sm radius-30">
+                                    <i class="bx bx-left-arrow-alt"></i>
+                                    Back to Onboarding Request List</a>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-sm w-100 align-middle mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="w-25">Agency</th>
+                                        <td class="w-25">{{agencyType}}</td>
+                                        <th class="w-25">Services</th>
+                                        <td class="w-25">{{services}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th [hidden]="stateshow" class="w-25">State</th>
+                                        <td [hidden]="stateshow" class="w-25">{{state}}</td>
+                                        <th [hidden]="ministryshow">Ministry</th>
+                                        <td [hidden]="ministryshow">{{ministryName}}</td>
+
+                                        <th>Name of Organization</th>
+                                        <td>{{ oranizationName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Website</th>
+                                        <td>{{ website }}</td>
+                                        <th>First time Affiliation with e-Counselling</th>
+                                        <td>{{yearOfFirstTimeAffiliation == null ? 'NA' : yearOfFirstTimeAffiliation}}
+                                        </td>
+                                    </tr>
+                                    <tr [hidden]="Examhide">
+                                        <th>Previous Agency deployed For Examination(if any)</th>
+                                        <td>{{previousAgency == null ? 'NA' : previousAgency}}</td>
+                                        <th>Brief Description on existing Examination</th>
+                                        <td>{{ description }}</td>
+                                    </tr>
+                                    <tr [hidden]="Counselling">
+                                        <th>Previous Agency deployed For Counselling(if any)</th>
+                                        <td>{{previousAgency == null ? 'NA' : previousAgency}}</td>
+                                        <th>Brief Description on existing Counselling</th>
+                                        <td>{{ Counsdescription }}</td>
+                                    </tr>
+                                    <tr [hidden]="Examhide">
+                                        <th>Expected no of Applicants in Examination</th>
+                                        <td>{{ examExpectedApplicant }}</td>
+                                        <th>Examination List</th>
+                                        <td>{{ examinationList }}</td>
+                                    </tr>
+                                    <tr [hidden]="Examhide">
+                                        <th>Tentative Schedule Start of Examination</th>
+                                        <td>{{ examTentativeScheduleStart|ddMmYYYYDate }}</td>
+                                        <th>Tentative Schedule End of Examination</th>
+                                        <td>{{ examTentativeScheduleEnd |ddMmYYYYDate }}</td>
+                                    </tr>
+                                    <tr [hidden]="Counselling">
+                                        <th>Expected no of Applicants in Counselling</th>
+                                        <td>{{counsExpectedApplicant == '0' ? 'NA' : counsExpectedApplicant}}</td>
+                                        <th>Expected no of Seat in Counselling</th>
+                                        <td>{{counsExpectedSeat == '0' ? 'NA' : counsExpectedSeat}}</td>
+                                    </tr>
+                                    <tr [hidden]="Counselling">
+                                        <th>Stream List in Counselling</th>
+                                        <td>{{counsStreamList == '0' ? 'NA' : counsStreamList}}</td>
+                                        <th>Expected Round in Counselling</th>
+                                        <td>{{counsExpectedRound == '0' ? 'NA' : counsExpectedRound}}</td>
+                                    </tr>
+                                    <tr [hidden]="Counselling">
+                                        <th>Expected Spot Round in Counselling</th>
+                                        <td>{{counsExpectedSpotRound == '0' ? 'NA' : counsExpectedSpotRound}}</td>
+                                        <th>Expected Participating Institute in Counselling</th>
+                                        <td>{{counsExpectedParticipatingInstitute == '0' ? 'NA' :
+                                            counsExpectedParticipatingInstitute}}</td>
+                                    </tr>
+                                    <tr [hidden]="Counselling">
+                                        <th>Tentative Schedule Start of Counselling</th>
+                                        <td>{{ counsTentativeScheduleStart |ddMmYYYYDate }}</td>
+                                        <th>Tentative Schedule End of Counselling</th>
+                                        <td>{{ counsTentativeScheduleEnd|ddMmYYYYDate }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th [hidden]="Counselling">Same Tentative Schedule for all Courses in
+                                            Counselling</th>
+                                        <td [hidden]="Counselling">{{ counsDissimilarityOfSchedule==true?"Yes":"No" }}
+                                        </td>
+                                    </tr>
+                                    <tr [hidden]="Examhide">
+                                        <th>Same Tentative Schedule for all Courses in Examination</th>
+                                        <td>{{ ExamDissimilarityOfSchedule==true?"Yes":"No" }}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header fw-bold">
+                        User Department Contact Detail
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-sm w-100 align-middle mb-0">
+                                <thead>
+                                    <tr class="bg-secondary text-white bg-gradient">
+                                        <th>Role</th>
+                                        <th>Name</th>
+                                        <th>Designation</th>
+                                        <th>Mobile No.</th>
+                                        <th>Email Id</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Coordinator</td>
+                                        <td>{{ userDepartmentCoordinator.name }}</td>
+                                        <td>{{ userDepartmentCoordinator.designation }}</td>
+                                        <td>+91{{ userDepartmentCoordinator.mobileNo | decryptStr:decSecretKey:decsalt}}</td>
+                                        <td> {{ userDepartmentCoordinator.emailId | decryptStr:decSecretKey:decsalt }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Deputy Coordinator</td>
+                                        <td>{{ userDepartmentDeputyCoordinator.name }}</td>
+                                        <td>{{ userDepartmentDeputyCoordinator.designation }}</td>
+                                        <td>+91{{ userDepartmentDeputyCoordinator.mobileNo | decryptStr:decSecretKey:decsalt}}</td>
+                                        <td>{{ userDepartmentDeputyCoordinator.emailId | decryptStr:decSecretKey:decsalt}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Program Manager Unit</td>
+                                        <td>{{ userDepartmentManagerUnit.name }}</td>
+                                        <td> {{ userDepartmentManagerUnit.designation }}</td>
+                                        <td>+91{{userDepartmentManagerUnit.mobileNo=="NA"?"NA":(userDepartmentManagerUnit.mobileNo| decryptStr:decSecretKey:decsalt)}}</td>
+                                        <td>{{userDepartmentManagerUnit.emailId=="NA"?"NA":userDepartmentManagerUnit.emailId|decryptStr:decSecretKey:decsalt }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header fw-bold">
+                        User Department MoU Signatory Details
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-sm w-100 align-middle mb-0">
+                                <thead>
+                                    <tr class="bg-secondary text-white bg-gradient">
+                                        <th>Role</th>
+                                        <th>Name</th>
+                                        <th>Designation</th>
+                                        <th>Mobile No.</th>
+                                        <th>Email Id</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nodal Officer</td>
+                                        <td>{{ userDepartmentNodalOfficer.name }}</td>
+                                        <td>{{ userDepartmentNodalOfficer.designation }}</td>
+                                        <td>+91{{ userDepartmentNodalOfficer.mobileNo | decryptStr:decSecretKey:decsalt}}</td>
+                                        <td>{{ userDepartmentNodalOfficer.emailId | decryptStr:decSecretKey:decsalt}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Authorized Signatory</td>
+                                        <td>{{ userDepartmentAuthorizedSignatory.name }}</td>
+                                        <td> {{ userDepartmentAuthorizedSignatory.designation }}</td>
+                                        <td>+91{{ userDepartmentAuthorizedSignatory.mobileNo |decryptStr:decSecretKey:decsalt}}</td>
+                                        <td>{{ userDepartmentAuthorizedSignatory.emailId | decryptStr:decSecretKey:decsalt}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header fw-bold">
+                        User Department Technical Team Details
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-sm w-100 align-middle mb-0">
+                                <thead>
+                                    <tr class="bg-secondary text-white bg-gradient">
+                                        <th>Role</th>
+                                        <th>Name</th>
+                                        <th>Designation</th>
+                                        <th>Mobile No.</th>
+                                        <th>Email Id</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>System Admin</td>
+                                        <td>{{ userDepartmentSystemAdmin.name }}</td>
+                                        <td>{{ userDepartmentSystemAdmin.designation }}</td>
+                                        <td>+91{{ userDepartmentSystemAdmin.mobileNo | decryptStr:decSecretKey:decsalt}}
+                                        </td>
+                                        <td> {{ userDepartmentSystemAdmin.emailId | decryptStr:decSecretKey:decsalt}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Database Admin</td>
+                                        <td> {{ userDepartmentDatabaseAdmin.name }}</td>
+                                        <td> {{ userDepartmentDatabaseAdmin.designation }}</td>
+                                        <td>+91{{ userDepartmentDatabaseAdmin.mobileNo |decryptStr:decSecretKey:decsalt}}</td>
+                                        <td> {{ userDepartmentDatabaseAdmin.emailId | decryptStr:decSecretKey:decsalt}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Web Info. Manager</td>
+                                        <td> {{ userDepartmentWebInfoManager.name }}</td>
+                                        <td> {{ userDepartmentWebInfoManager.designation }}</td>
+                                        <td>+91{{ userDepartmentWebInfoManager.mobileNo | decryptStr:decSecretKey:decsalt}}</td>
+                                        <td>{{ userDepartmentWebInfoManager.emailId | decryptStr:decSecretKey:decsalt}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header fw-bold">
+                        Uploaded Documents
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-sm w-100 align-middle mb-0">
+                                <thead>
+                                    <tr class="bg-secondary text-white bg-gradient">
+                                        <th>Download and View Document</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <div class="d-flex order-actions">
+                                            <a href="javascript:;" title="Download" (click)="btndownload()"
+                                                class="ms-4 text-primary bg-light-primary border-0">
+                                                <i class="bx bxs-download"></i>
+                                            </a>
+                                            <a href="javascript:;" title="View Document" (click)="viewDocument()"
+                                                class="ms-4 text-primary bg-light-primary border-0">
+                                                <i class='bx bxs-show'></i></a>
+                                        </div>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="currStatus=='DP' || currStatus=='DT' || currStatus=='DD'">
+            <div class="col">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <div class="form-body">
+                            <form autocomplete="off" class="row g-2">
+                                <div class="col-xxl-8 col-xl-8 col-md-8 col-sm-12 offset-xxl-2 offset-xl-2 offset-md-2">
+                                    <label for="ddlStatus" class="form-label">Status</label>
+                                    <select class="form-select" id="ddlStatus">
+                                        <option selected>--Change Status--</option>
+                                        <option *ngFor="let status of Statuslist" value="{{status.value}}">
+                                            {{status.Text}}</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-xxl-8 col-xl-8 col-md-8 col-sm-12 offset-xxl-2 offset-xl-2 offset-md-2">
+                                    <label for="remarks" class="form-label">Remarks</label>
+                                    <textarea id="remarks" type="text" class="form-control"
+                                        placeholder="Remarks"></textarea>
+                                </div>
+                                <div class="col-xxl-8 col-xl-8 col-md-8 col-sm-12 offset-xxl-2 offset-xl-2 offset-md-2">
+                                    <div class="row">
+
+                                        <div class="col text-end">
+                                            <button type="submit" class="btn btn-danger float-end ms-2">Cancel</button>
+                                            <button class="btn btn-primary float-end"
+                                                (click)="onSubmit()">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button *ngIf="(onBoardingDetailsStatus=='DT' || onBoardingDetailsStatus=='DA')"
+                    class="btn btn-warning btn-sm" (click)="onReSend()">Re-Send Registration Link</button>
+            </div>
+        </div>
+
+    </div>
+</div>

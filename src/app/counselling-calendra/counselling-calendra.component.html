@@ -1,0 +1,88 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Counselling Management Services</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item active" aria-current="page">Counselling Calendar</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10 mb-3">
+                <div class="card-body">
+                    <form class="row g-3" [formGroup]="CounsellingCalendar">
+                        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                            <label for="inputAgency" class="form-label">Start Date</label>
+                            <input id="inputAgency" type="date" class="form-control" formControlName="StartDate"
+                                [ngClass]="{ 'is-invalid':(CounsCalendar?.['StartDate'].errors 
+                           && ( CounsCalendar?.['StartDate'].touched || submitted  ))}" placeholder="Start Date">
+                            <span class="text-danger"
+                                *ngIf="(CounsCalendar?.['StartDate'].touched || submitted) && CounsCalendar?.['StartDate'].errors?.['required']">
+                                Start Date is Required
+                            </span>
+                        </div>
+                        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                            <label for="inputServices" class="form-label">End Date</label>
+                            <input id="inputServices" formControlName="Enddate" [ngClass]="{ 'is-invalid':(CounsCalendar?.['Enddate'].errors 
+                        && ( CounsCalendar?.['Enddate'].touched || submitted  ))}" type="date" class="form-control"
+                                placeholder="Application URL">
+                            <span class="text-danger"
+                                *ngIf="(CounsCalendar?.['Enddate'].touched || submitted) && CounsCalendar?.['Enddate'].errors?.['required']">
+                                End Date is Required
+                            </span>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" (click)="submit()" class="btn btn-primary me-3"> Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col mt-4">
+            <div class="card radius-10 mb-0">
+                <div class="card-body">
+                    <div style="max-height: 600px; overflow: auto;">
+                        <table id="applicationSummary" class="table table-bordered align-middle mb-0 w-100">
+                            <thead class=" sticky-top">
+                                <tr class="bg-dark bg-gradient text-white">
+                                    <th *ngFor="let myear of monthyear" [attr.colspan]="myear.lengthcol">
+                                        {{myear.month}}-{{myear.year}}</th>
+                                </tr>
+                                <ng-container>
+                                    <tr class="bg-secondary bg-gradient text-white" style="font-size: 10px;">
+                                        <th [ngStyle]="{width: widthcol}" *ngFor="let dates of filterdates">
+                                            {{dates.date}}
+                                        </th>
+                                    </tr>
+                                </ng-container>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let datahead of dataSchedule">
+                                    <tr>
+                                        <td colspan="31" class="fw-bold bg-secondary bg-opacity-25 bg-gradient">
+                                            {{datahead.projectName}}</td>
+                                    </tr>
+                                    <tr *ngFor="let dataheadjs of datahead.jSummary">
+                                        <td style="font-size: 10px;" [attr.colspan]="datewiseshift(dataheadjs)">
+                                        </td>
+                                        <td style="word-wrap: break-word !important; font-size: 10px;"
+                                            [attr.colspan]="shiftaccorddate(dataheadjs)">
+                                            {{dataheadjs.description}}-{{dataheadjs.sdate}}-{{dataheadjs.cDate}}
+                                        </td>
+                                        <td [attr.colspan]="afterDate(dataheadjs)"></td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

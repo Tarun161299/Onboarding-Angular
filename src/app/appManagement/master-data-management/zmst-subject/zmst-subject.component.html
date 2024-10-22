@@ -1,0 +1,156 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3"> Subject Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        
+                        <li class="breadcrumb-item active" aria-current="page">Subject</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-2">
+                    <div class="card-body mt-3">
+                        <form class="row g-3" [formGroup]="mdzmstSubjectFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="qualificationId"
+                                class="form-label">Qualification</label>
+                            <ng-select formControlName="qualificationId" name="qualificationId" [clearable]="false"
+                                [searchable]="true" (change)="byqual($event)"
+                                [ngClass]="{ 'is-invalid':(mdSubjectFrmControl?.['qualificationId'].errors 
+                                    && (mdSubjectFrmControl?.['qualificationId'].dirty || mdSubjectFrmControl?.['qualificationId'].touched || submitted  ))}">
+                                <ng-option value="">--Select--</ng-option>
+                                <ng-option *ngFor="let  qualification Of qualificationList" value={{qualification.qualificationId}}>
+                                    {{qualification.description}}</ng-option>
+                            </ng-select>
+
+                            <span class="invalid-feedback"
+                                *ngIf="(mdSubjectFrmControl?.['qualificationId'].touched || submitted) && mdSubjectFrmControl?.['qualificationId'].errors?.['required']">
+                                Qualification is required.
+                            </span>
+                        </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="subjectId"
+                                    class="form-label">Subject Id</label> <input type="text" id="subjectId"
+                                    maxlength="3" formControlName="subjectId" name="id" class="form-control"
+                                    placeholder="Subject Id"
+                                    [ngClass]="{ 'is-invalid':(mdSubjectFrmControl?.['subjectId'].errors && (mdSubjectFrmControl?.['subjectId'].dirty || mdSubjectFrmControl?.['subjectId'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(mdSubjectFrmControl?.['subjectId'].touched || submitted) && mdSubjectFrmControl?.['subjectId'].errors?.['required']">
+                                    Subject Id is required</span>
+                                <span class="text-danger"
+                                    *ngIf="mdSubjectFrmControl?.['subjectId'].touched && mdSubjectFrmControl?.['subjectId'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                                <div *ngIf="mdSubjectFrmControl?.['subjectId'].errors?.['minlength']"
+                                    class="invalid-feedback1">
+                                    Subject Id should be of 3 digits
+                                </div>
+                                <div *ngIf="mdSubjectFrmControl?.['subjectId'].errors?.['pattern']"
+                                    class="invalid-feedback1">
+                                    Invalid Subject Id
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="subjectName"
+                                    class="form-label">Subject Name</label> <input type="text" id="subjectName"
+                                    formControlName="subjectName" [maxlength]="100" name="id" class="form-control"
+                                    placeholder="Subject Name"
+                                    [ngClass]="{ 'is-invalid':(mdSubjectFrmControl?.['subjectName'].errors && (mdSubjectFrmControl?.['subjectName'].dirty || mdSubjectFrmControl?.['subjectName'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(mdSubjectFrmControl?.['subjectName'].touched || submitted) && mdSubjectFrmControl?.['subjectName'].errors?.['required']">
+                                    Subject Name is required</span>
+                                <span class="text-danger"
+                                    *ngIf="mdSubjectFrmControl?.['subjectName'].touched && mdSubjectFrmControl?.['subjectName'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="alternateNames"
+                                    class="form-label">Alternate Name</label>
+                                <input type="text" id="alternateNames" formControlName="alternateNames"
+                                    [maxlength]="100" name="alternateNames" class="form-control"
+                                    placeholder="Alternate Name"
+                                    [ngClass]="{ 'is-invalid':(mdSubjectFrmControl?.['alternateNames'].errors && (mdSubjectFrmControl?.['alternateNames'].dirty || mdSubjectFrmControl?.['alternateNames'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(mdSubjectFrmControl?.['alternateNames'].touched || submitted) && mdSubjectFrmControl?.['alternateNames'].errors?.['required']">
+                                    Alternate Name is required</span>
+                                <span class="text-danger"
+                                    *ngIf="mdSubjectFrmControl?.['alternateNames'].touched && mdSubjectFrmControl?.['alternateNames'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="tblsubject" class="table align-middle mb-0"
+                                *ngIf="zmstSubjectModelList.length>0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Qualification Name </th>
+                                        <th>Subject Id </th>
+                                        <th>Subject Name </th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstSubjectModelList.length>0">
+                                        <tr *ngFor="let data of zmstSubjectModelList;">
+                                            <td>{{data.questionName}}</td>
+                                            <td>{{data.subjectId}}</td>
+                                            <td>{{data.subjectName}}</td>
+                                            <td>{{data.alternateNames}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.subjectId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Qualification Name </th>
+                                        <th>Subject Id </th>
+                                        <th>Subject Name </th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

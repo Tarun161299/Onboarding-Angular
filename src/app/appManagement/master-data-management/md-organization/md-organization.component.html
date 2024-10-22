@@ -1,0 +1,149 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Organization Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+
+                        <li class="breadcrumb-item active" aria-current="page">Organization</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="mdorganizationFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                    <label for="agency" class="form-label d-block">
+                                        Choose Agency
+                                    </label>
+                                    <div class="form-check form-check-inline" *ngFor="let item1 of RADIO_LIST;">
+                                        <input class="form-check-input" type="radio" id="{{item1.id}}"
+                                            [value]="item1.id"  formControlName="agency" (change)="onchange(item1)"
+                                            name="agency" />
+                                        <label class="form-check-label" for="{{item1.id}}">{{item1.name}}</label>
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="( submitted) && mdorganizationFrmControl?.['agency'].errors?.['required']">
+                                        Agency should be selected.
+                                    </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12" [hidden]="agencyHide"> <label for="stateId"
+                                    class="form-label">State</label>
+                                <ng-select formControlName="stateId" name="stateId" [clearable]="false"
+                                    [searchable]="true" (change)="byState($event)"
+                                    [ngClass]="{ 'is-invalid':(mdorganizationFrmControl?.['stateId'].errors 
+                                && (mdorganizationFrmControl?.['stateId'].dirty || mdorganizationFrmControl?.['stateId'].touched || submitted  ))}">
+                                    <ng-option value="">--Select--</ng-option>
+                                    <ng-option *ngFor="let state Of stateData" value={{state.id}}>
+                                        {{state.description}}</ng-option>
+                                </ng-select>
+
+                                <span class="invalid-feedback"
+                                    *ngIf="(mdorganizationFrmControl?.['stateId'].touched || submitted) && mdorganizationFrmControl?.['stateId'].errors?.['required']">
+                                    State is required.
+                                </span>
+                            </div>
+                            <!-- <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="organizationId"
+                                    class="form-label">Organization Id</label> <input type="text" id="organizationId"
+                                    formControlName="organizationId" [maxlength]="3" name="organizationId"
+                                    class="form-control" placeholder="Organization Id"
+                                    [ngClass]="{ 'is-invalid':(mdorganizationFrmControl?.['organizationId'].errors && (mdorganizationFrmControl?.['organizationId'].dirty || mdorganizationFrmControl?.['organizationId'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(mdorganizationFrmControl?.['organizationId'].touched || submitted) && mdorganizationFrmControl?.['organizationId'].errors?.['required']">Organization
+                                    Id is required</span>
+                                <div *ngIf="mdorganizationFrmControl?.['organizationId'].errors?.['maxLength']"
+                                    class="invalid-feedback1">
+                                    Organization Id should be of 3 digits
+                                </div>
+                                <div *ngIf="mdorganizationFrmControl?.['organizationId'].errors?.['pattern']"
+                                    class="invalid-feedback1">
+                                    Invalid Organization Id
+                                </div>
+                            </div> -->
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="organizationName"
+                                    class="form-label">Organization Name</label> <input type="text"
+                                    id="organizationName" formControlName="organizationName" [maxlength]="500"
+                                    name="organizationName" class="form-control" placeholder="Organization Name"
+                                    [ngClass]="{ 'is-invalid':(mdorganizationFrmControl?.['organizationName'].errors && (mdorganizationFrmControl?.['organizationName'].dirty || mdorganizationFrmControl?.['organizationName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(mdorganizationFrmControl?.['organizationName'].touched || submitted) && mdorganizationFrmControl?.['organizationName'].errors?.['required']">
+                                    Organization Name is required</span>
+                                <span class="text-danger"
+                                    *ngIf="mdorganizationFrmControl?.['organizationName'].touched && mdorganizationFrmControl?.['organizationName'].errors?.['invalid']">
+                                    Script or Style are not allowed.
+                                </span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="mdorganizationGrid" class="table align-middle mb-3">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>State</th>
+                                        <th>Organization Id</th>
+                                        <th>Organization Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="mdorganizationList.length>0">
+                                        <tr *ngFor="let data of mdorganizationList;">
+                                            <td>{{data.stateName}}</td>
+                                            <td>{{data.organizationId}}</td>
+                                            <td>{{data.organizationName}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <!-- <a (click)="delete(data.organizationId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a> -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>State</th>
+                                        <th>Organization Id</th>
+                                        <th>Organization Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

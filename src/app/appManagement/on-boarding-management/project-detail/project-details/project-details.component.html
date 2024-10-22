@@ -1,0 +1,63 @@
+<form [formGroup]="projectDetailsForm" autocomplete="off">
+    <div class="row g-3">
+
+        <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+            <label for="projectStatus" class="form-label">Project Status</label>
+            <select id="projectStatus" class="form-select"
+                [ngClass]="{ 'is-invalid':(projectDetailsFormControl?.['projectStatus'].errors 
+                && (projectDetailsFormControl?.['projectStatus'].dirty || projectDetailsFormControl?.['projectStatus'].touched || submitted  ))}"
+                formControlName="projectStatus">
+                <option value="">--Select Status--</option>
+                <option value="R" selected="R">Running</option>
+                <option value="C" selected="C">Closed</option>
+            </select>
+            <span class="invalid-feedback"
+                *ngIf="(projectDetailsFormControl?.['projectStatus'].touched || submitted) && projectDetailsFormControl?.['projectStatus'].errors?.['required']">
+                Project Status is Required.
+            </span>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+            <label for="eFileNumber" class="form-label">E-File Number</label>
+            <input id="eFileNumber" type="text" class="form-control"
+                [ngClass]="{ 'is-invalid':(projectDetailsFormControl?.['eFileNumber'].errors 
+                && (projectDetailsFormControl?.['eFileNumber'].dirty || projectDetailsFormControl?.['eFileNumber'].touched || submitted  ))}" placeholder="E-File Number"
+                formControlName="eFileNumber">
+            <span class="invalid-feedback"
+                *ngIf="(projectDetailsFormControl?.['eFileNumber'].touched || submitted) && projectDetailsFormControl?.['eFileNumber'].errors?.['required']">
+                E-File Number is Required.
+            </span>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+            <label for="prizmId" class="form-label">Prism Id</label>
+            <input id="prizmId" type="text" class="form-control" placeholder="Prizm Id"
+                [ngClass]="{ 'is-invalid':(projectDetailsFormControl?.['prizmId'].errors 
+                && (projectDetailsFormControl?.['prizmId'].dirty || projectDetailsFormControl?.['prizmId'].touched || submitted  ))}" formControlName="prizmId">
+            <span class="invalid-feedback"
+                *ngIf="(projectDetailsFormControl?.['prizmId'].touched || submitted) && projectDetailsFormControl?.['prizmId'].errors?.['required']">
+                Prism Id is Required.
+            </span>
+        </div>
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+            <label for="remark" class="form-label">Remark (If any)</label>
+            <textarea id="remark" class="form-control" rows="2"
+                [ngClass]="{ 'is-invalid':(projectDetailsFormControl?.['remark'].errors 
+                && (projectDetailsFormControl?.['remark'].dirty || projectDetailsFormControl?.['remark'].touched || submitted  ))}" placeholder="Enter Remark"
+                formControlName="remark"></textarea>
+            <span class="invalid-feedback"
+                *ngIf="(projectDetailsFormControl?.['remark'].touched || submitted) && projectDetailsFormControl?.['remark'].errors?.['required']">
+                Required.
+            </span>
+            <span class="text-danger"
+                *ngIf="projectDetailsFormControl?.['remark'].touched && projectDetailsFormControl?.['remark'].errors?.['invalid']">
+                Script or Style are not allowed.
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 mt-3">
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+            <button type="submit" (click)="saveProjectDetails()" class="btn btn-primary me-3">
+                Submit
+            </button>
+        </div>
+    </div>
+</form>

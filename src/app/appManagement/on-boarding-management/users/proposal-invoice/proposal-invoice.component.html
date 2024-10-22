@@ -1,0 +1,119 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Project Activities</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item active" aria-current="page">User PI </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <h5 class="card-title mb-1">
+                                Proposal Invoice -
+                                <strong *ngIf="rowData.length>0">
+                                    <i> ({{rowData[0].projectName}})</i>
+                                </strong>
+                            </h5>
+                        </div>
+                        <hr />
+                        <div class="row g-3">
+                            <div *ngIf="rowData.length>0">
+                                <div class="row">
+                                    <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                                        <label class="form-label">NICSI PI Number</label>
+                                        :
+                                        <label>{{rowData[0].nicsipino}}</label>
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                                        <label class="form-label">Date of PI</label>
+                                        :
+                                        <label>{{rowData[0].pidate |date:'yyyy-MM-dd'}}</label>
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+                                        <label class="form-label">PI Amount</label>
+                                        :
+                                        <label>{{rowData[0].piamount}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <form>
+                                <div class="row g-3">
+                                    <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-4">
+
+                                        <label class="form-label">PI</label>
+                                        :
+                                        <label *ngIf="piIsAvail==0" class="text-warning">Pending</label>
+                                        <button *ngIf="piIsAvail!=0" href="javascript:;" title="Download"
+                                            class="ms-2 text-primary bg-light-primary border-0"
+                                            (click)="btndownload(pi)">
+                                            <i class="bx bxs-download fs-4"></i>
+                                        </button>
+                                        <button *ngIf="piIsAvail!=0" href="javascript:;" title="View Document"
+                                            class="ms-2 text-primary bg-light-primary border-0"
+                                            (click)="viewPIDetailsDocument('05')"><i
+                                                class='bx bxs-show fs-4'></i></button>
+                                        <strong *ngIf="piIsAvail!=0" class="m-4">Updated on {{piIsAvailSubmitTime |
+                                            ddMmYYYYDate}}</strong>
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-4">
+
+                                        <label class="form-label">Cover Letter</label>
+                                        :
+                                        <label *ngIf="coverLetterIsAvail==0" class="text-warning">Pending</label>
+                                        <button *ngIf="coverLetterIsAvail!=0" href="javascript:;" title="Download"
+                                            class="ms-2 text-primary bg-light-primary border-0"
+                                            (click)="btndownload(CoverLetter)">
+                                            <i class="bx bxs-download fs-4"></i>
+                                        </button>
+                                        <button *ngIf="coverLetterIsAvail!=0" href="javascript:;" title="View Document"
+                                            class="ms-2 text-primary bg-light-primary border-0"
+                                            (click)="viewCoverLetterDocument('07')"><i
+                                                class='bx bxs-show fs-4'></i></button>
+                                        <strong *ngIf="coverLetterIsAvail!=0" class="m-4">Updated on
+                                            {{coverLetterIsAvailSubmitTime |ddMmYYYYDate}}</strong>
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-4">
+
+                                        <label class="form-label">Proposal</label>
+                                        :
+                                        <label *ngIf="projectProposalIsAvail==0" class="text-warning">Pending</label>
+                                        <button *ngIf="projectProposalIsAvail!=0" href="javascript:;" title="Download"
+                                            class="ms-2 text-primary bg-light-primary border-0"
+                                            (click)="btndownload(Proposal)">
+                                            <i class="bx bxs-download fs-4"></i>
+                                        </button>
+                                        <button *ngIf="projectProposalIsAvail!=0" href="javascript:;"
+                                            title="View Document" class="ms-2 text-primary bg-light-primary border-0"
+                                            (click)="viewProposalDocument('06')"><i
+                                                class='bx bxs-show fs-4'></i></button>
+                                        <strong *ngIf="projectProposalIsAvail!=0" class="m-4">Updated on
+                                            {{projectProposalIsAvailSubmitTime | ddMmYYYYDate}}</strong>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

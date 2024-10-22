@@ -1,0 +1,203 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Qualification Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Employee Qualification</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="qualificationdetailsFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="empCode"
+                                class="form-label">Employee Code</label>
+                            <ng-select formControlName="empCode" name="empCode"  [clearable]="false" (change)="byEmpCode($event)"
+                                [searchable]="true" 
+                                [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['empCode'].errors 
+                                    && (qualificationdetailsFrmControl?.['empCode'].dirty || qualificationdetailsFrmControl?.['empCode'].touched || submitted  ))}">
+                                <ng-option [value]=" ">--Select--</ng-option>
+                                <ng-option *ngFor="let  data of empCodeData" value={{data.empCode}}>
+                                    {{data.empName}} [{{data.empCode}}]</ng-option>
+                            </ng-select>
+                            <span class="invalid-feedback"
+                                *ngIf="(qualificationdetailsFrmControl?.['empCode'].touched || submitted) && qualificationdetailsFrmControl?.['empCode'].errors?.['required']">
+                                Employee Code is required.
+                            </span>
+                        </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="examPassed"
+                                class="form-label">Exam Passed</label>
+                            <ng-select formControlName="examPassed" name="examPassed" [clearable]="false"
+                                [searchable]="true"
+                                [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['examPassed'].errors 
+                                    && (qualificationdetailsFrmControl?.['examPassed'].dirty || qualificationdetailsFrmControl?.['examPassed'].touched || submitted  ))}">
+                                <ng-option value="0">--Select--</ng-option>
+                                <ng-option *ngFor="let data of examData" value={{data.id}}>
+                                    {{data.exam}}</ng-option>
+                            </ng-select>
+                            <span class="invalid-feedback"
+                                *ngIf="(qualificationdetailsFrmControl?.['examPassed'].touched || submitted) && qualificationdetailsFrmControl?.['examPassed'].errors?.['required']">
+                                Exam Passed  is required.
+                            </span>
+                        </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="boardUniv"
+                                    class="form-label">Board/University</label> <input type="text" id="boardUniv1"
+                                    formControlName="boardUniv" [maxlength]="150" name="boardUniv1" class="form-control"
+                                    placeholder="Board/University"
+                                    [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['boardUniv'].errors && (qualificationdetailsFrmControl?.['boardUniv'].dirty || qualificationdetailsFrmControl?.['boardUniv'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(qualificationdetailsFrmControl?.['boardUniv'].touched || submitted) && qualificationdetailsFrmControl?.['boardUniv'].errors?.['required']">
+                                    Board/University is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="passYear"
+                                    class="form-label">Pass Year</label> <input type="text" id="passYear1"
+                                    formControlName="passYear" [maxlength]="4" name="passYear1" class="form-control"
+                                    placeholder="Pass Year"
+                                    [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['passYear'].errors && (qualificationdetailsFrmControl?.['passYear'].dirty || qualificationdetailsFrmControl?.['passYear'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(qualificationdetailsFrmControl?.['passYear'].touched || submitted) && qualificationdetailsFrmControl?.['passYear'].errors?.['required']">
+                                    Pass Year is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="boardUniv"
+                                    class="form-label">Upload Certificate</label> <input type="file"
+                                    id="uploadCertificate1" name="uploadCertificate1"
+                                    formControlName="uploadCertificate" class="form-control"
+                                    (change)="handleFileInput($event)" placeholder="Upload Certificate"
+                                    [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['uploadCertificate'].errors && (qualificationdetailsFrmControl?.['uploadCertificate'].dirty || qualificationdetailsFrmControl?.['uploadCertificate'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(qualificationdetailsFrmControl?.['uploadCertificate'].touched || submitted) && qualificationdetailsFrmControl?.['uploadCertificate'].errors?.['required']">
+                                    Upload Certificate is required</span>
+                                    <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+                            </div>
+                            <div [hidden]="showViewDoc" class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+
+                                <label for="btndownload" class="form-label">View Document
+                                </label>
+                                <button class="btn bg-warning btn-sm d-block" title="View Document"
+                                    (click)="ViewClick()"><i class='bx bxs-show'></i>
+                                </button>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="division"
+                                    class="form-label">Division</label>
+                                <select class="form-select" formControlName="division" id="div" name="div"
+                                    [ngClass]="{ 'is-invalid':(qualificationdetailsFrmControl?.['division'].errors && (qualificationdetailsFrmControl?.['division'].dirty || qualificationdetailsFrmControl?.['division'].touched || submitted  ))}">
+                                    <option value="0">--Select--</option>
+                                    <option value="1st">
+                                        1st
+                                    </option>
+                                    <option value="2nd">
+                                        2nd
+                                    </option>
+                                    <option value="3rd">
+                                        3rd
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(qualificationdetailsFrmControl?.['division'].touched || submitted) && qualificationdetailsFrmControl?.['division'].errors?.['required']">
+                                    Division is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="submit" (click)="clear()" class="btn btn-primary btn-danger">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="qualificationdetailsList.length>0">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="qualificationdetailsGrid" class="table align-middle mb-0"
+                                *ngIf="qualificationdetailsList.length>0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Employee Code</th>
+                                        <th>Employee name</th>
+                                        <th>Exam Passed</th>
+                                        <th>Board/University</th>
+                                        <th>Pass Year</th>
+                                        <th>Division</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="qualificationdetailsList.length>0">
+                                        <tr *ngFor="let data of qualificationdetailsList;">
+                                            <td>{{data.empCode}}</td>
+                                            <td>{{data.empName}}</td>
+                                            <td>{{data.examPassed|examTypePipe:examData}}</td>
+                                            <td>{{data.boardUniv}}</td>
+                                            <td>{{data.passYear}}</td>
+                                            <td>{{data.division}}</td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a title="View Document"
+                                                        class="ms-4 text-primary bg-light-primary border-0"
+                                                        (click)="viewDocument(data)"><i class='bx bxs-show'></i></a>
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.qualificationDetailsId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Employee Code</th>
+                                        <th>Employee name</th>
+                                        <th>Exam Passed</th>
+                                        <th>Board/University</th>
+                                        <th>Pass Year</th>
+                                        <th>Division</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div *ngIf="qualificationdetailsList.length==0">
+                            <strong class="w-50 text-center"> No Records Found</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

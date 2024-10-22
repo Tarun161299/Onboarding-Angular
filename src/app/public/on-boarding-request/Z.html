@@ -1,0 +1,130 @@
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="id" class="form-label">Id</label> <input type="text"
+        id="id" formControlName="id" [maxlength]="4" name="id" class="form-control" placeholder="Id"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['id'].errors && (registerFormControl?.['id'].dirty || registerFormControl?.['id'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="requestNo" class="form-label">RequestNo</label> <input
+        type="text" id="requestNo" formControlName="requestNo" [maxlength]="30" name="requestNo" class="form-control"
+        placeholder="RequestNo"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['requestNo'].errors && (registerFormControl?.['requestNo'].dirty || registerFormControl?.['requestNo'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="requestLetterNo"
+        class="form-label">RequestLetterNo</label> <input type="text" id="requestLetterNo"
+        formControlName="requestLetterNo" [maxlength]="30" name="requestLetterNo" class="form-control"
+        placeholder="RequestLetterNo"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['requestLetterNo'].errors && (registerFormControl?.['requestLetterNo'].dirty || registerFormControl?.['requestLetterNo'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="requestLetterDate"
+        class="form-label">RequestLetterDate</label> <input type="text" id="requestLetterDate"
+        formControlName="requestLetterDate" [maxlength]="8" name="requestLetterDate" class="form-control"
+        placeholder="RequestLetterDate"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['requestLetterDate'].errors && (registerFormControl?.['requestLetterDate'].dirty || registerFormControl?.['requestLetterDate'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="projectCode" class="form-label">ProjectCode</label>
+    <input type="text" id="projectCode" formControlName="projectCode" [maxlength]="50" name="projectCode"
+        class="form-control" placeholder="ProjectCode"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['projectCode'].errors && (registerFormControl?.['projectCode'].dirty || registerFormControl?.['projectCode'].touched || submitted  ))}" />
+    <span class="text-danger"
+        *ngIf="(registerFormControl?.['projectCode'].touched || submitted) && registerFormControl?.['projectCode'].errors?.['pattern']">
+        Enter a valid ProjectCode</span>
+    <div *ngIf="registerFormControl?.['projectCode'].errors?.['maxlength']" class="invalid-feedback1"> ProjectCode
+        should be of 50 digits </div>
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="projectName" class="form-label">ProjectName</label>
+    <input type="text" id="projectName" formControlName="projectName" [maxlength]="500" name="projectName"
+        class="form-control" placeholder="ProjectName"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['projectName'].errors && (registerFormControl?.['projectName'].dirty || registerFormControl?.['projectName'].touched || submitted  ))}" />
+    <span class="text-danger"
+        *ngIf="(registerFormControl?.['projectName'].touched || submitted) && registerFormControl?.['projectName'].errors?.['required']">
+        ProjectName is required</span><span class="text-danger"
+        *ngIf="(registerFormControl?.['projectName'].touched || submitted) && registerFormControl?.['projectName'].errors?.['pattern']">
+        Enter a valid ProjectName</span>
+    <div *ngIf="registerFormControl?.['projectName'].errors?.['maxlength']" class="invalid-feedback1"> ProjectName
+        should be of 500 digits </div>
+    <div *ngIf="registerFormControl?.['projectName'].errors?.['minlength']" class="invalid-feedback1"> ProjectName
+        should be of 500 digits </div>
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="projectYear" class="form-label">ProjectYear</label>
+    <input type="text" id="projectYear" formControlName="projectYear" [maxlength]="10" name="projectYear"
+        class="form-control" placeholder="ProjectYear"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['projectYear'].errors && (registerFormControl?.['projectYear'].dirty || registerFormControl?.['projectYear'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyId" class="form-label">AgencyId</label> <input
+        type="text" id="agencyId" formControlName="agencyId" [maxlength]="4" name="agencyId" class="form-control"
+        placeholder="AgencyId"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['agencyId'].errors && (registerFormControl?.['agencyId'].dirty || registerFormControl?.['agencyId'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyName" class="form-label">AgencyName</label> <input
+        type="text" id="agencyName" formControlName="agencyName" [maxlength]="500" name="agencyName"
+        class="form-control" placeholder="AgencyName"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['agencyName'].errors && (registerFormControl?.['agencyName'].dirty || registerFormControl?.['agencyName'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="eFileNo" class="form-label">EFileNo</label> <input
+        type="text" id="eFileNo" formControlName="eFileNo" [maxlength]="30" name="eFileNo" class="form-control"
+        placeholder="EFileNo"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['eFileNo'].errors && (registerFormControl?.['eFileNo'].dirty || registerFormControl?.['eFileNo'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="prizmId" class="form-label">PrizmId</label> <input
+        type="text" id="prizmId" formControlName="prizmId" [maxlength]="30" name="prizmId" class="form-control"
+        placeholder="PrizmId"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['prizmId'].errors && (registerFormControl?.['prizmId'].dirty || registerFormControl?.['prizmId'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="status" class="form-label">Status</label> <input
+        type="text" id="status" formControlName="status" [maxlength]="2" name="status" class="form-control"
+        placeholder="Status"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['status'].errors && (registerFormControl?.['status'].dirty || registerFormControl?.['status'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="remarks" class="form-label">Remarks</label> <input
+        type="text" id="remarks" formControlName="remarks" name="remarks" class="form-control" placeholder="Remarks"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['remarks'].errors && (registerFormControl?.['remarks'].dirty || registerFormControl?.['remarks'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="nICSIProjectCode"
+        class="form-label">NICSIProjectCode</label> <input type="text" id="nICSIProjectCode"
+        formControlName="nICSIProjectCode" [maxlength]="32" name="nICSIProjectCode" class="form-control"
+        placeholder="NICSIProjectCode"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['nICSIProjectCode'].errors && (registerFormControl?.['nICSIProjectCode'].dirty || registerFormControl?.['nICSIProjectCode'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="nICSIPINo" class="form-label">NICSIPINo</label> <input
+        type="text" id="nICSIPINo" formControlName="nICSIPINo" [maxlength]="30" name="nICSIPINo" class="form-control"
+        placeholder="NICSIPINo"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['nICSIPINo'].errors && (registerFormControl?.['nICSIPINo'].dirty || registerFormControl?.['nICSIPINo'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="pIDate" class="form-label">PIDate</label> <input
+        type="text" id="pIDate" formControlName="pIDate" [maxlength]="8" name="pIDate" class="form-control"
+        placeholder="PIDate"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['pIDate'].errors && (registerFormControl?.['pIDate'].dirty || registerFormControl?.['pIDate'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="pIAmount" class="form-label">PIAmount</label> <input
+        type="text" id="pIAmount" formControlName="pIAmount" [maxlength]="9" name="pIAmount" class="form-control"
+        placeholder="PIAmount"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['pIAmount'].errors && (registerFormControl?.['pIAmount'].dirty || registerFormControl?.['pIAmount'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="submitTime" class="form-label">SubmitTime</label> <input
+        type="text" id="submitTime" formControlName="submitTime" [maxlength]="8" name="submitTime" class="form-control"
+        placeholder="SubmitTime"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['submitTime'].errors && (registerFormControl?.['submitTime'].dirty || registerFormControl?.['submitTime'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="iPAddress" class="form-label">IPAddress</label> <input
+        type="text" id="iPAddress" formControlName="iPAddress" [maxlength]="32" name="iPAddress" class="form-control"
+        placeholder="IPAddress"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['iPAddress'].errors && (registerFormControl?.['iPAddress'].dirty || registerFormControl?.['iPAddress'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="submitBy" class="form-label">SubmitBy</label> <input
+        type="text" id="submitBy" formControlName="submitBy" [maxlength]="50" name="submitBy" class="form-control"
+        placeholder="SubmitBy"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['submitBy'].errors && (registerFormControl?.['submitBy'].dirty || registerFormControl?.['submitBy'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="modifyBy" class="form-label">ModifyBy</label> <input
+        type="text" id="modifyBy" formControlName="modifyBy" [maxlength]="50" name="modifyBy" class="form-control"
+        placeholder="ModifyBy"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['modifyBy'].errors && (registerFormControl?.['modifyBy'].dirty || registerFormControl?.['modifyBy'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="modifyOn" class="form-label">ModifyOn</label> <input
+        type="text" id="modifyOn" formControlName="modifyOn" [maxlength]="8" name="modifyOn" class="form-control"
+        placeholder="ModifyOn"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['modifyOn'].errors && (registerFormControl?.['modifyOn'].dirty || registerFormControl?.['modifyOn'].touched || submitted  ))}" />
+</div>
+<div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="isActive" class="form-label">IsActive</label> <input
+        type="text" id="isActive" formControlName="isActive" [maxlength]="2" name="isActive" class="form-control"
+        placeholder="IsActive"
+        [ngClass]="{ 'is-invalid':(registerFormControl?.['isActive'].errors && (registerFormControl?.['isActive'].dirty || registerFormControl?.['isActive'].touched || submitted  ))}" />
+</div>

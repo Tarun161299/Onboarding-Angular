@@ -1,0 +1,114 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Quota Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Quota</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">                       
+                        <form class="row g-3" [formGroup]="zmstquotaFrmGroup">
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="quotaId"
+                                    class="form-label">Quota Id</label> <input type="text" id="quotaId" 
+                                    formControlName="quotaId" [maxlength]="2" name="quotaId" class="form-control"
+                                    placeholder="Quota Id"
+                                    [ngClass]="{ 'is-invalid':(zmstquotaFrmControl?.['quotaId'].errors && (zmstquotaFrmControl?.['quotaId'].dirty || zmstquotaFrmControl?.['quotaId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstquotaFrmControl?.['quotaId'].touched || submitted) && zmstquotaFrmControl?.['quotaId'].errors?.['required']">
+                                    Quota Id is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="name"
+                                    class="form-label">Name</label> <input type="text" id="name" formControlName="name"
+                                    [maxlength]="100" name="name" class="form-control" placeholder="Name"
+                                    [ngClass]="{ 'is-invalid':(zmstquotaFrmControl?.['name'].errors && (zmstquotaFrmControl?.['name'].dirty || zmstquotaFrmControl?.['name'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(zmstquotaFrmControl?.['name'].touched || submitted) && zmstquotaFrmControl?.['name'].errors?.['required']">
+                                    Name is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="alternateNames"
+                                    class="form-label">Alternate Name</label> <input type="text" id="alternateNames"
+                                    formControlName="alternateNames" [maxlength]="100" name="alternateNames"
+                                    class="form-control" placeholder="Alternate Names"
+                                    [ngClass]="{ 'is-invalid':(zmstquotaFrmControl?.['alternateNames'].errors && (zmstquotaFrmControl?.['alternateNames'].dirty || zmstquotaFrmControl?.['alternateNames'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstquotaFrmControl?.['alternateNames'].touched || submitted) && zmstquotaFrmControl?.['alternateNames'].errors?.['required']">
+                                    Alternate Name is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstquotaGrid" class="table align-middle mb-0" >
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Quota Id</th>
+                                        <th>Name</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstquotaList.length>0">
+                                        <tr *ngFor="let data of zmstquotaList;">
+                                            <td>{{data.quotaId}}</td>
+                                            <td>{{data.name}}</td>
+                                            <td>{{data.alternateNames}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.quotaId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Quota Id</th>
+                                        <th>Name</th>
+                                        <th>Alternate Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,148 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Agency Virtual Directory Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Agency Virtual Directory Mapping</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstagencyvirtualdirectorymappingFrmGroup"> 
+						
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="agencyId"
+                                    class="form-label">Agency</label>
+                                <ng-select formControlName="agencyId" name="agencyId" [clearable]="false"
+                                    [searchable]="true"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyvirtualdirectorymappingFrmControl?.['agencyId'].errors 
+                                && (zmstagencyvirtualdirectorymappingFrmControl?.['agencyId'].dirty || zmstagencyvirtualdirectorymappingFrmControl?.['agencyId'].touched || submitted  ))}">
+                                    <ng-option value="">--Select--</ng-option>
+                                    <ng-option *ngFor="let agency of agencyList" value={{agency.agencyId}}>
+                                        {{agency.agencyName}}</ng-option>
+                                </ng-select>
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyvirtualdirectorymappingFrmControl?.['agencyId'].touched || submitted) && zmstagencyvirtualdirectorymappingFrmControl?.['agencyId'].errors?.['required']">
+                                    Agency is required.
+                                </span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="baseDirectory"
+                                    class="form-label">Base Directory</label> <input type="text" id="baseDirectory"
+                                    formControlName="baseDirectory" [maxlength]="50" name="baseDirectory"
+                                    class="form-control" placeholder="Base Directory"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyvirtualdirectorymappingFrmControl?.['baseDirectory'].errors && (zmstagencyvirtualdirectorymappingFrmControl?.['baseDirectory'].dirty || zmstagencyvirtualdirectorymappingFrmControl?.['baseDirectory'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyvirtualdirectorymappingFrmControl?.['baseDirectory'].touched || submitted) && zmstagencyvirtualdirectorymappingFrmControl?.['baseDirectory'].errors?.['required']">
+                                    Base Directory is required</span>
+                            </div>                           
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="virtualDirectoryType"
+                                    class="form-label">Virtual Directory Type</label>
+                                <ng-select formControlName="virtualDirectoryType" name="virtualDirectoryType"
+                                    [clearable]="false" [searchable]="true"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectoryType'].errors 
+                        && (zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectoryType'].dirty || zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectoryType'].touched || submitted  ))}">
+                                    <ng-option value="">--Select--</ng-option>
+                                    <ng-option value="Admin">Admin</ng-option>
+                                    <ng-option value="Candidate">Candidate</ng-option>
+                                </ng-select>
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectoryType'].touched || submitted) && zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectoryType'].errors?.['required']">
+                                    Virtual Directory Type is required</span>
+                            </div>
+                             <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="virtualDirectory"
+                                    class="form-label">Virtual Directory</label> <input type="text"
+                                    id="virtualDirectory" formControlName="virtualDirectory" maxlength="50"
+                                    name="virtualDirectory" class="form-control" placeholder="Virtual Directory"
+                                    [ngClass]="{ 'is-invalid':(zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectory'].errors && (zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectory'].dirty || zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectory'].touched || submitted  ))}" />
+                                <span class="text-danger"
+                                    *ngIf="(zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectory'].touched || submitted) && zmstagencyvirtualdirectorymappingFrmControl?.['virtualDirectory'].errors?.['required']">
+                                    Virtual Directory is required</span>
+                            </div>
+                            <div class="col-xxl-1 col-xl-1 col-md-1 col-sm-2" *ngFor="let item1 of RADIO_LIST;">
+                                <input class="form-check-input" type="radio" id="{{item1.id}}" [value]="item1.id"
+                                    formControlName="isActive" name="isActive" />
+                                <label class="form-check-label" style="margin-left: 10px;" for="{{item1.id}}">{{item1.name}}</label>
+                            </div>
+                            <span class="text-danger"
+                                *ngIf="(zmstagencyvirtualdirectorymappingFrmControl?.['isActive'].touched || submitted) && zmstagencyvirtualdirectorymappingFrmControl?.['isActive'].errors?.['required']">
+                                Is Active is required</span>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" class="btn btn-primary btn-danger" (click)="clear()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstagencyvirtualdirectorymappingGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+									<th>Agency</th>
+						            <th>Base Directory</th>
+						            <th>Virtual Directory</th>
+						            <th>Virtual Directory Type</th>
+						            <th>IsActive</th>
+						            <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstagencyvirtualdirectorymappingList.length>0">
+                                        <tr *ngFor="let data of zmstagencyvirtualdirectorymappingList;">	
+                                        <td>{{data.agencyName}}</td> 																		
+										<td>{{data.baseDirectory}}</td>
+										<td>{{data.virtualDirectory}}</td>
+										<td>{{data.virtualDirectoryType}}</td>
+										<td>{{data.isActive}}</td>
+										
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.agencyId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+					                <th>Agency</th>
+						            <th>Base Directory</th>
+						            <th>Virtual Directory</th>
+						            <th>Virtual Directory Type</th>
+						            <th>IsActive</th>
+						            <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

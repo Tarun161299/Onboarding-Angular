@@ -1,0 +1,462 @@
+<ng-template #content let-c="close" let-d="dismiss" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #image let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile Image</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <img height="200px" [src]="imageSource" alt="Image Source">
+    </div>
+</ng-template>
+
+<ng-template class="modal fade" tabindex="-1" aria-labelledby="modal-basic-title" aria-hidden="true" #filterpopupview
+    let-modal>
+    <div class="modal-header" >
+        <h4 class="modal-title" id="modal-basic-title">Advance Search</h4>
+<!-- 
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        </button> -->
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            <div class="row g3">
+                <form class="row g-3" [formGroup]="advanceSearchFrmGroup">
+                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                        <label for="searchempStatus" class="form-label">Employee Status</label>
+                        <select class="form-select" formControlName="searchempStatus" id="searchempStatus"
+                            name="searchempStatus">
+                            <option value="">--Select--</option>
+                            <option *ngFor="let empStatus of mdempstatusList" value='{{empStatus.id}}'>
+                                {{empStatus.status}}
+                            </option>
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="searchdivision"
+                            class="form-label">Division</label>
+                        <select class="form-select" formControlName="searchdivision" id="searchdivision"
+                            name="searchdivision">
+                            <option value="">--Select--</option>
+                            <option *ngFor="let division of divisionList" [ngValue]="division.value">
+                                {{division.year}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="searchagency"
+                            class="form-label">Agency</label>
+                        <select class="form-select" formControlName="searchagency" id="searchagency"
+                            name="searchagency">
+                            <option value="">--Select--</option>
+                            <option *ngFor="let orderagency of mdWorkOrderAgencyList"
+                                [ngValue]="orderagency.agencyName">
+                                {{orderagency.agencyName}}
+                            </option>
+                        </select>
+
+                    </div>
+                    <!-- <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12"> <label for="searchworkorderTo"
+                            class="form-label">Work Order To</label> <input type="date"
+                            formControlName="searchworkorderTo" class="form-control" placeholder="Work Order To" />
+
+
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm"  (click)="advanceSearchClose()">Close</button>
+        <button type="button" (click)="advanceSearching()" class="btn btn-primary btn-sm">Search</button>
+    </div>
+</ng-template>
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Employee Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+
+                        <li class="breadcrumb-item active" aria-current="page">Employee Details</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row" style="display: none;">
+            <div class="col">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="employeedetailsFrmGroup">
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="empName"
+                                    class="form-label">Employee Name</label> <input type="text" id="empName"
+                                    formControlName="empName" [maxlength]="50" name="empName" class="form-control"
+                                    placeholder="Employee Name"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['empName'].errors && (employeedetailsFrmControl?.['empName'].dirty || employeedetailsFrmControl?.['empName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['empName'].touched || submitted) && employeedetailsFrmControl?.['empName'].errors?.['required']">
+                                    Employee Name is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="mName"
+                                    class="form-label">Mother Name</label> <input type="text" id="mName"
+                                    formControlName="mName" [maxlength]="50" name="mName" class="form-control"
+                                    placeholder="Mother Name"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['mName'].errors && (employeedetailsFrmControl?.['mName'].dirty || employeedetailsFrmControl?.['mName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['mName'].touched || submitted) && employeedetailsFrmControl?.['mName'].errors?.['required']">
+                                    Mother Name is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="fName"
+                                    class="form-label">Father Name</label>
+                                <input type="text" id="fName" formControlName="fName" [maxlength]="50" name="fName"
+                                    class="form-control" placeholder="Father Name"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['fName'].errors && (employeedetailsFrmControl?.['fName'].dirty || employeedetailsFrmControl?.['fName'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['fName'].touched || submitted) && employeedetailsFrmControl?.['fName'].errors?.['required']">
+                                    Father Name is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="designation"
+                                    class="form-label">Designation</label> <input type="text" id="designation"
+                                    formControlName="designation" [maxlength]="50" name="designation"
+                                    class="form-control" placeholder="Designation"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['designation'].errors && (employeedetailsFrmControl?.['designation'].dirty || employeedetailsFrmControl?.['designation'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['designation'].touched || submitted) && employeedetailsFrmControl?.['designation'].errors?.['required']">
+                                    designation is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="dob" class="form-label">Date
+                                    of Birth</label> <input type="date" id="dob" formControlName="dob" [maxlength]="10"
+                                    name="dob" class="form-control" placeholder="Date of Birth"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['dob'].errors && (employeedetailsFrmControl?.['dob'].dirty || employeedetailsFrmControl?.['dob'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['dob'].touched || submitted) && employeedetailsFrmControl?.['dob'].errors?.['required']">
+                                    Date of Birth is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                                <label for="uploadFile" class="form-label">Upload Photo</label>
+                                <input type="file" class="form-control" formControlName="uploadFile" name="uploadFile"
+                                    (change)="handleFileInput($event,'uploadPhoto','img')" id="uploadFile"
+                                    placeholder="Upload Photo" [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['uploadFile'].errors 
+                                    && (employeedetailsFrmControl?.['uploadFile'].dirty || submitted))}">
+                                <span class="invalid-feedback"
+                                    *ngIf="(submitted) && employeedetailsFrmControl?.['uploadFile'].errors?.['required']">
+                                    File is Required.
+                                </span>
+                                <span class="text-danger" *ngIf="fileUploadValidationPhoto==true">Please
+                                    Upload JPG/JPEG File only.</span>
+                                    <span class="text-danger" *ngIf="fileExtensionsCountimg">Extenion should not be more than 1.use single '.'' in file name</span>
+                            </div>
+
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="phoneNumber"
+                                    class="form-label">Phone Number</label> <input type="text" id="phoneNumber"
+                                    formControlName="phoneNumber" [maxlength]="15" name="phoneNumber"
+                                    class="form-control" placeholder="Phone Number"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['phoneNumber'].errors && (employeedetailsFrmControl?.['phoneNumber'].dirty || employeedetailsFrmControl?.['phoneNumber'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['phoneNumber'].touched || submitted) && employeedetailsFrmControl?.['phoneNumber'].errors?.['required']">
+                                    Phone Number is required</span>
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['phoneNumber'].touched && employeedetailsFrmControl?.['phoneNumber'].errors?.['pattern'])">Only
+                                    Numaric value are allowed</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="mobileNumber"
+                                    class="form-label">Mobile Number</label> <input type="text" id="mobileNumber"
+                                    formControlName="mobileNumber" [maxlength]="10" name="mobileNumber"
+                                    class="form-control" placeholder="Mobile Number"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['mobileNumber'].errors && (employeedetailsFrmControl?.['mobileNumber'].dirty || employeedetailsFrmControl?.['mobileNumber'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['mobileNumber'].touched || submitted) && employeedetailsFrmControl?.['mobileNumber'].errors?.['required']">
+                                    MobileNumber is required</span>
+                                <div *ngIf="employeedetailsFrmControl?.['mobileNumber'].errors?.['pattern']"
+                                    class="invalid-feedback">
+                                    Invalid Mobile Number
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="emailId"
+                                    class="form-label">Email Id</label> <input type="text" id="emailId"
+                                    formControlName="emailId" [maxlength]="50" name="emailId" class="form-control"
+                                    placeholder="Email Id"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['emailId'].errors && (employeedetailsFrmControl?.['emailId'].dirty || employeedetailsFrmControl?.['emailId'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['emailId'].touched || submitted) && employeedetailsFrmControl?.['emailId'].errors?.['required']">
+                                    Email Id is required</span>
+                                <span class="invalid-feedback"
+                                    *ngIf="employeedetailsFrmControl?.['emailId'].touched && (employeedetailsFrmControl?.['emailId'].errors?.['emailId'] || employeedetailsFrmControl?.['emailId'].errors?.['pattern'])">
+                                    Enter a valid email address
+                                </span>
+                            </div>
+                            <div class="col-xxl-8 col-xl-8 col-md-6 col-sm-12"> <label for="address"
+                                    class="form-label">Address</label> <input type="text" id="address"
+                                    formControlName="address" [maxlength]="150" name="address" class="form-control"
+                                    placeholder="Address"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['address'].errors && (employeedetailsFrmControl?.['address'].dirty || employeedetailsFrmControl?.['address'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['address'].touched || submitted) && employeedetailsFrmControl?.['address'].errors?.['required']">
+                                    Address is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                                <label for="uploadaddressProof" class="form-label">Upload Address Proof</label>
+                                <input type="file" class="form-control" formControlName="uploadaddressProof"
+                                    name="uploadaddressProof"
+                                    (change)="handleFileInput($event,'addressProof','AdressProof')"
+                                    id="uploadaddressProof" placeholder="Upload Address Proof" [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['uploadaddressProof'].errors 
+                                && (employeedetailsFrmControl?.['uploadaddressProof'].dirty || submitted ))}">
+                                <span class="invalid-feedback"
+                                    *ngIf="(submitted) && employeedetailsFrmControl?.['uploadaddressProof'].errors?.['required']">
+                                    File is Required.
+                                </span>
+                                <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                                    Upload PDf File only.</span>
+                                    <span class="text-danger" *ngIf="fileExtensionsCountAddressProof">Extenion should not be more than 1.use single '.'' in file name</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                                <label for="id" class="form-label">Id</label>
+                                <select class="form-select" formControlName="id" id="id" name="id"                                    
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['id'].errors 
+                                && (employeedetailsFrmControl?.['id'].dirty || employeedetailsFrmControl?.['id'].touched || submitted  ))}">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let dist of mdidtypeList" value='{{dist.id}}'>
+                                        {{dist.idType}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['id'].touched || submitted) && employeedetailsFrmControl?.['id'].errors?.['required']">
+                                    Id is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="idNumber"
+                                    class="form-label">Id Number</label> <input type="text" id="idNumber"
+                                    formControlName="idNumber" [maxlength]="50" name="idNumber" class="form-control"
+                                    placeholder="Id Number"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['idNumber'].errors && (employeedetailsFrmControl?.['idNumber'].dirty || employeedetailsFrmControl?.['idNumber'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['idNumber'].touched || submitted) && employeedetailsFrmControl?.['idNumber'].errors?.['required']">
+                                    Id Number is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                                <label for="uploadIdDocument" class="form-label">Upload Id Proof</label>
+                                <input type="file" class="form-control" formControlName="uploadIdDocument"
+                                    name="uploadIdDocument" (change)="handleFileInput($event,'docId','id')"
+                                    id="uploadIdDocument" placeholder="Upload Id Proof" [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['uploadIdDocument'].errors 
+                                    && (employeedetailsFrmControl?.['uploadIdDocument'].dirty || submitted ))}">
+                                <span class="invalid-feedback"
+                                    *ngIf="(submitted) && employeedetailsFrmControl?.['uploadIdDocument'].errors?.['required']">
+                                    File is Required.
+                                </span>
+                                <span class="text-danger" *ngIf="fileUploadValidationId==true">Please
+                                    Upload PDf File only.</span>
+                                    <span class="text-danger" *ngIf="fileExtensionsCountid">Extenion should not be more than 1.use single '.'' in file name</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="reportingOfficer"
+                                    class="form-label">Reporting Officer</label> <input type="text"
+                                    id="reportingOfficer" formControlName="reportingOfficer" [maxlength]="50"
+                                    name="reportingOfficer" class="form-control" placeholder="Reporting Officer"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['reportingOfficer'].errors && (employeedetailsFrmControl?.['reportingOfficer'].dirty || employeedetailsFrmControl?.['reportingOfficer'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['reportingOfficer'].touched || submitted) && employeedetailsFrmControl?.['reportingOfficer'].errors?.['required']">
+                                    Reporting Officer is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="division"
+                                    class="form-label">Division</label>
+                                <select class="form-select" formControlName="division" id="division" name="division"
+                                    (change)="onSelectDivision($event)"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['division'].errors  
+                            && (employeedetailsFrmControl?.['division'].dirty || employeedetailsFrmControl?.['division'].touched || submitted  ))}">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let division of divisionList" [ngValue]="division.value">
+                                        {{division.year}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['division'].touched || submitted) && employeedetailsFrmControl?.['division'].errors?.['required']">
+                                    Division is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12">
+                                <label for="empStatus" class="form-label">Employee Status</label>
+                                <select class="form-select" formControlName="empStatus" id="empStatus" name="empStatus"
+                                    (change)="onSelectEmpStatus($event)"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['empStatus'].errors  
+                            && (employeedetailsFrmControl?.['empStatus'].dirty || employeedetailsFrmControl?.['empStatus'].touched || submitted  ))}">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let empStatus of mdempstatusList" value='{{empStatus.id}}'>
+                                        {{empStatus.status}}
+                                    </option>
+                                </select>
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['empStatus'].touched || submitted) && employeedetailsFrmControl?.['empStatus'].errors?.['required']">
+                                    Employee Status is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="joinDate"
+                                    class="form-label">Join Date</label> <input type="date" id="joinDate"
+                                    formControlName="joinDate" [maxlength]="10" name="joinDate" class="form-control"
+                                    placeholder="JoinDate"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['joinDate'].errors && (employeedetailsFrmControl?.['joinDate'].dirty || employeedetailsFrmControl?.['joinDate'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['joinDate'].touched || submitted) && employeedetailsFrmControl?.['joinDate'].errors?.['required']">
+                                    Join Date is required</span>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="resignDate"
+                                    class="form-label">Resign Date</label> <input type="date" id="resignDate"
+                                    formControlName="resignDate" [maxlength]="10" name="resignDate" class="form-control"
+                                    placeholder="Resign Date" />
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-md-6 col-sm-12"> <label for="remarks"
+                                    class="form-label">Remarks</label> <input type="text" id="remarks"
+                                    formControlName="remarks" [maxlength]="150" name="remarks" class="form-control"
+                                    placeholder="Remarks"
+                                    [ngClass]="{ 'is-invalid':(employeedetailsFrmControl?.['remarks'].errors && (employeedetailsFrmControl?.['remarks'].dirty || employeedetailsFrmControl?.['remarks'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(employeedetailsFrmControl?.['remarks'].touched || submitted) && employeedetailsFrmControl?.['remarks'].errors?.['required']">
+                                    Remarks is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Save
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-danger" (click)="reset()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">           
+            <div class="col">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <div class="col-sm-12 text-end"> 
+                            <button type="button" class="btn btn-primary me-3" (click)="addDetails()">
+                                <i class="bx bxs-plus-square"></i> Add New
+                            </button>
+                            <button  type="button" class="btn btn-danger" (click)="searchpupup()">
+                                <i class="bx bxs-search"></i> Advance Searching
+                            </button>                           
+                        </div>                        
+                        <div class="table-responsive mt-3">                           
+                            <table id="employeedetailsGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Employee Code</th>
+                                        <th>Employee Name</th>
+                                        <th>Agency Name</th>
+                                        <th>Mobile Number</th>
+                                        <th>Email Id</th>
+                                        <th>Joining Date</th>
+                                        <th>Till Date</th>
+                                        <th>Division</th>
+                                        <th>Status</th>
+                                        <th>Photo , Address , Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="employeedetailsList.length>0">
+                                        <tr *ngFor="let data of employeedetailsList;">
+                                            <td><a class="btn btn-link" (click)="viewDetails(data)">{{data.empCode}}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{data.empName}}
+                                            </td>
+                                            <td>
+                                                {{data.agencyName}}
+                                            </td>
+                                            <td>{{data.mobileNumber}}</td>
+                                            <td>{{data.emailId}}</td>
+                                            <td>{{data.joinDate | ddMmYYYYDate }}</td>
+                                            <td>{{data.workorderTo | ddMmYYYYDate}}</td>
+                                            <td>{{(data.division=='R')?"Registration":(data.division=='C')?"Counselling":(data.division=='H')?"HigherEducation":data.division}}
+                                            </td>
+                                            <td>{{(data.empStatus=='01')?"Active":(data.empStatus=='02')?"Resign":data.empStatus}}
+                                            </td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <button class="btn text-primary bg-light-primary btn-sm d-block"
+                                                        (click)="showPhoto(data)" title="View Photo"><i
+                                                            class='bx bxs-show'></i>
+                                                    </button>
+                                                    <button
+                                                        class="ms-2 text-primary btn bg-light-primary btn-sm d-block"
+                                                        (click)="showAddressProof(data)" title="View Address Proof"><i
+                                                            class='bx bxs-show'></i>
+                                                    </button>
+                                                    <button
+                                                        class="ms-2 text-primary btn bg-light-primary btn-sm d-block"
+                                                        (click)="showIdDocument(data)" title="View Id Document"><i
+                                                            class='bx bxs-show'></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.empId)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Employee Code</th>
+                                        <th>Employee Name</th>
+                                        <th>Agency Name</th>
+                                        <th>Mobile Number</th>
+                                        <th>Email Id</th>
+                                        <th>Joining Date</th>
+                                        <th>Till Date</th>
+                                        <th>Division</th>
+                                        <th>Status</th>
+                                        <th>Photo , Address , Id</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

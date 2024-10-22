@@ -1,0 +1,121 @@
+<div class="section-authentication-signin d-flex">
+  <div class="container">
+    <div class="card">
+      <div class="card-body p-0">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="pt-2 pe-0 ps-4 pb-4">
+              <div class="text-center">
+                <h3 class="border-bottom pb-4" style="font-size: 20px;">Login Here</h3>
+
+              </div>
+              <div class="form-body">
+                <form class="row g-4" [formGroup]="form" (ngSubmit)="OnSigninClick()">
+                  <div class="col-12">
+                    <label for="txtUserId" class="form-label">Login Id</label>
+                    <input type="text" formControlName="txtUserId" class="form-control" id="txtUserId"
+                      placeholder="Enter Login Id" [maxLength]="15"
+                      [ngClass]="{ 'is-invalid': submitted && loginFormControl['txtUserId'].errors }" />
+                    <div *ngIf="submitted && loginFormControl['txtUserId'].errors" class="invalid-feedback">
+                      <div *ngIf="loginFormControl['txtUserId'].errors['required']">Login is required
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="txtChoosePassword" class="form-label">Password</label>
+                    <div class="input-group" id="show_hide_password">
+                      <input [type]="password" class="form-control" autocomplete="off"
+                        formControlName="txtChoosePassword" id="txtChoosePassword" [maxLength]="10"
+                        [ngClass]="{ 'is-invalid': submitted && loginFormControl['txtChoosePassword'].errors }"
+                        placeholder="Enter Password" />
+                      <a href="javascript:;" (click)="onClickShoHidePassword()" class="input-group-text bg-warning">
+                        <i class="bx bx-hide" aria-hidden="true" *ngIf="!show"></i>
+                        <i class="bx bx-show" aria-hidden="true" *ngIf="show"></i>
+                      </a>
+                      <div *ngIf="submitted && loginFormControl['txtChoosePassword'].errors" class="invalid-feedback">
+                        <div *ngIf="loginFormControl['txtChoosePassword'].errors['required']">Password is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="txtSecurityCode" class="form-label">Security Code</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" formControlName="txtSecurityCode" id="txtSecurityCode"
+                        value="Abcd"
+                        [ngClass]="{ 'is-invalid': submitted && loginFormControl['txtSecurityCode'].errors }"
+                        placeholder="Enter Security Code" autocomplete="off" />
+                      <div *ngIf="submitted && loginFormControl['txtSecurityCode'].errors" class="invalid-feedback">
+                        <div *ngIf="loginFormControl['txtSecurityCode'].errors['required']">Security Code is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-inline">
+                      <div class="CaptchaDiv">
+                        <div class="d-flex">
+                          <span class=" p-3 py-0 fs-4 rounded fw-bold" style="letter-spacing: 4px;">
+                            <img [src]="imageSource">
+                          </span>
+                          <button type="button" (click)="refreshCaptcha()" class="btn btn-outline-primary btn-sm ms-1">
+                            <i class="bx bx-refresh"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 text-end">
+                    <button type="submit" class="btn btn-primary">
+                      Login
+                    </button>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <a routerLink="/forgotPassword">Forgot Password ?</a>
+                  </div>
+                  
+                </form>
+                <div class="col-md-6 text-end">
+                  <form ngNoForm method="post" action={{action}}>
+                    <input type="hidden" name="response_type"  [(ngModel)]="response_type">
+                    <input type="hidden" name="client_Id"  [(ngModel)]="client_Id">
+                    <input type="hidden" name="redirect_uri"  [(ngModel)]="redirect_uri">
+                    <input type="hidden" name="scope" [(ngModel)]="scope">
+                    <input type="hidden" name="state"  [(ngModel)]="state">
+                <input *ngIf="eisLogin"  type="submit" Text="Login with EIS" name="submit" value="Login with EIS"  class="btn btn-link  btn-lg mt-4 ms-2">
+                </form>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="login-instruction">
+              <h3 class="border-bottom pb-4 text-center">
+                Important Instructions
+              </h3>
+              <ul class="list-unstyled inst">
+                <li>Confidentiality of Password is solely responsibility of the user and all care
+                  must be taken to protect the password. </li>
+                <li>Users are advised to keep changing the Password at frequent intervals.</li>
+                <li>Never share your password and do not respond to any mail which asks you for your
+                  Login-Id/Password. </li>
+                <li>It is strongly recommended that the OTP sent to the applicant for any activity like reset password
+                  etc. must not be shared with anyone.</li>
+                <li>For security reasons, after finishing your work, click the LOGOUT button
+                  and close all the windows related to your session. </li>
+              </ul>
+              <hr />
+              <p class="cautiontext">
+                <strong style="color: #fbac1b;">Caution:</strong> Your IP address
+                <span id="ctl00_ContentPlaceHolder1_lblipddadmin">{{ ipAddress }}</span>&nbsp;is
+                being monitored for security purpose.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

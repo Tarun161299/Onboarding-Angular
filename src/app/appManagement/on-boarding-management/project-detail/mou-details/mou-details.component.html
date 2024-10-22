@@ -1,0 +1,113 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="file-priview-container">
+            <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+                [height]="'60vh'" [showHandToolButton]="true">
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</ng-template>
+<form [formGroup]="documentCycles">
+    <div class="row g-3">
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+
+            <label class="form-label">Original MOU</label>
+            :
+            <label *ngIf="isavailMouunsign==0" class="text-warning">Pending</label>
+
+            <button *ngIf="isavailMouunsign!=0" href="javascript:;" title="Download"
+                class="ms-2 text-primary bg-light-primary border-0" (click)="btndownload(unsinMou)">
+                <i class="bx bxs-download"></i>
+            </button>
+            <button *ngIf="isavailMouunsign!=0" href="javascript:;" title="View Document"
+                class="ms-2 text-primary bg-light-primary border-0" (click)="viewDocument(unsinMou)"><i
+                    class='bx bxs-show'></i></button>
+            <strong *ngIf="isavailMouunsign!=0" class="ms-4">Updated on ({{unsignedMouSubmitTime |ddMmYYYYDate}})</strong>
+
+        </div>
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+            <label class="form-label">Signed MOU</label>
+            :
+            <label *ngIf="isavailMousign==0" class="text-warning">Pending</label>
+            <button *ngIf="isavailMousign!=0" href="javascript:;" title="Download"
+                class="ms-2 text-primary bg-light-primary border-0" (click)="btndownload(signMou)">
+                <i class="bx bxs-download"></i>
+            </button>
+            <button *ngIf="isavailMousign!=0" href="javascript:;" title="View Document"
+                class="ms-2 text-primary bg-light-primary border-0" (click)="viewDocument(signMou)"><i
+                    class='bx bxs-show'></i></button>
+            <button *ngIf="(isavailMousign!=0) && (approved!=true)" (click)="verifiedMou()"
+                class="ms-2 text-primary bg-light-primary border-0"><i class='bx bx-check-shield'></i></button>
+            <button *ngIf="approved==true" class="ms-2 text-success bg-light-green border-0"><i
+                    class='bx bxs-check-circle'></i> </button>
+            <strong *ngIf="isavailMousign!=0" class="ms-4">Updated on ({{signedMouSubmitTime | ddMmYYYYDate}})</strong>
+        </div>
+        <!-- *ngIf="(isavailMousign!=0) && (approved!=true)"  -->
+        <div  class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+            <label class="form-label">Nic verified MOU</label>
+            :
+            <label *ngIf="isavailnicMou==0" class="text-warning">Pending</label>
+            <button *ngIf="isavailnicMou!=0" href="javascript:;" title="Download"
+                class="ms-2 text-primary bg-light-primary border-0" (click)="btndownload(niCMOU)">
+                <i class="bx bxs-download"></i>
+            </button>
+            <button *ngIf="isavailnicMou!=0" href="javascript:;" title="View Document"
+                class="ms-2 text-primary bg-light-primary border-0" (click)="viewDocument(niCMOU)"><i
+                    class='bx bxs-show'></i></button>
+            <!-- <button *ngIf="(isavailnicMou!=0) && (approved!=true)" (click)="verifiedMou()"
+                class="ms-2 text-primary bg-light-primary border-0"><i class='bx bx-check-shield'></i></button>
+            <button *ngIf="approved==true" class="ms-2 text-success bg-light-green border-0"><i
+                    class='bx bxs-check-circle'></i> </button> -->
+        </div>
+        <div *ngIf="isavailMousign==0" class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+            <label class="form-label">Upload Unsigned MOU</label>
+            <input type="file" class="form-control" formControlName="Uploadfile" name="Uploadfile"
+                (change)="handleFileInput($event)" id="Uploadfile" placeholder="Upload Signed Request Letter" [ngClass]="{ 'is-invalid':(registerFormControl?.['Uploadfile'].errors 
+            && (registerFormControl?.['Uploadfile'].dirty || (submitted || fileUploadValidation)))}">
+            <div class="help-block">Only PDF files are allowed to be uploaded</div>
+            <span class="invalid-feedback"
+                *ngIf="(submitted) && registerFormControl?.['Uploadfile'].errors?.['required']">
+                file is required.
+            </span>
+            <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+                upload PDF file only.</span>
+            <span class="text-danger" *ngIf="fileSizeValidation>5">Please
+                file should be smaller than 5 MB</span>
+                <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+        </div>
+
+        <div *ngIf="approved==true" class="col-xxl-4 col-xl-4 col-md-4 col-sm-12">
+            <label class="form-label">Nic verified MOU</label>
+            <input type="file" class="form-control" formControlName="uploadNicMou" name="uploadNicMou"
+                (change)="handleFileInput($event)" id="uploadNicMou" placeholder="Upload Signed Request Letter" [ngClass]="{ 'is-invalid':(registerFormControl?.['uploadNicMou'].errors 
+            && (registerFormControl?.['uploadNicMou'].dirty || (submittedNicMou || fileUploadValidation)))}">
+        <div class="help-block">Only PDF files are allowed to be uploaded</div>
+        <span class="invalid-feedback"
+            *ngIf="(submittedNicMou) && registerFormControl?.['uploadNicMou'].errors?.['required']">
+            file is required.
+        </span>
+        <span class="text-danger" *ngIf="fileUploadValidation==true">Please
+            upload PDF file only.</span>
+            <span class="text-danger" *ngIf="fileSizeValidation>10">Please
+                file should be smaller than 10 MB</span>
+            
+                <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+        </div>
+    </div>
+    <div class="row g-3 mt-1">
+        <div *ngIf="isavailMousign==0" class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+            <button type="button" class="btn btn-primary me-3" (click)="documentSubmit()">
+                Submit
+            </button>
+        </div>
+        <div *ngIf="approved==true" class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+            <button type="button" class="btn btn-primary me-3" (click)="documentSubmitNic()">
+                Submit
+            </button>
+        </div>
+    </div>
+</form>

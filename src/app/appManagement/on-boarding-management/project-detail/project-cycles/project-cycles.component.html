@@ -1,0 +1,152 @@
+<form [formGroup]="projectCycles" autocomplete="off">
+    <div class="row g-3">
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputAgency" class="form-label">Agency </label>
+            <input id="inputAgency" type="text" class="form-control" value={{Agency}} placeholder="Agency" disabled>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="ddlServices" class="form-label">Services</label>
+            <select id="ddlServices" class="form-select" formControlName="Services" (change)="onselectservices()"
+                [ngClass]="{ 'is-invalid':(projectCycleControls?.['Services'].errors 
+        && (projectCycleControls?.['Services'].dirty || projectCycleControls?.['Services'].touched || submittedCycle  ))}">
+                <option value="">--Select--</option>
+                <option *ngFor="let services of servicesdata" value={{services.serviceTypeId}}>
+                    {{services.serviceTypeName}}
+                </option>
+            </select>
+            <span class="invalid-feedback"
+                *ngIf="(projectCycleControls?.['Services'].touched || submittedCycle) && projectCycleControls?.['Services'].errors?.['required']">
+                Services is Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputAttempt" class="form-label">Attempt </label>
+            <input id="inputAttempt" type="number" [max]="9" [min]="1" class="form-control" formControlName="Attempt"
+                (change)="onattemptchange($event)"
+                [ngClass]="{ 'is-invalid':(projectCycleControls?.['Attempt'].errors 
+        && (projectCycleControls?.['Attempt'].dirty || projectCycleControls?.['Attempt'].touched || submittedCycle  ))}" placeholder="Attempt">
+            <span class="invalid-feedback"
+                *ngIf="(projectCycleControls?.['Attempt'].touched || submittedCycle) && projectCycleControls?.['Attempt'].errors?.['required']">
+                Attempt is Required.
+            </span>
+            <div *ngIf="projectCycleControls?.['Attempt'].errors?.['max']" class="invalid-feedback1">
+                Attempt should be of 1 digit.
+            </div>
+            <div *ngIf="projectCycleControls?.['Attempt'].errors?.['min']" class="invalid-feedback1">
+                Attempt should be of 1 digit.
+            </div>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="ddlExamCode" class="form-label">Counselling Code</label>
+            <select id="ddlExamCode" class="form-select" formControlName="ExamCode" (change)="onselectExamcode($event)"
+                [ngClass]="{ 'is-invalid':(projectCycleControls?.['ExamCode'].errors 
+        && (projectCycleControls?.['ExamCode'].dirty || projectCycleControls?.['ExamCode'].touched || submittedCycle  ))}">
+                <option value="">--Select--</option>
+                <option *ngFor="let Examcode of examcode" value={{Examcode.examCounsId}}>{{Examcode.description}}
+                </option>
+            </select>
+            <span class="invalid-feedback"
+                *ngIf="(projectCycleControls?.['ExamCode'].touched || submittedCycle) && projectCycleControls?.['ExamCode'].errors?.['required']">
+                Counselling Code Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputProjectName" class="form-label">Project Name</label>
+            <input type="text" id="inputProjectName" class="form-control" formControlName="projectName"
+                [ngClass]="{ 'is-invalid':(projectCycleControls?.['projectName'].errors 
+        && (projectCycleControls?.['projectName'].dirty || projectCycleControls?.['projectName'].touched || submittedCycle  ))}" placeholder="Project Name" />
+            <span class="invalid-feedback"
+                *ngIf="(projectCycleControls?.['projectName'].touched || submittedCycle) && projectCycleControls?.['projectName'].errors?.['required']">
+                Project Name is Required.
+            </span>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="inputProjectName" class="form-label">Cycle ID</label>
+            <input type="text" id="inputProjectName" class="form-control" formControlName="cycleid"
+                [ngClass]="{ 'is-invalid':(projectCycleControls?.['cycleid'].errors 
+        && (projectCycleControls?.['cycleid'].dirty || projectCycleControls?.['cycleid'].touched || submittedCycle  ))}" placeholder="Cycle Id" [disabled]="true" />
+            <span class="invalid-feedback"
+                *ngIf="(projectCycleControls?.['cycleid'].touched || submittedCycle) && projectCycleControls?.['cycleid'].errors?.['required']">
+                Cycle ID is Required.
+            </span>
+        </div>
+        <div class="row mt-2" [hidden]="submitcyclehdn">
+            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-end">
+                <button type="button" (click)="projectCycleSubmit()" class="btn btn-outline-primary btn-sm">
+                    <i class="bx bxs-plus-circle"></i> Add
+                </button>
+            </div>
+        </div>
+        <div class="row mt-2" [hidden]="updateCycleHidden">
+            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-end">
+                <button type="button" (click)="projectCycleupdate()" class="btn btn-outline-primary btn-sm">
+                    <i class="bx bxs-plus-circle"></i> Update
+                </button>
+            </div>
+        </div>
+        <div [hidden]="true" class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="ddlProjectInitiated" class="form-label">Project
+                Initiated</label>
+            <select id="ddlProjectInitiated" class="form-select" formControlName="projectInitiated"
+                [ngClass]="{ 'is-invalid':(projectCycleControls?.['projectInitiated'].errors 
+        && (projectCycleControls?.['projectInitiated'].dirty || projectCycleControls?.['projectInitiated'].touched || submittedCycle  ))}">
+                <option value="">--Select--</option>
+                <option value="Y">Yes</option>
+                <option value="N">No</option>
+            </select>
+            <span class="invalid-feedback"
+                *ngIf="(projectCycleControls?.['projectInitiated'].touched || submittedCycle) && projectCycleControls?.['projectInitiated'].errors?.['required']">
+                Required.
+            </span>
+        </div>
+        <div [hidden]="true" class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+            <label for="ddlIsLive" class="form-label">Is Live</label>
+            <select id="ddlIsLive" class="form-select" formControlName="isLive" [ngClass]="{ 'is-invalid':(projectCycleControls?.['isLive'].errors 
+        && (projectCycleControls?.['isLive'].dirty || projectCycleControls?.['isLive'].touched || submittedCycle  ))}">
+                <option value="">--Select--</option>
+                <option value="Y">Yes</option>
+                <option value="N">No</option>
+            </select>
+            <span class="invalid-feedback"
+                *ngIf="(projectCycleControls?.['isLive'].touched || submittedCycle) && projectCycleControls?.['isLive'].errors?.['required']">
+                Required.
+            </span>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12">
+            <div class="table-responsive">
+                <table class="table w-100">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>Cycle Id</th>
+                            <th>Project Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let projectlist of projectList">
+
+                            <td>{{projectlist.projectId}}</td>
+                            <td>
+                                {{projectlist.projectName}}
+                            </td>
+                            <td>
+                                <div class="d-flex order-actions">
+                                    <a href="javascript:;" title="Edit" (click)="editcycle(projectlist)"
+                                        class="ms-4 text-primary bg-light-primary border-0">
+                                        <i class="bx bxs-edit"></i>
+                                    </a>
+                                    <a href="javascript:;" title="Delete" (click)="deleteCycle(projectlist)"
+                                        class="ms-4 text-danger bg-light-danger border-0">
+                                        <i class="bx bxs-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

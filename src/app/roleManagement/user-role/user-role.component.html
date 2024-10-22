@@ -1,0 +1,79 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="appuserrolemappingFrmGroup"> 
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="inputRole" class="form-label">User</label>
+                                <select class="form-select"
+                                    [ngClass]="{ 'is-invalid':(userrolemoduleFrmControl?.['Role'].errors 
+                            && (userrolemoduleFrmControl?.['Role'].dirty || userrolemoduleFrmControl?.['Role'].touched || submitted  ))}"
+                                    formControlName="Role" (change)="GetByUserRoll($event)">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let Usern of UserRoledropdown" value={{Usern.userId}}>
+                                        {{Usern.userName}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="(userrolemoduleFrmControl?.['Role'].touched || submitted) && userrolemoduleFrmControl?.['Role'].errors?.['required']">
+                                    Role is Required
+                                </span>
+                            </div>
+                            <div class="card-body" *ngIf="appuserrolemappingListgrid.length>0">
+                                <div class="table-responsive mt-3">
+                                    <table id="roledetailsGrid" class="table align-middle mb-0"
+                                        *ngIf="appuserrolemappingListgrid.length>0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Role</th>
+                                                <th>Assign</th>
+                                                <th>Is ReadOnly</th>
+                                                <th>Is Active</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngIf="appuserrolemappingListgrid.length>0">
+                                                <tr *ngFor="let data of appuserrolemappingListgrid; index as i">
+                                                    <td>{{data.role}}</td>
+                                                    <td>
+                                                       <input  type="checkbox" value="{{data.roleId}}" [checked]="data.assign !=null"   (change)="getRole($event, data,i)" />
+                                                    </td>
+                                                    <td>
+                                                      <input  type="checkbox" value="{{data.isReadOnly}}" [checked]="data.isReadOnly =='Y'" (change)="getModule1($event, data,i)" />
+                                                    </td>
+                                                     <td>         
+                                                       <input  type="checkbox" value="{{data.isActive}}" [checked]="data.isActive =='Y'" (change)="getModule2($event, data,i)" />     
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Role</th>
+                                                <th>Assign</th>
+                                                <th>Is ReadOnly</th>
+                                                <th>Is Active</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row mt-2" *ngIf="appuserrolemappingListgrid.length>0">
+                                <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                    <button type="submit" (click)="btnSave()" class="btn btn-primary me-3"> Save
+                                    </button>
+                                    <button type="button" (click)="cancel()" class="btn btn-primary btn-danger">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                       </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

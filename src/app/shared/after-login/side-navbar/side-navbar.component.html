@@ -1,0 +1,69 @@
+<div class="sidebar-wrapper" data-simplebar="true">
+  <div class="sidebar-header">
+    <div>
+      <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon" />
+    </div>
+    <div>
+      <h4 class="logo-text">eCounselling</h4>
+    </div>
+    <div class="toggle-icon ms-auto"><i class="bx bx-first-page"></i></div>
+  </div>
+  <ul class="metismenu" id="menu">
+    <li *ngIf="userRoleID !== 'USER'">
+      <a routerLink="/auth/pmudashboard">
+        <div class="parent-icon"><i class="bx bxs-dashboard"> </i></div>
+        <div (click)="onclickPmuDashBord()" class="menu-title" data-toggle="collapse">PMU Dashboard </div>
+      </a>
+    </li>
+    <li *ngIf="userRoleID === 'USER'">
+      <a routerLink={{dashboardUser}}>
+        <div class="parent-icon"><i class="bx bxs-dashboard"> </i></div>
+        <div class="menu-title" data-toggle="collapse">Dashboard </div>
+      </a>
+    </li>
+    <li *ngFor="let menu of parentmenuListArray">
+      <a href="javascript:;" class="has-arrow">
+        <div class="parent-icon"><i class="bx bx-alarm"> </i></div>
+        <div class="menu-title" data-toggle="collapse">{{ menu.heading }}</div>
+      </a>
+      <ul *ngIf="submenuListArray.length > 0">
+        <ng-container *ngFor="let submenu of submenuListArray">
+          <li *ngIf="submenu.parent == menu.moduleId">
+            <a *ngIf="userRoleID != 'USER'" routerLink="{{ submenu.path }}"><i class="bx bx-right-arrow-alt"></i>{{
+              submenu.heading }}</a>
+          </li>
+        </ng-container>
+      </ul>
+    </li>
+    <li *ngIf="userRoleID === 'USER'">
+      <a href="javascript:;" class="has-arrow">
+        <div class="parent-icon"><i class="bx bx-alarm"> </i></div>
+        <div class="menu-title" data-toggle="collapse">Project Activities</div>
+      </a>
+      <ul>
+        <li>
+          <a *ngIf="userRoleID === 'USER'" (click)="RedirectMou()"><i class="bx bx-right-arrow-alt"></i>MOU</a>
+        </li>
+        <li>
+          <a *ngIf="userRoleID === 'USER'" (click)="RedirectPropsalInvoice()"><i
+              class="bx bx-right-arrow-alt"></i>Proposal Invoice</a>
+        </li>
+        <li>
+          <a *ngIf="userRoleID === 'USER'" (click)="RedirectPayment()"><i class="bx bx-right-arrow-alt"></i>Payment</a>
+        </li>
+        <li>
+          <a *ngIf="userRoleID === 'USER'" (click)="RedirectSignOff()"><i class="bx bx-right-arrow-alt"></i>Sign
+            Off</a>
+        </li>
+        <li>
+          <a *ngIf="userRoleID === 'USER'" (click)="RedirectUtilizationCertificate()"><i
+              class="bx bx-right-arrow-alt"></i>Utlilization Certificate</a>
+        </li>
+        <li>
+          <a *ngIf="userRoleID === 'USER'" (click)="Redirect(uploadNA)"><i class="bx bx-right-arrow-alt"></i>Upload
+            New Document</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

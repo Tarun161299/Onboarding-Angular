@@ -1,0 +1,278 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">User Profile</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="container-fluid">
+            <div class="main-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card" [formGroup]="uploadProfileForm">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <img [src]="imgsrc" class="rounded-circle p-1 bg-primary" alt="user profile photo"
+                                        width="150" height="150">
+                                    <div class="mt-3">
+                                        <h4>{{profileData.username}}</h4>
+                                        <p class="text-secondary mb-1">{{profileData.designation}}</p>
+                                        <div class="input-group">
+                                            <input #Image type="file"
+                                                [ngClass]="{ 'is-invalid':(uploadProfileFormControl?.['flupload'].errors 
+                                            && (uploadProfileFormControl?.['flupload'].dirty || uploadProfileFormControl?.['flupload'].touched || isProfileSubmitted  ))}"
+                                                formControlName="flupload" class="form-control"
+                                                (change)="handleFileInput($event)" accept=".jpg,.svg,.png,.jpeg" />
+                                            <button class="btn text-white bg-primary" (click)="saveuserphoto()">
+                                                Save Profile
+                                            </button>
+                                            <span class="text-danger"
+                                                *ngIf="(uploadProfileFormControl?.['flupload'].touched || isProfileSubmitted) && uploadProfileFormControl?.['flupload'].errors?.['required']">
+                                                Required
+                                            </span>
+                                            <span class="text-danger" *ngIf="fileExtensionsCount">Extenion should not be more than 1.use single '.'' in file name</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card" [formGroup]="userprofilefrm">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputuserid" class="form-label">User Id</label>
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+
+                                        <input id="UserId" [maxLength]="15"
+                                            [ngClass]="{ 'is-invalid':(userprofileFormControl?.['UserId'].errors 
+            && (userprofileFormControl?.['UserId'].dirty || userprofileFormControl?.['UserId'].touched || submitted  ))}" formControlName="UserId"
+                                            type="text" class="form-control" placeholder="UserId">
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['UserId'].touched || submitted) && userprofileFormControl?.['UserId'].errors?.['required']">
+                                            Choose your User Id is Required
+                                        </span>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputemailid" class="form-label">Email</label>
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+
+                                        <input id="EmailId"
+                                            [ngClass]="{ 'is-invalid':(userprofileFormControl?.['EmailId'].errors 
+            && (userprofileFormControl?.['EmailId'].dirty || userprofileFormControl?.['EmailId'].touched || submitted  ))}"
+                                            formControlName="EmailId" type="text" class="form-control"
+                                            placeholder="Email Id">
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['EmailId'].touched || submitted) && userprofileFormControl?.['EmailId'].errors?.['required']">
+                                            Email Id is Required
+                                        </span>
+
+
+                                        <span class="invalid-feedback"
+                                            *ngIf="userprofileFormControl?.['EmailId'].touched && (userprofileFormControl?.['EmailId'].errors?.['email'] || userprofileFormControl?.['EmailId'].errors?.['pattern'])">
+                                            Enter a valid email address
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputusername" class="form-label">User
+                                                Name</label></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+
+                                        <input id="UserName"
+                                            [ngClass]="{ 'is-invalid':(userprofileFormControl?.['UserName'].errors 
+        && (userprofileFormControl?.['UserName'].dirty || userprofileFormControl?.['UserName'].touched || submitted  ))}"
+                                            formControlName="UserName" type="text" class="form-control"
+                                            placeholder="User Name">
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['UserName'].touched || submitted) && userprofileFormControl?.['UserName'].errors?.['required']">
+                                            User Name is Required
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputdesignation"
+                                                class="form-label">Designation</label></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+
+                                        <input id="Designation"
+                                            [ngClass]="{ 'is-invalid':(userprofileFormControl?.['Designation'].errors 
+        && (userprofileFormControl?.['Designation'].dirty || userprofileFormControl?.['Designation'].touched || submitted  ))}"
+                                            formControlName="Designation" type="text" class="form-control"
+                                            placeholder="Designation">
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['Designation'].touched || submitted) && userprofileFormControl?.['Designation'].errors?.['required']">
+                                            Designation is Required
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"> <label for="inputmobile" class="form-label">Mobile</label>
+                                        </h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+
+                                        <input id="Mobile" [maxLength]="10" (keypress)="numberOnly($event)" [ngClass]="{ 'is-invalid':(userprofileFormControl?.['Mobile'].errors 
+        && (userprofileFormControl?.['Mobile'].dirty || userprofileFormControl?.['Mobile'].touched || submitted  ))}"
+                                            formControlName="Mobile" type="text" class="form-control"
+                                            placeholder="Mobile">
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['Mobile'].touched || submitted) && userprofileFormControl?.['Mobile'].errors?.['required']">
+                                            Mobile is Required
+                                        </span>
+
+                                        <div *ngIf="userprofileFormControl?.['Mobile'].errors?.['pattern']"
+                                            class="invalid-feedback">
+                                            Invalid Mobile Number
+                                        </div>
+                                        <div *ngIf="userprofileFormControl?.['Mobile'].errors?.['maxlength']"
+                                            class="invalid-feedback1">
+                                            Mobile number should be of 10 digits
+                                        </div>
+                                        <div *ngIf="userprofileFormControl?.['Mobile'].errors?.['minlength']"
+                                            class="invalid-feedback1">
+                                            Mobile number should be of 10 digits
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputSecurityQuestion" class="form-label">Security
+                                                Question</label></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+
+                                        <select class="form-select"
+                                            [ngClass]="{ 'is-invalid':(userprofileFormControl?.['SecurityQuestion'].errors 
+                                        && (userprofileFormControl?.['SecurityQuestion'].dirty || userprofileFormControl?.['SecurityQuestion'].touched || submitted  ))}"
+                                            formControlName="SecurityQuestion">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let SecurityQ of SecurityQuestiondropdown"
+                                                value={{SecurityQ.securityQuesId}}>
+                                                {{SecurityQ.securityQues}}
+                                            </option>
+                                        </select>
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['SecurityQuestion'].touched || submitted) && userprofileFormControl?.['SecurityQuestion'].errors?.['required']">
+                                            Security Question is Required
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputsecurityanswer" class="form-label">Security
+                                                Answer</label></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+
+                                        <input id="securityanswer"
+                                            [ngClass]="{ 'is-invalid':(userprofileFormControl?.['securityanswer'].errors 
+                && (userprofileFormControl?.['securityanswer'].dirty || userprofileFormControl?.['securityanswer'].touched || submitted  ))}"
+                                            formControlName="securityanswer" type="text" class="form-control"
+                                            placeholder="Security Answer">
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['securityanswer'].touched || submitted) && userprofileFormControl?.['securityanswer'].errors?.['required']">
+                                            Security Answer is Required
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputAuthenticationMode"
+                                                class="form-label">Authentication Mode</label></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <select class="form-select"
+                                            [ngClass]="{ 'is-invalid':(userprofileFormControl?.['AuthenticationMode'].errors 
+                                && (userprofileFormControl?.['AuthenticationMode'].dirty || userprofileFormControl?.['AuthenticationMode'].touched || submitted  ))}"
+                                            formControlName="AuthenticationMode">
+                                            <option value="">--Select--</option>
+                                            <option *ngFor="let authentication of AuthenticationModedropdown"
+                                                value={{authentication.authCode}}>
+                                                {{authentication.authmode}}
+                                            </option>
+                                        </select>
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['AuthenticationMode'].touched || submitted) && userprofileFormControl?.['AuthenticationMode'].errors?.['required']">
+                                            Authentication Mode is Required
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputsecuritypin" class="form-label">Enter Security
+                                                Pin</label></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input id="securitypin"
+                                            [ngClass]="{ 'is-invalid':(userprofileFormControl?.['securitypin'].errors 
+                                        && (userprofileFormControl?.['securitypin'].dirty || userprofileFormControl?.['securitypin'].touched || submitted  ))}"
+                                            formControlName="securitypin" type="text" class="form-control"
+                                            placeholder="Security Pin">
+                                        <span class="text-danger"
+                                            *ngIf="(userprofileFormControl?.['securitypin'].touched || submitted) && userprofileFormControl?.['securitypin'].errors?.['required']">
+                                            Security Pin is Required
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0"><label for="inputsecuritypin" class="form-label">Security
+                                                Pin</label></h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <div class="d-inline">
+                                            <div class="CaptchaDiv">
+                                                <div class="d-flex">
+                                                    <span class=" p-3 py-0 fs-4 rounded fw-bold"
+                                                        style="letter-spacing: 4px;">
+                                                        <img [src]="imageSource">
+                                                    </span>
+                                                    <button type="button" (click)="refreshCaptcha()"
+                                                        class="btn btn-outline-primary btn-sm ms-1">
+                                                        <i class="bx bx-refresh"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <button type="submit" (click)="btnUpdate()" class="btn btn-primary me-3"> Save
+                                            Changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,258 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">View PDf</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="file-priview-container">
+      <ngx-extended-pdf-viewer [useBrowserLocale]="true" [handTool]="false" [base64Src]="selectedFileB64"
+        [height]="'60vh'" [showHandToolButton]="true">
+      </ngx-extended-pdf-viewer>
+    </div>
+  </div>
+</ng-template>
+<div class="page-wrapper">
+  <div class="page-content">
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+      <div class="breadcrumb-title pe-3">Employee Detail</div>
+      <div class="ps-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0 p-0">
+            <li class="breadcrumb-item"><a routerLink="/auth/pmudashboard"><i class="bx bx-home-alt"></i></a>
+            </li>
+            <li class="breadcrumb-item"><a class="text-decoration-none" routerLink="/auth/addEmployee">Employee
+                Detail view</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Employee Detail view</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="ms-auto">
+        <div class="btn-group">
+          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
+              href="javascript:;">Action</a>
+            <a class="dropdown-item" href="javascript:;">Another action</a>
+            <a class="dropdown-item" href="javascript:;">Something else here</a>
+            <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+              link</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card radius-10">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+            </div>
+            <div class="table-responsive mt-3">
+              <table class="table table-bordered table-sm w-100 table-hover">
+                <tbody>
+                  <tr>
+                    <th class="w-50">Employee Code</th>
+                    <td>{{employeedata.empCode}}</td>
+                    <td rowspan="8" style="text-align: center; width: 15%;">
+                      <img width="150" [src]="imageSource" alt="Image Source">
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="w-50">Name</th>
+                    <td>{{employeedata.empName}}</td>
+                  </tr>
+                  <tr>
+                    <th>Designation</th>
+                    <td>{{employeedata.designation}}</td>
+                  </tr>
+                  <tr>
+                    <th>Father Name</th>
+                    <td>{{employeedata.fName}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Mother Name</th>
+                    <td>{{employeedata.mName}}</td>
+                  </tr>
+                  <tr>
+                    <th>Phone No.</th>
+                    <td>{{employeedata.phoneNumber}}</td>
+                  </tr>
+                  <tr>
+                    <th>Mobile No.</th>
+                    <td>{{employeedata.mobileNumber}}</td>
+                  </tr>
+                  <tr>
+                    <th>Email</th>
+                    <td>{{employeedata.emailId}}</td>
+                  </tr>
+                  <tr>
+                    <th>Address</th>
+                    <td>{{employeedata.address}}</td>
+                    <td>
+                      <div class="d-flex order-actions">
+                         <a href="javascript:;" title="Download Id Proof"
+                          id="btndownload" class="ms-4 text-primary bg-light-primary border-0"
+                          (click)="onIconClickDownload('AddressProof')">
+                          <i class="bx bxs-download"></i></a>
+                          <a href="javascript:;" title="View Address"
+                            class="ms-4 text-primary bg-light-primary border-0"
+                            (click)="showAddressProof(employeedata)"><i class='bx bxs-show'></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>ID Type</th>
+                    <td>{{employeedata.id|ConversionIdentity:identityData}}</td>
+                    <td>
+                      <div class="d-flex order-actions">
+                        <a href="javascript:;" title="Download Id Proof" id="btndownload"
+                          class="ms-4 text-primary bg-light-primary border-0" (click)="onIconClickDownload('IdProof')">
+                          <i class="bx bxs-download"></i>
+                        </a>
+                        <a href="javascript:;" title="View Id" class="ms-4 text-primary bg-light-primary border-0"
+                          (click)="viewEmployeeDocument(employeedata)"><i class='bx bxs-show'></i></a>
+
+
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Id Number</th>
+                    <td colspan="2">{{employeedata.idNumber}}</td>
+                  </tr>
+                  <tr>
+                    <th>Date Of Joining</th>
+                    <td colspan="2">{{employeedata.joinDate | date :'dd/MM/yyyy'}}</td>
+                  </tr>
+                  <tr *ngIf="employeedata.resignDate">
+                    <th>Date Of Resign</th>
+                    <td colspan="2">{{employeedata.resignDate | date :'dd/MM/yyyy'}}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Reporting Officer</th>
+                    <td colspan="2">{{ employeedata.reportingOfficer}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                <button type="submit" hidden class="btn btn-primary me-3">
+                </button>
+                <button type="submit" class="btn btn-primary me-3">
+                  <a (click)="edit(employeedata)" style="color: white; text-decoration: none;">
+                    Edit
+                  </a>
+                </button>
+                <button type="submit" hidden class="btn btn-primary me-3">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="qualificationdetailsList.length>0">
+      <div class="col">
+        <div class="card radius-10">
+          <div class="card-body">
+            <div class="table-responsive mt-3">
+              <table id="qualificationdetailsGrid" class="table align-middle mb-0"
+                *ngIf="qualificationdetailsList.length>0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Qualification Details Id</th>
+                    <th>Employee Code</th>
+                    <th>Exam Passed</th>
+                    <th>Board/University</th>
+                    <th>Pass Year</th>
+                    <th>Division</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="qualificationdetailsList.length>0">
+                    <tr *ngFor="let data of qualificationdetailsList;">
+                      <td>{{data.qualificationDetailsId}}</td>
+                      <td>{{data.empCode}}</td>
+                      <td>{{data.examName}}</td>
+                      <td>{{data.boardUniv}}</td>
+                      <td>{{data.passYear }}</td>
+                      <td>{{data.division}}</td>
+                      <td>
+                        <div class="d-flex order-actions">
+                          <a title="View Document" class="ms-4 text-primary bg-light-primary border-0"
+                            (click)="viewDocument(data)"><i class='bx bxs-show'></i></a>
+                        </div>
+
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Qualification Details Id</th>
+                    <th>Employee Code</th>
+                    <th>Exam Passed</th>
+                    <th>Board/University</th>
+                    <th>Pass Year</th>
+                    <th>Division</th>
+                    <th>Action</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="workorderdetailsList.length>0">
+      <div class="col">
+        <div class="card radius-10 mb-4">
+          <div class="card-body">
+            <div class="table-responsive mt-3">
+              <table id="workorderdetailsGrid" class="table align-middle mb-0" *ngIf="workorderdetailsList.length>0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Employee Code</th>
+                    <th>Work Order No</th>
+                    <th>Agency Name</th>
+                    <th>Work Order From</th>
+                    <th>Work Order To</th>
+                    <th>View Work Order</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="workorderdetailsList.length>0">
+                    <tr *ngFor="let data of workorderdetailsList;">
+                      <td>{{data.empCode}}</td>
+                      <td>{{data.workorderNo}}</td>
+                      <td>{{data.agencyName}}</td>
+                      <td>{{data.workorderFrom | date:'dd/MM/yyyy'}}</td>
+                      <td>{{data.workorderTo | date:'dd/MM/yyyy'}}</td>
+                      <td>
+                        <button class="ms-4 btn text-primary btn bg-light-primary btn-sm d-block"
+                          (click)="showIdDocument(data)" title="View Work Order"><i class='bx bxs-show'></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Employee Code</th>
+                    <th>Work Order No</th>
+                    <th>Agency Name</th>
+                    <th>Work Order From</th>
+                    <th>Work Order To</th>
+                    <th>View Work Order</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

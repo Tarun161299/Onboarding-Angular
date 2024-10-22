@@ -1,0 +1,106 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">Experience Type Management</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/auth/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Experience Type</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-3">
+                    <div class="card-body">
+                        <form class="row g-3" [formGroup]="zmstexperiencetypeFrmGroup">
+
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="id" class="form-label">Id</label>
+                                <input type="text" id="id" formControlName="id" [maxlength]="2" name="id"
+                                    class="form-control" placeholder="Id"
+                                    [ngClass]="{ 'is-invalid':(zmstexperiencetypeFrmControl?.['id'].errors && (zmstexperiencetypeFrmControl?.['id'].dirty || zmstexperiencetypeFrmControl?.['id'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstexperiencetypeFrmControl?.['id'].touched || submitted) && zmstexperiencetypeFrmControl?.['id'].errors?.['required']">
+                                    Id is required</span>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                <label for="experienceType" class="form-label">Experience Type</label>
+                                <input type="text" id="experienceType" formControlName="experienceType"
+                                    [maxlength]="500" name="experienceType" class="form-control"
+                                    placeholder="Experience Type"
+                                    [ngClass]="{ 'is-invalid':(zmstexperiencetypeFrmControl?.['experienceType'].errors && (zmstexperiencetypeFrmControl?.['experienceType'].dirty || zmstexperiencetypeFrmControl?.['experienceType'].touched || submitted  ))}" />
+
+                                <span class="text-danger"
+                                    *ngIf="(zmstexperiencetypeFrmControl?.['experienceType'].touched || submitted) && zmstexperiencetypeFrmControl?.['experienceType'].errors?.['required']">
+                                    Experience Type is required</span>
+                            </div>
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 text-center">
+                                <button type="submit" *ngIf="updatehdn==false" (click)="save()"
+                                    class="btn btn-primary me-3"> Submit
+                                </button>
+                                <button type="submit" *ngIf="updatehdn==true" (click)="update()"
+                                    class="btn btn-primary me-3"> Update
+                                </button>
+                                <button type="button" (click)="clear()" class="btn btn-primary btn-danger">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card radius-10 mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table id="zmstexperiencetypeGrid" class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Experience Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="zmstexperiencetypeList.length>0">
+                                        <tr *ngFor="let data of zmstexperiencetypeList;">
+                                            <td>{{data.id}}</td>
+                                            <td>{{data.experienceType}}</td>
+
+                                            <td>
+                                                <div class="d-flex order-actions">
+                                                    <a (click)="edit(data)"
+                                                        class="ms-4 text-primary bg-light-primary border-0">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>
+                                                    <a (click)="delete(data.id)"
+                                                        class="ms-4 text-danger bg-light-danger border-0">
+                                                        <i class="bx bxs-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Experience Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

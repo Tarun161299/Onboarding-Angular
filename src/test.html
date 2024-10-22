@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table class="table table-sm table-bordered w-100 breaklongword">
+        <thead>
+            <tr>
+                <th colspan="2" class="bg-secondary text-center bg-opacity-25">
+                    OnBoarding Details for Awailing</th>
+            </tr>
+            <tr>
+                <td class="w-50">
+                    <img src="assets/images/logo-img.png" style="height:40px;" />
+                </td>
+                <td class="w-50 text-center">
+                    <img src="assets/images/niclogo.png" style="height:40px;" />
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Agency</th>
+                <td>#Agency#</td>
+            </tr>
+            <tr>
+                <th>Services</th>
+                <td>#Services#</td>
+            </tr>
+            <tr>
+                <th [hidden]="stateshow">State</th>
+                <td [hidden]="stateshow">#State#</td>
+            </tr>
+            <tr>
+                <th [hidden]="ministryshow">Ministry</th>
+                <td [hidden]="ministryshow">#MinistryName#</td>
+            </tr>
+            <tr>
+                <th>Name of Organization</th>
+                <td>#Organization#</td>
+            </tr>
+            <tr>
+                <th>Website</th>
+                <td>#website#</td>
+            </tr>
+            <tr>
+                <th>First time Affiliation with e-Counselling</th>
+                <td>#FirstTimeAffiliation#
+                </td>
+            <tr>
+
+                <th>Previous Agency deployed For Examination(if any)</th>
+                <td>#previousAgencyExamination#</td>
+            </tr>
+            <tr>
+                <th>Brief Description on existing Examination</th>
+                <td>#descriptionExam#</td>
+            </tr>
+            <tr>
+
+                <th>Previous Agency deployed For Counselling(if any)</th>
+                <td>#previousAgencyCounselling#</td>
+            </tr>
+            <tr>
+                <th>Brief Description on existing Counselling</th>
+                <td>#descriptionCounselling#</td>
+            </tr>
+            <tr>
+
+                <th>Expected no of Applicants in Examination</th>
+                <td>#expectedApplicantsexam#</td>
+            </tr>
+            <tr>
+                <th>Examination List</th>
+                <td>#ExaminationList#</td>
+            </tr>
+            <tr>
+                <th>Tentative Schedule Start of Examination</th>
+                <td>#tentstartExamin#</td>
+            </tr>
+            <tr>
+                <th>Tentative Schedule End of Examination</th>
+                <td>#tentendexam#</td>
+            </tr>
+            <tr>
+                <th>Expected no of Applicants in Counselling</th>
+                <td>#ExpectAppCouns#</td>
+            </tr>
+            <tr>
+                <th>Expected no of Seat in Counselling</th>
+                <td>#ExpectSeatCouns#</td>
+            </tr>
+            <tr>
+                <th>Stream List in Counselling</th>
+                <td>#streamlistcouns#</td>
+            </tr>
+            <tr>
+                <th>Expected Round in Counselling</th>
+                <td>#expectRoundcouns#</td>
+            </tr>
+            <tr>
+                <th>Expected Spot Round in Counselling</th>
+                <td>#expecSpotRoundCouns#</td>
+            </tr>
+            <tr>
+                <th>Expected Participating Institute in Counselling</th>
+                <td>#expectPartInstitute#</td>
+            </tr>
+            <tr>
+                <th>Tentative Schedule Start of Counselling</th>
+                <td>#tentScheduleStartcouns#</td>
+            </tr>
+            <tr>
+                <th>Tentative Schedule End of Counselling</th>
+                <td>#tentendCouns#</td>
+            </tr>
+            <tr>
+                <th [hidden]="Counselling">Dissimilarity Of Schedule Counselling</th>
+                <td [hidden]="Counselling">#DissScheduleCouns#</td>
+            </tr>
+            <tr>
+                <th>Dissimilarity Of Schedule Examination</th>
+                <td>#ExamDissimilarityOfSchedule#</td>
+            </tr>
+            <tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered w-100 breaklongword">
+        <thead>
+            <tr>
+                <th colspan="5">User Department Contact Detail</th>
+            </tr>
+            <tr class="bg-secondary text-white bg-gradient">
+                <th>Role</th>
+                <th>Name</th>
+                <th>Designation</th>
+                <th>Mobile No.</th>
+                <th>Email Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Coordinator</td>
+                <td>#coname#</td>
+                <td>#codesignation#</td>
+                <td>#comobile#</td>
+                <td>#coemail#</td>
+            </tr>
+            <tr>
+                <td>Deputy Coordinator</td>
+                <td>#DepConame#</td>
+                <td>#DepCodesignation#</td>
+                <td>#DepComobile#</td>
+                <td>#DepCoemail#</td>
+            </tr>
+            <tr>
+                <td>Program Manager Unit</td>
+                <td>#progname#</td>
+                <td>#progdesignation#</td>
+                <td>#progmobile#</td>
+                <td>#progemail#</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered w-100 breaklongword">
+        <thead>
+            <tr>
+                <th colspan="5">User Department MoU Signatory Details</th>
+            </tr>
+            <tr class="bg-secondary text-white bg-gradient">
+                <th>Role</th>
+                <th>Name</th>
+                <th>Designation</th>
+                <th>Mobile No.</th>
+                <th>Email Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Nodal Officer</td>
+                <td>#nodalname#</td>
+                <td>#nodaldesignation#</td>
+                <td>#nodalmobile#</td>
+                <td>#nodalemail#</td>
+            </tr>
+            <tr>
+                <td>Authorized Signatory</td>
+                <td>#Authorname#</td>
+                <td> #Authordesignation#</td>
+                <td>#Authormobile#</td>
+                <td>#Authoremail#</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered w-100 breaklongword">
+        <thead>
+            <tr>
+                <th colspan="5">User Department Technical Team Details</th>
+            </tr>
+            <tr class="bg-secondary text-white bg-gradient">
+                <th>Role</th>
+                <th>Name</th>
+                <th>Designation</th>
+                <th>Mobile No.</th>
+                <th>Email Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>System Admin</td>
+                <td>#systemname#</td>
+                <td>#systemdesignation#</td>
+                <td>#systemmobile#</td>
+                <td> #systememail#</td>
+            </tr>
+            <tr>
+                <td>Database Admin</td>
+                <td> #databasename#</td>
+                <td> #databasedesignation#</td>
+                <td>#databasemobile#</td>
+                <td> #databaseemail#</td>
+            </tr>
+            <tr>
+                <td>Web Info. Manager</td>
+                <td> #webname#</td>
+                <td> #webdesignation#</td>
+                <td>#webmobile#</td>
+                <td>#webemail#</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
